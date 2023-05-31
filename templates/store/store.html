@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- ========================= SECTION PAGETOP ========================= -->
+<section class="section-pagetop bg">
+    <div class="container">
+        <h2 class="title-page">Our Store</h2>
+
+    </div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION INTRO END// ========================= -->
+<section class="section-content padding-y">
+    <div class="container">
+
+        <div class="row">
+           
+            <main class="col-md-9">
+
+                <header class="border-bottom mb-4 pb-3">
+                    <div class="form-inline">
+                        <span class="mr-md-auto" style="direction:rtl;"> {{product_count}} کالا </span>
+
+                    </div>
+                </header><!-- sect-heading -->
+
+                <div class="row" style="direction: rtl;">
+                    {% for product in products %}
+                    <div class="col-md-4">
+                        <figure class="card card-product-grid" style=" width: 100%;
+                text-align: right;
+                padding: 20px;">
+                            <div class="img-wrap">
+                                <a href="{{ product.get_url }}"><img src={{product.images.url}}></a>
+
+                            </div> <!-- img-wrap.// -->
+                            <figcaption style="width: 100%;">
+                                <div class="fix-height">
+                                    <a href="{{ product.get_url}}" class="title"
+                                        style="align-items: center; margin-top: 10px;">{{ product.product_name}}</a>
+                                    <div class="price-wrap mt-2" style="font-size: 15px; float: left; direction: rtl;">
+                                        <span class="price"> {{product.price}} <span
+                                                style="font-size: 15px;">تومان</span></span>
+
+                                    </div> <!-- price-wrap.// -->
+                                </div>
+                                <a href="#" class="btn btn-block btn-primary">افزودن به سبد </a>
+                            </figcaption>
+                        </figure>
+                    </div> <!-- col.// -->
+                    {% endfor %}
+                    
+                    
+                </div> <!-- row end.// -->
+               
+
+
+
+                <nav class="mt-4" style="direction: rtl; " aria-label="Page navigation sample">
+                    <ul class="pagination">
+                        <li class="page-item disabled"><a class="page-link" href="#">قبلی</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
+                    </ul>
+                </nav>
+
+            </main> <!-- col.// -->
+            <aside class="col-md-3">
+
+                <div class="card" >
+                    <article class="filter-group" >
+                        <header class="card-header" >
+                            <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"
+                                class="" >
+                                <i class="icon-control fa fa-chevron-down" style="float: left;"></i>
+                                <h6 class="title" style="margin-block-end: 0px; float: right;" >دسته بندی ها</h6>
+                                
+                            </a>
+                        </header>
+                        <div class="filter-content collapse show" id="collapse_1" style="">
+                            <div class="card-body">
+
+                                <ul class="list-menu">
+                                    <li><a href="{% url 'store' %}" style="float: right;">تمام محصولات </a></li>
+                                    {% for category in links %}
+                                    <li><a href="{{ category.get_url }}" style="float: right;">{{category.category_name}} </a></li>
+                                    {% endfor %}
+
+                                </ul>
+
+                            </div> <!-- card-body.// -->
+                        </div>
+                   <article class="filter-group">
+							<header class="card-header">
+								<a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true"
+									class="">
+									<i class="icon-control fa fa-chevron-down" style="float: left;"></i>
+									<h6 class="title"style="float: right;">سایزها </h6>
+								</a>
+							</header>
+							<div class="filter-content collapse show" id="collapse_4" style="">
+								<div class="card-body">
+									<label class="checkbox-btn">
+										<input type="checkbox">
+										<span class="btn btn-light"> XS </span>
+									</label>
+
+									<label class="checkbox-btn">
+										<input type="checkbox">
+										<span class="btn btn-light"> SM </span>
+									</label>
+
+									<label class="checkbox-btn">
+										<input type="checkbox">
+										<span class="btn btn-light"> LG </span>
+									</label>
+
+									<label class="checkbox-btn">
+										<input type="checkbox">
+										<span class="btn btn-light"> XXL </span>
+									</label>
+								</div><!-- card-body.// -->
+							</div>
+						</article> <!-- filter-group .// -->
+
+						<article class="filter-group">
+							<header class="card-header">
+								<a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true"
+									class="">
+									<i class="icon-control fa fa-chevron-down" style="float: left;"></i>
+									<h6 class="title" style="float: right;">حدود قیمت </h6>
+								</a>
+							</header>
+							<div class="filter-content collapse show" id="collapse_3" style="">
+								<div class="card-body">
+
+									<div class="form-row">
+                                        <div class="form-group text-right col-md-6">
+											<label style="float: left;">حداکثر</label>
+											<select class="mr-2 form-control">
+												<option value="50">$50</option>
+												<option value="100">$100</option>
+												<option value="150">$150</option>
+												<option value="200">$200</option>
+												<option value="500">$500</option>
+												<option value="1000">$1000</option>
+												<option value="2000">$2000+</option>
+											</select>
+										</div>
+										<div class="form-group col-md-6">
+											<label style="float: right;">حداقل</label>
+											<!-- <input class="form-control" placeholder="$0" type="number"> -->
+											<select class="mr-2 form-control">
+												<option value="0">$0</option>
+												<option value="50">$50</option>
+												<option value="100">$100</option>
+												<option value="150">$150</option>
+												<option value="200">$200</option>
+												<option value="500">$500</option>
+												<option value="1000">$1000</option>
+											</select>
+										</div>
+										
+									</div> <!-- form-row.// -->
+									<button class="btn btn-block btn-primary">Apply</button>
+								</div><!-- card-body.// -->
+							</div>
+						</article> <!-- filter-group .// -->
+
+                </div> <!-- card.// -->
+
+            </aside> <!-- col.// -->
+
+        </div>
+
+    </div> <!-- container .//  -->
+</section>
+<!-- ========================= SECTION CONTENT END// ========================= -->
+{% endblock%}

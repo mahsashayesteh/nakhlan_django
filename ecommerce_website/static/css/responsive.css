@@ -1,0 +1,126 @@
+.mobile-block {
+    display: none;
+  }
+  
+  @media (max-width: 1200px) {
+    /* tablet devices */
+  }
+  @media (max-width: 992px) {
+    /* small tablet devices */
+    .slider-main .item-slide {
+      height: auto;
+    }
+  
+    .table-shopping-cart tr td:first-child {
+      width: 250px;
+    }
+    .table-shopping-cart .itemside .info {
+      padding: 0;
+    }
+    .table-shopping-cart .itemside .aside {
+      display: none;
+    }
+  }
+  @media all and (max-width: 768px) {
+    /* mobile devices */
+    .mobile-block {
+      display: block;
+    }
+  
+    .mobile-hide {
+      display: none;
+    }
+  
+    .section-header .logo {
+      max-height: 40px;
+      width: auto;
+    }
+    .section-header .header-main .brand-wrap {
+      margin-bottom: 1px;
+      margin-left: 0px;
+      display: inline-block;
+      
+    }
+    .section-header .header-main .search {
+      margin-bottom: 1rem;
+      
+    }
+  
+    .section-header .header-main .logo-marg{
+      margin-right: -17px;
+      margin-top: -17px;
+      margin-left: 15px;
+      
+    }
+    .section-header .header-main .dropdown{
+      
+      margin-top: -5px;
+      margin-right: 50px;
+      
+    }
+    
+    .section-header .header-main .btn-store{
+      
+      margin-top: 1px;
+      margin-right: 7px;
+      width: 60px;
+      margin-bottom: -5px;
+    }
+
+    .section-header .header-main .sec-login{
+      margin-top: 5px;
+      margin-left: -28px;
+      width: 60px;
+      margin-bottom: -5px;
+
+    }
+
+    .section-header .header-main .search{
+      margin-top: 1px;
+      margin-left: -50px;
+      width: 130px;
+      margin-bottom: -5px;
+      
+      
+    }
+
+    .item-feature {
+      margin-bottom: 20px;
+      /* margin-right: 20px; */
+    }
+  
+    .mobile-order-first {
+      order: -1;
+    }
+  
+    .mobile-order-1 {
+      order: 1;
+    }
+  
+    .mobile-order-2 {
+      order: 2;
+    }
+  
+    .mobile-order-3 {
+      order: 3;
+    }
+  
+    .mobile-py {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  
+    .mobile-pb {
+      padding-bottom: 20px;
+    }
+  
+    .mobile-pt {
+      padding-top: 20px;
+    }
+  
+    .navbar-expand .navbar-collapse {
+      flex-direction: column;
+    }
+  }
+  
+  /*# sourceMappingURL=responsive.css.map */

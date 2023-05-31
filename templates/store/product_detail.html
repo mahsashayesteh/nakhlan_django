@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        <!-- ============================ COMPONENT 1 ================================= -->
+        <div class="card" style="direction: rtl;">
+            <div class="row no-gutters" >
+                <aside class="col-md-6" >
+                    <article class="gallery-wrap" >
+                        <div class="img-big-wrap">
+                            <a href="#" ><img src="{{ single_product.images.url}}"></a>
+                        </div> <!-- img-big-wrap.// -->
+
+                    </article> <!-- gallery-wrap .end// -->
+                </aside>
+                <main class="col-md-6 border-left" >
+                    <article class="content-body" >
+                        <div style=" line-height: 20px; width:520px;">
+                            <h2  class="title" style="text-align: right;" >{{ single_product.product_name}}</h2><br>
+                        </div>
+                        
+
+                        <div class="mb-3">
+                            <var class="price h4">{{ single_product.price}} تومان</var>
+                        </div>
+
+                        <p style="text-align: right;">{{ single_product.description}}.</p>
+
+
+                        <hr>
+                        <div class="row">
+                            <div class="item-option-select">
+                                <h6 style="text-align: right;">رنگ</h6>
+                                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-light">
+                                        <input type="radio" name="radio_color"> نقره‌ای
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <input type="radio" name="radio_color"> طوسی
+                                    </label>
+                                    <label class="btn btn-light active">
+                                        <input type="radio" name="radio_color checked"> طلایی
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <input type="radio" name="radio_color"> مشکی
+                                    </label>
+                                </div>
+                            </div>
+                        </div> <!-- row.// -->
+                        <div class="row">
+                            <div class="item-option-select">
+                                <h6 style="text-align: right;">اندازه</h6>
+                                <div class="btn-group btn-group-sm btn-group-toggle" data-toggle="buttons">
+                                    <label class="btn btn-light">
+                                        <input type="radio" name="radio_color"> S
+                                    </label>
+                                    <label class="btn btn-light active">
+                                        <input type="radio" name="radio_color" checked> M
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <input type="radio" name="radio_color"> L
+                                    </label>
+                                    <label class="btn btn-light">
+                                        <input type="radio" name="radio_color"> XL
+                                    </label>
+                                </div>
+                            </div>
+                        </div> <!-- row.// -->
+                        <hr>
+                        {% if single_product.stock <= 0 %}
+                         <span class="text btn w-30 float-right btn-gray">موجود نیست</span>
+                            
+                        {% else %}
+                              <a href="./product-detail.html" class="btn  w-30 float-right btn-primary"> <span class="text">افزودن به سبد</span>
+                            <i class="fas fa-shopping-cart"></i> </a>
+                        {% endif %}
+                    </article> <!-- product-info-aside .// -->
+                </main> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div> <!-- card.// -->
+        <!-- ============================ COMPONENT 1 END .// ================================= -->
+
+        <br>
+
+        <div class="row" style="direction: rtl;">
+            <div class="col-md-9">
+
+                <header class="section-heading">
+                    <h3 style="text-align: right;">دیدگاه‌ها </h3>
+
+                </header>
+
+                <article class="box mb-3">
+                    <div class="icontext w-100"  >
+                        <img  src="{% static './images/avatars/avatar1.jpg' %}" class="img-xs icon rounded-circle">
+                        <h6 class=" float-right " style="width: 100px;" >Mike John </h6><br>
+                        <div class="text">
+                            
+                            <p class="date text-muted float-md-right " style="margin-top:100px; margin-right: -80px;">24.04.2020 </p>
+                            
+
+                        </div>
+                        
+                        
+                    </div> <!-- icontext.// -->
+                    <div class="mt-3">
+                        <p style="text-align: right;">
+                            Dummy comment Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip
+                        </p>
+                    </div>
+                </article>
+
+
+
+            </div> <!-- col.// -->
+        </div> <!-- row.// -->
+
+
+    </div> <!-- container .//  -->
+</section>
+
+{% endblock%}

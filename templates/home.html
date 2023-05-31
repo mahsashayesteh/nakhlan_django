@@ -1,0 +1,66 @@
+{% extends 'base.html'%}
+{% load static %}
+
+{% block content %}
+
+<!-- ========================= SECTION MAIN ========================= -->
+<section class="section-intro padding-y-sm">
+	<div class="container">
+
+		<div class="intro-banner-wrap">
+			<img src="{% static '..//static//images/banners/1.jpg' %}" class="img-fluid rounded">
+		</div>
+
+	</div> <!-- container //  -->
+</section>
+<!-- ========================= SECTION MAIN END// ========================= -->
+
+<!-- ========================= SECTION  ========================= -->
+<section class="section-name padding-y-sm">
+	<div class="container">
+
+		<header class="section-heading" style="display:flex;
+	-webkit-flex-direction: row-reverse; 
+	flex-direction: row-reverse;">
+			<h3 class="section-title">محصولات محبوب</h3>
+			&nbsp;
+			<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">مشاهده همه</a>
+
+		</header><!-- sect-heading -->
+
+		<div class="row" style="direction: rtl;">
+			{% for product in products %}
+			<div class="col-md-3">
+				<div 
+				class="card card-product-grid" 
+				style="float: right;
+				       width: 100%;
+		               text-align: right;
+		               padding: 20px;">
+					<a href="{{product.get_url}}" class="img-wrap"> <img src="{{ product.images.url }}"> </a>
+					<figcaption style="margin-top: 10px;">
+						<a href="{{product.get_url}}" class="title">{{ product.product_name }}</a>
+						<div style="float: left;" class="price mt-1">{{product.price}} <span
+								style="font-size: 10px; ">تومان</span></div> <!-- price-wrap.// -->
+					</figcaption>
+				</div>
+			</div> <!-- col.// -->
+			{% endfor %}
+		</div> <!-- row.// -->
+
+	</div><!-- container // -->
+</section>
+<!-- ========================= SECTION  END// ========================= -->
+
+
+
+
+<!-- ========================= FOOTER ========================= -->
+
+<!-- ========================= FOOTER END // ========================= -->
+
+</body>
+
+</html>
+
+{% endblock %}
