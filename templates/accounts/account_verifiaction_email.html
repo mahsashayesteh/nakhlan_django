@@ -1,0 +1,13 @@
+
+{% autoescape off %}
+
+سلام {{ user.first_name }}
+
+لطفا جهت تایید ثبت نام در سایت نخلان روی لینک زیر کلیک کنید.
+
+http://{{domain}}{% url 'activate' uidb64=uid token=token  %}
+
+
+اگر فکر می کنید اینطور نیست، لطفاً این ایمیل را نادیده بگیرید.
+
+{% endautoescape %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+<link href="{% static '..//static//css//ui.css'%}" rel="stylesheet" type="text/css"/>
+
+{% block content %}
+
+<section class="section-content padding-y section-register" >
+
+    <!-- ============================ COMPONENT REGISTER   ================================= -->
+        <div class="card mx-auto" style="max-width:520px; margin-top:40px; "  >
+            
+            {% include 'includes/alerts.html' %} 
+          <article class="card-body " style="direction: rtl;" >
+
+            <header class="mb-4"><h4 class="card-title">ثبت نام</h4></header>
+            
+            <form action="{% url 'register' %}" method="POST" class="form-register " >
+                {% csrf_token %}
+                    <div class="form-row"   >
+                        <div class="col-md-12 form-group">
+                            <label >نام</label><br>
+                              {{form.first_name}}
+                        </div> <!-- form-group end.// -->
+                        <div class="col-md-12 form-group">
+                            <label>نام خانوادگی</label>
+                            {{form.last_name}}
+                        </div> <!-- form-group end.// -->
+                    </div> <!-- form-row end.// -->
+                    
+                    
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                                <label> ایمیل</label>
+                                {{form.email}}
+                        </div> <!-- form-group end.// -->
+                        <div class="form-group col-md-12">
+                            <label>تلفن</label>
+                            {{form.phone_number}}
+                        </div> <!-- form-group end.// --> 
+                    </div> <!-- form-row.// -->
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label>رمز عبور</label>
+                            {{form.password}}
+                            
+                        </div> <!-- form-group end.// --> 
+                        <div class="form-group col-md-12">
+                            <label >تکرار رمز عبور</label>
+                            {{form.confirm_password}}
+                        </div> <!-- form-group end.// -->  
+                    </div>
+                    <div class="form-group mt-5">
+                        <button type="submit" class="form-control wc-cart"  > ثبت نام  </button>
+                    </div> <!-- form-group// -->  
+                     {% if form.non_field_errors %}
+                    <div class="card border-danger mb-3" style="max-width: 40rem;">
+                        <div class="card-header  " style="height: 25px; margin-top: 0px; padding-top: 1px;"><p class="float-right bold-4 " style="color: red; font-weight: bold">خطا</p></div>
+                        <div class="card-body text-danger float-right" >
+                          <p class="card-text">{{form.non_field_errors}}  </p>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    
+                
+                </form>
+            </article><!-- card-body.// -->
+        </div> <!-- card .// -->
+        <p class="text-center mt-4 color-orange">حساب کاربری دارید؟ &nbsp;<a href="{%url 'login' %}" >ورود</a></p>
+        <br><br>
+    <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+    
+    
+    </section>
+
+{% endblock %}

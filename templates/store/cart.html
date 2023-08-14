@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load product_tags %}
+{% load humanize %}
+
+{% load static %}
+{% block content %}
+
+    <section class="section-content padding-y bg">
+        <div class="container">
+
+            <!-- ============================ COMPONENT 1 ================================= -->
+            {% if not cart_items %}
+                <h2 class="text-center txt-empt-cart">.سبد خرید شما خالی می‌باشد</h2>
+                <br>
+                <div class="text-center ">
+                    <a href='{% url "store" %}' class="btn wc-cart" style="width: 120px;">ادامه خرید </a>
+                </div>
+            {% else %}
+
+
+
+                <aside class=" cart-area pt-20 pb-50" style="direction: rtl;">
+                    <div class="card">
+                        <table class="table table-borderless table-shopping-cart">
+                            <thead class="text-muted">
+                            <tr class="small text-uppercase" style="text-align: center;">
+                                <th scope="col " class="">محصولات</th>
+                                <th scope="col" width="120px">تعداد</th>
+                                <th scope="col" width="120">قیمت واحد</th>
+                                <th scope="col" class="text-right" width="200"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for cart_item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside"><img src="{{ cart_item.product.images.url }}" class="img-sm"></div>
+                                            <figcaption class="info">
+                                                <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
+                                                <p class="text-muted small" style="text-align: right;"><br>
+                                                    {% if cart_item.variation.all %}
+                                                        {% for item in cart_item.variation.all %}
+                                                            {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </p>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td>
+                                        <!-- col.// -->
+                                        <div class="col spinner" style="margin-top: 20px;">
+                                            <div class="input-group input-spinner">
+
+                                                <div class="input-group-append">
+                                                    <form action="{% url 'add_cart' cart_item.product.id %}" method="POST">
+                                                        {% csrf_token %}
+                                                        {% for item in cart_item.variation.all %}
+
+                                                            <input type="hidden" name="{{ item.variation_category | lower }}" value="{{ item.variation_value | capfirst }}">
+                                                        {% endfor %}
+                                                        <button class="btn btn-light" type="submit" id="button-minus"><i class="fa fa-plus"></i></Button>
+                                                        <input type="hidden" class="hidden hide" name="quantity" value="1">
+                                                    </form>
+
+                                                </div>
+
+                                                <input type="text" class="form-control" style="padding: 0 0px;" value="{{ cart_item.quantity }}">
+
+                                                <div class="input-group-prepend">
+                                                    <a href="{% url 'remove_cart' cart_item.product.id cart_item.id %}" class="btn btn-light" type="button" id="button-plus"> <i
+                                                            class="fa fa-minus"></i> </a>
+                                                </div>
+
+
+                                            </div> <!-- input-group.// -->
+                                        </div> <!-- col.// -->
+
+                                    </td>
+                                    <td>
+                                        <div class=" unit_price price-wrap text-center" style="padding-top: 23px;">
+                                             {% if cart_item.product.discount == 0 or cart_item.product.discount == None or pro.discount == '0' %}
+
+                                                <span> {{ cart_item.price|intcomma:False }} تومان</span>
+                                            {% else %}
+                                                <span>{% call_sellprice cart_item.product.price cart_item.product.discount as price %} {{ price|intcomma:False }} تومان </span><br>
+                                                <del style="font-weight: 200;font-size: 13px; color: #6c6c6c">{{ cart_item.product.price|intcomma:False }} تومان </del>
+
+                                            {% endif %}
+
+                                        </div> <!-- price-wrap .// -->
+                                    </td>
+                                    <td class="product-remove">
+                                        <a href="{% url 'remove_cart_item' cart_item.product.id cart_item.id %}" class=" btn float-left "
+                                           onclick="return confirm('آیا مطمئن هستید که می خواهید این مورد را حذف کنید؟')" style=" padding: 4px 4px;"><i style="width: 20px; height: 20px; color: red; "
+                                                                                                                                                        class="fal fa-remove"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div> <!-- card.// -->
+
+                </aside> <!-- col.// -->
+
+                {#       ساید بار نمایش قیمت کل #}
+                </div> <!-- row.// -->
+                <div class="col-md-11 " style="direction: rtl">
+                <aside class="col-md-4" style="direction: rtl;">
+
+                    <div class="card">
+                        <div class="card-body" style="text-align: right;">
+                            <dl class="dlist-align">
+                                <dt>قیمت کل:</dt>
+                                <dd class="text-right"><strong>{{ total|intcomma:False }} تومان</strong></dd>
+
+                            </dl>
+
+                            <hr>
+                            <dl class="dlist-align">
+                                <dt>هزینه حمل و نقل:</dt>
+                                <dd class="text-right"> {{ shipping_cost|intcomma:False }} تومان</dd>
+                            </dl>
+                            <dl class="dlist-align">
+                                <dt>جمع قیمت کالاها:</dt>
+                                <dd class="text-right text-dark b">{{ sub_total|intcomma:False }} تومان</dd>
+                            </dl>
+                            <hr>
+                            <p class="text-center mb-3">
+                                <img src="{% static './images/misc/payments.png' %}" height="26">
+                            </p>
+                            <a href="{% url 'checkout' %}" class="btn btn-primary btn-block"> بررسی </a>
+                            <a href="{% url 'store' %}" class="btn btn-light btn-block">ادامه خرید</a>
+                        </div> <!-- card-body.// -->
+                    </div> <!-- card.// -->
+
+                </aside> <!-- col.// -->
+                <!-- ============================ COMPONENT 1 END .// ================================= -->
+            {% endif %}
+
+            </div> <!-- container .//  -->
+    </section>
+
+    <!-- <script>
+        $("#button-minus").click(function() {
+            $.ajax({
+                url:'add_cart/<int:product_id>/',
+                data:{
+                  'search_term':'hello'
+                },
+                dataType:'JSON',
+                success:function(data){
+                    $('#')
+                }
+
+            })
+        });
+    </script> -->
+
+{% endblock %}
+

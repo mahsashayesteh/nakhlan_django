@@ -1,0 +1,72 @@
+{% load humanize %}
+{% load static %}
+{% load product_tags %}
+{% if product|length < 1 %}
+<div style="margin-left: 300px;"> <!-- show not find product-->#}
+
+                        <img id="not_find_product" style="height: 300px; width: 300px; " src="{% static '..//static//images//not_find//not_find_product.svg' %}">
+                        <div>
+                            <span style="padding-left:20px ; font-size: 25px;" >کالایی با این مشخصات پیدا نکردیم</span><img style="height: 50px; width: 35px; " src="{% static '..//static//images//icons//danger.png' %}">
+                        </div>
+                    </div>
+{% else %}
+{% for i in product %}
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+        <div class="product__item product__item-d">
+            <div class="product__thumb fix">
+                <div class="product-image w-img">
+                    <a href="{{ i.get_url }}">
+                        <img src="{{ i.images.url }}" alt="product">
+                    </a>
+                </div>
+                <div class="product-action">
+                    <a href="#" class="icon-box icon-box-1" data-toggle="modal" data-target="#productModalId">
+                        <i class="fal fa-eye"></i>
+                        <i class="fal fa-eye"></i>
+                    </a>
+                    <a href="#" class="icon-box icon-box-1">
+                        <i class="fal fa-heart"></i>
+                        <i class="fal fa-heart"></i>
+                    </a>
+                    <a href="#" class="icon-box icon-box-1">
+                        <i class="fal fa-layer-group"></i>
+                        <i class="fal fa-layer-group"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="product__content-3">
+                <h6><a href="{{ i.get_url }}">{{ i.product_name }}</a></h6>
+                <div class="rating mb-5">
+                    <div class="rtl rate-review">
+
+
+                        <i class=" {% if i.avg == 0.5 %} fa fa-star-half-o {% elif i.avg >= 1 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                           aria-hidden="true"></i>
+                        <i class=" {% if i.avg == 1.5 %} fa fa-star-half-o {% elif i.avg >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                           aria-hidden="true"></i>
+                        <i class=" {% if i.avg == 2.5 %} fa fa-star-half-o {% elif i.avg >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                           aria-hidden="true"></i>
+                        <i class=" {% if i.avg == 3.5 %} fa fa-star-half-o {% elif i.avg >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                           aria-hidden="true"></i>
+                        <i class=" {% if i.avg == 4.5 %} fa fa-star-half-o {% elif i.avg >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                           aria-hidden="true"></i>
+
+                    </div>&nbsp;&nbsp;
+                    <span>({{ i.count_review }})</span>
+                </div>
+                <div class="price left " style="text-align: left; height: 30px">
+                    {% if i.discount is not 0 or i.discount is not None or i.discount is not '0' %}
+                        {{ i.discount }}
+                        <span>{% call_sellprice i.price i.discount as price %} {{ price|intcomma:False }} تومان </span><br>
+                        <del style="font-weight: 200;font-size: 13px; color: #6c6c6c"> تومان{{ i.price|intcomma:False }}</del>
+                    {% elif i.discount is 0 or i.discount is None or i.discount is  '0' %}
+                        <span>تومان {{ i.price|intcomma:False }}</span>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endfor %}
+{% endif %}

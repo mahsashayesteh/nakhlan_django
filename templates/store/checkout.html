@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load humanize %}
+
+{% load static %}
+{% block content%}
+<section class="section-content padding-y bg">
+    <div class="container">
+
+        <!-- ============================ COMPONENT 1 ================================= -->
+
+        <div class="row">
+            <aside class="col-lg-6" style="direction: rtl;">
+              <form action="{% url 'place_order' %}" method="POST">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-body" style="text-align: right;">
+                        <table class="table table-borderless table-shopping-cart">
+                            <thead class="text-muted">
+                                <tr class="small text-uppercase" style="text-align: center;">
+                                    <th scope="col " class="">محصولات</th>
+                                    <th scope="col" width="120px">تعداد</th>
+                                    <th scope="col" width="120">قیمت واحد</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for cart_item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <figure class="itemside align-items-center">
+                                            <div class="aside"><img src="{{ cart_item.product.images.url }}"
+                                                    class="img-sm"></div>
+                                            <figcaption class="info">
+                                                <a href="{{cart_item.product.get_url}}" class="title text-dark">{{cart_item.product.product_name}}</a>
+                                                <p class="text-muted small" style="text-align: right;"> <br>
+                                                    {% if cart_item.variation.all %}
+                                                    {% for item in cart_item.variation.all %}
+                                                      {{item.variation_category |capfirst }}:{{item.variation_value | capfirst }}  <br>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </p>
+                                            </figcaption>
+                                        </figure>
+                                    </td>
+                                    <td class="text-center">
+                                        <!-- col.// -->
+                                       <label>{{cart_item.quantity}}</label>
+                                    </td>
+                                    <td>
+                                        <div class="price-wrap text-center" style="padding-top: 23px;">
+                                            <var class="price">{{ cart_item.product.price|intcomma:False }} تومان</var>
+                                        </div> <!-- price-wrap .// -->
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <hr>
+
+                            <div class="your-order  " >
+
+                                <div class="your-order-table table-responsive text-right">
+                                    <table class="text-right">
+                                        <tfoot>
+                                            <tr class="cart-subtotal">
+                                                <th class="">جمع مبلغ کالاها:</th>
+                                                <td><span class="amount">{{ sub_total|intcomma:False }} تومان </span></td>
+                                            </tr>
+                                            <tr class="shipping">
+                                                <th>حمل و نقل:</th>
+                                                <td>
+                                                    <ul>
+                                                        <li>
+
+                                                            <label>
+                                                              {{ shipping_cost|intcomma:False }}  تومان
+                                                            </label>
+                                                        </li>
+
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr class="order-total">
+                                                <th>مجموع سفارش:</th>
+                                                <td><strong><span class="amount">{{ total|intcomma:False }} تومان </span></strong>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+
+
+                        </div>
+                    </div> <!-- card-body.// -->
+                </div> <!-- card.// -->
+              </form>
+            </aside> <!-- col.// -->
+
+
+            <aside class="col-lg-6 rtl text-right">
+                <div class="card p-3">
+                    <div class="cart-body">
+                        {% include 'includes/alerts.html' %}
+                        <h4 class="cart-title mb-4">
+                            اطلاعات پرداخت
+                        </h4>
+                        <form >
+                            <div class="form-row">
+                                <div class=" col form-group">
+                                    <label for="">نام </label>
+                                    <input type="text" name="first_name" class="form-control" required>
+                                </div>
+
+                                <div class=" col form-group">
+                                    <label for="">نام خانوادگی</label>
+                                    <input type="text" name="last_name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class=" col form-group">
+                                    <label for=""> ایمیل</label>
+                                    <input type="email" name="email" class="form-control" required>
+                                </div>
+
+                                <div class=" col form-group">
+                                    <label for="">شماره موبایل</label>
+                                    <input type="number" name="phone" maxlength="13" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class=" col form-group">
+                                    <label for="">کد پستی</label>
+                                    <input type="number" name="zip_code" maxlength="10" class="form-control" required>
+                                </div>
+                                <div class=" col form-group">
+                                    <label for="">نشانی</label>
+                                    <textarea  name="address" rows="4" class="form-control" required> </textarea>
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class=" col form-group">
+                                    <label for="">یادداشت سفارش</label>
+                                    <textarea name="order_note" class="form-control" rows="2" required></textarea>
+                                </div>
+                            </div>
+                            <button class="btn pt-30 mt-30 cart-btn btn-block" type="submit">سفارش</button>
+                        </form>
+                    </div>
+                </div> <!-- card.// -->
+            </form>
+            </aside> <!-- col.// -->
+
+
+        </div> <!-- row.// -->
+        <!-- ============================ COMPONENT 1 END .// ================================= -->
+
+    </div> <!-- container .//  -->
+</section>
+
+<!-- <script>
+    $("#button-minus").click(function() {
+        $.ajax({
+            url:'add_cart/<int:product_id>/',
+            data:{
+              'search_term':'hello'
+            },
+            dataType:'JSON',
+            success:function(data){
+                $('#')
+            }
+
+        })
+    });
+</script> -->
+
+{% endblock %}

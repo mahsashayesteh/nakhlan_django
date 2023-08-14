@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% load product_tags %}
+{% load humanize %}
+{% block content %}
+    {% load static %}
+    <main class="rtl">
+        <!-- page-banner-area-start -->
+        <div class="page-banner-area page-banner-height" data-background="{% static 'images/banner/page-banner-about-us.png' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="page-banner-content text-center">
+                            <h3>درباره ما</h3>
+                            <p>آرامشی شگفت انگیز همه جانم را فرا گرفته است، مثل این صبح های شیرین تابستانی که با تمام وجود از آن لذت می برم.</p>
+                            <div class="page-bottom-btn mt-55">
+                                <a href="{% url 'store' %}" class="st-btn-4">کشف کنید</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- page-banner-area-end -->
+
+        <!-- about-area-start -->
+        <div class="about-area pt-80 pb-80" data-background="assets/img/bg/about-bg.png">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="about-content">
+                            <span>بریم که فروشگاره آنلاین ما رو بشناسید</span>
+                            <h4>سلام,</h4>
+                            <h5 class="banner-t mb-30">با 10 سال سابقه </h5>
+                            <p class="about-text">بیش از 10 سال است که نیاز مشتریان عزیزم را در خصوص پوشاک تامین میکنم.</p>
+                            <p>در کنار شما مشتریان (دوستای عزیزم) یاد گرفتیم و بزرگ شدیم هر روز بیشتر از دیروز به فکر تامین نیازهای شما هستیم.</p></div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                        <div class="about-image w-img">
+                            <img src="{% static 'images/about/about-b.png' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- about-area-end -->
+
+        <!-- services-area-start -->
+        <div class="services-area pt-70 light-bg-s pb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="abs-section-title text-center">
+                            <span>چگونه کار می کنیم</span>
+                            <h4>سفارش</h4>
+                            <p>سفارش از شما، ارسال سریع از ما</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-40">
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="services-item mb-30">
+                            <div class="services-icon mb-25">
+                                <i class="fal fa-share-square"></i>
+                            </div>
+                            <h6>انتخاب ثبت سفارش </h6>
+                            <p> کاربرا می تواند در قسمت جزِئیات کالاها با افزودن محصول به سبد خرید خود و تکمیل مراحل خرید، سفارش خود را ثبت کنند.<a style="color: orangered" href="{% url 'store' %}">فروشگاه</a>
+                                <br> <br></p>
+                            <div class="s-count-number" style="text-align: left; float: left">
+                                <span>01</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="services-item mb-30">
+                            <div class="services-icon mb-25">
+                                <i class="fal fa-file"></i>
+                            </div>
+                            <h6>بررسی و ارسال محصول توسط فروشگاه نخلان</h6>
+                            <p> سفارشات ثبت شده توسط فروشگاه نخلان برسی و سپس محصولات به صورت خاص و زیبا بسته بندی شده و برای مشتریان ارسال می گردد.<a style="color: orangered"
+                                                                                                                                                       href="{% url 'store' %}">فروشگاه</a></p>
+                            <div class="s-count-number">
+                                <span>02</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-4 col-md-6">
+                        <div class="services-item mb-30">
+                            <div class="services-icon mb-25">
+                                <i class="fal fa-thumbs-up"></i>
+                            </div>
+                            <h6> دریافت سفارش توسط مشتریان </h6>
+                            <p>زمان دریافت سفارشات متغییر بوده در بازه زمانی 3 الی 5 روز می باشد. در صورتی که مشتری عزیز از سفارش رضایت داشتند می تواند پیام رضایت خود را طریق صفحه ارتباط با ما در میان
+                                بگذارند.</p>
+                            <div class="s-count-number">
+                                <span>03</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- services-area-end -->
+
+        <!-- technolgy-index-start -->
+        <div class="technolgy-index mt-70 mb-10">
+            <div class="container">
+                <div class="row mb-15">
+                    <div class="col-xl-12">
+                        <div class="abs-section-title text-center">
+                            <span>همراهان همیشگی ما</span>
+                            <h4> کامل کننده های ما</h4>
+                            <p>رسالت ما با شما و همراه شما بودن است. در کنار ما از خرید بیشترین لذت ببرید.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6 col-lg-6">
+                    <div class="main-abs mb-30">
+                        <div class="ab-counter-image w-img ">
+
+                                <img src="{% static 'images/about/ab-01.png' %}" alt="">
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 ">
+                                    <div class="ab-counter-item mb-30 pr-195">
+                                        <div class="ab-counter mb-20  ">
+                                            <div class="counter-icon mr-10">
+                                                <img src="{% static 'images/about/c-icon-01.png' %}" alt="">
+                                            </div>
+                                            <div class="counter_info " >
+                                                <span class="counter">1200</span>
+                                                <p>+</p>
+                                            </div>
+                                        </div>
+                                        <h5>مشتریان همیشگی</h5>
+                                        <p></p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-6">
+                    <div class="main-abs mb-30">
+                        <div class="ab-counter-image w-img mb-40">
+                                <img src="{% static 'images/about/ab-02.png' %}" alt="">
+                            </div>
+                            <div class="row">
+
+                                <div class="col-xl-12 col-lg-6 col-md-6 col-sm-6 ">
+                                    <div class="ab-counter-item mb-30 pr-195">
+                                        <div class="ab-counter mb-20">
+                                            <div class="counter-icon mr-10">
+                                                <img src="{% static 'images/about/c-icon-01.png' %}" alt="">
+                                            </div>
+                                            <div class="counter_info">
+                                                <span class="counter">1000</span>
+                                               <p>+</p>
+                                           </div>
+                                        </div>
+                                        <h5>کاربر آنلاین</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- technolgy-index-end -->
+
+
+    </main>
+
+{% endblock %}

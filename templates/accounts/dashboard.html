@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="section-conten padding-y bg rtl text-right">
+
+        <div class="container ">
+            {% include 'includes/alerts.html' %}
+            <div class="row">
+                {% include 'includes/dashboard_sidbar.html' %}
+                <main class="col-md-9">
+                    <article class="card">
+                        <header class="card-header">
+                            <strong class="d-inline-block mr-3">وارد شدید با عنوان:</strong>
+                            <span>{{ user.full_name }} </span>
+                        </header>
+                        <div class="card-body text-center">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-title text-center font-weight-bold mb-4">مجموع سفارش ها</div>
+                                            <h5 class="mb-3">{{ orders_count }}</h5>
+                                            <a href="{% url 'my_orders' %}" class="color-orange" >مشاهده سفارش ها</a>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body ">
+                                            {% if userprofile.profile_picture.url   %}
+                                             <img src="{{ userprofile.profile_picture.url }}"  alt="عکس پروفایل کاربر" class="avatar align-center mr-150" width="50px" height="50px" style="border-radius: 50%">
+                                            {% else %}
+                                             <img src="https://www.w3schools.com/howto/img_avatar.png"  alt="عکس پروفایل کاربر" class="avatar" width="50px" height="50px" style="border-radius: 50%">
+                                            {% endif %}
+                                            <p class="mb-0">{{ user.email }}</p>
+                                            <p class="mb-0">{{ user.phone_number }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- row.// -->
+                        </div> <!-- card-body .// -->
+                    </article> <!-- order-group.// -->
+                </main>
+            </div> <!-- row.// -->
+        </div>
+
+
+    </section>
+
+{% endblock %}

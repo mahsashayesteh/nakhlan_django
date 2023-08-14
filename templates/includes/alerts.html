@@ -1,0 +1,17 @@
+{% if messages %}
+
+   {% for message in messages %}
+   <div id="message" class="container rtl" style="max-width:520px; margin-top:10px; " >
+      <div {% if message.tags %} class=" alert alert-{{message.tags}} rtl " style="width: 100%; " {% endif %} role="alert">
+         <button type="button" class="close float-left " style="margin-right:70% ;" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
+         <div class="rtl " style="text-align: right;">
+         {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}خطا: {% endif %}
+         <br>
+            {{message}}
+         </div>
+         
+         
+      </div>
+   </div>
+   {% endfor %}
+{% endif %}

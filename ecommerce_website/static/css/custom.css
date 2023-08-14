@@ -1,0 +1,143 @@
+html{
+  border: 0 ;
+  margin: 0;
+
+}
+
+:root{
+
+  --color-131921: #131921;
+  --color-3b4149: #3b4149;
+  --color-febd69: #febd69;
+  --color-232f3e: #232f3e;
+  --color-bf4800: #f56004;
+  --color-f5f5f7: #f5f5f7;
+  --color-ededed: #ededed;
+  --color-e5e5e5: #f5f5f5;
+  --color-777777: #777777;
+  --color-1c1c1b: #1c1c1b;
+}
+
+
+.links {
+  text-decoration: none;
+}
+/* Hide Radio button */
+.rate > input{
+  display: none;
+}
+
+.rate{
+  display: inline-block;;
+  border: 0;
+}
+
+.rate > label{
+  float: left;
+}
+
+/* Showing the stars */
+.rate > label:before{
+  display: inline-block;
+  font-size: 1.1rem;
+  font-family: FontAwesome, sans-serif;
+  content: "\f005";
+  margin:0;
+  padding:0.3rem .2rem;
+  cursor: pointer;
+}
+
+/* Half star */
+.rate .half:before{
+  content: "\f089";
+  transform: rotate(360deg) scaleX(-1);
+  position: absolute;
+  padding-right: 0rem;
+}
+
+
+.btn_sub{
+    width: 185px;
+    height: 40px;
+    font-size: 15px;
+
+}
+
+/* Click and hover */
+input:checked ~ label, label:hover ~ label{
+    color: #ffb503;
+  }
+  
+  /* hover hightlight */
+  input:checked + label:hover, input:checked ~ label:hover,input:checked ~ label:hover ~ label,
+  label:hover ~ input:checked ~ label{
+    color: #cc9000;
+  }
+  
+  .rating-star i{
+    color: #ffb503 !important;
+  }
+
+/* all url must be orange */
+
+a{
+  color: var(--color-bf4800);
+}
+
+/* این برای زمانی است که ستاره های ثبت شده کاربر در کامنت نمایش داده می شود */
+.rate-review i {
+  transform: rotate(360deg) scaleX(-1);
+  padding-right: 0rem;
+  color: #ffb503 !important;
+}
+
+/* تغییر هاور ساید بار داشبورد*/
+.col-md-3 .list-group a.active{
+  color: #ffffff;
+  background-color: var(--color-bf4800);
+  border: none;
+
+
+
+
+}
+.col-md-3 ul a:hover{
+  background-color: var(--color-e5e5e5);
+  color: var(--color-bf4800);
+}
+
+/* change password- dashboard*/
+
+.change_pass input{
+  margin-bottom:15px;
+}
+
+/* product gallery*/
+
+ul.thumb{
+  margin: 0 auto;
+  padding: 0;
+  float: right;
+
+}
+
+ul.thumb li{
+  list-style: none;
+  margin: 10px;
+}
+
+ul.thumb li img{
+  width: 100px;
+  height: 120px;
+  border: 0.1mm solid #d9d5d5;
+  border-radius: 10%;
+}
+/* border*/
+.border-orange{
+  border:1px solid var(--color-bf4800);
+}
+
+.header__bottom{
+  border-bottom: 1px solid #e3dbdb;
+}
+
