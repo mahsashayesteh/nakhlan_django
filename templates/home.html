@@ -1,66 +1,347 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
 {% load static %}
-
+{% load humanize %}
+{% load product_tags %}
 {% block content %}
 
-<!-- ========================= SECTION MAIN ========================= -->
-<section class="section-intro padding-y-sm">
-	<div class="container">
+    <!-- ========================= SECTION MAIN ========================= -->
+   <main>
+        <!-- slider-area-start -->
 
-		<div class="intro-banner-wrap">
-			<img src="{% static '..//static//images/banners/1.jpg' %}" class="img-fluid rounded">
-		</div>
-
-	</div> <!-- container //  -->
-</section>
-<!-- ========================= SECTION MAIN END// ========================= -->
-
-<!-- ========================= SECTION  ========================= -->
-<section class="section-name padding-y-sm">
-	<div class="container">
-
-		<header class="section-heading" style="display:flex;
-	-webkit-flex-direction: row-reverse; 
-	flex-direction: row-reverse;">
-			<h3 class="section-title">محصولات محبوب</h3>
-			&nbsp;
-			<a href="{% url 'store' %}" class="btn btn-outline-primary float-right">مشاهده همه</a>
-
-		</header><!-- sect-heading -->
-
-		<div class="row" style="direction: rtl;">
-			{% for product in products %}
-			<div class="col-md-3">
-				<div 
-				class="card card-product-grid" 
-				style="float: right;
-				       width: 100%;
-		               text-align: right;
-		               padding: 20px;">
-					<a href="{{product.get_url}}" class="img-wrap"> <img src="{{ product.images.url }}"> </a>
-					<figcaption style="margin-top: 10px;">
-						<a href="{{product.get_url}}" class="title">{{ product.product_name }}</a>
-						<div style="float: left;" class="price mt-1">{{product.price}} <span
-								style="font-size: 10px; ">تومان</span></div> <!-- price-wrap.// -->
-					</figcaption>
-				</div>
-			</div> <!-- col.// -->
-			{% endfor %}
-		</div> <!-- row.// -->
-
-	</div><!-- container // -->
-</section>
-<!-- ========================= SECTION  END// ========================= -->
+        <div class="slider-area rtl">
+            <div class="swiper-container slider__active">
+                <div class="slider-wrapper  swiper-wrapper">
+                    {%  for slider in sliders %}
+                    <div class=" swiper-slide slider-height d-flex align-items-center" data-background="{{ slider.image.url }}">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-5">
+                                    <div class="slider-content">
+                                        <div class="slider-top-btn" data-animation="fadeInLeft" data-delay="1.5s">
+                                            <a href="{{ slider.product.get_url }}" class="st-btn b-radius">{{ slider.discount_deal }}</a>
+                                        </div>
+                                        <h2 data-animation="fadeInLeft" data-delay="1.7s" class="pt-15 slider-title pb-5">  {{ slider.product.product_name }} آف شگفت انگیز خورد</h2>
+                                        <p class="pr-20 slider_text" data-animation="fadeInLeft" data-delay="1.9s">تخفیف {{ slider.product.discount }}% </p>
+                                        <div class="slider-bottom-btn mt-75">
+                                            <a data-animation="fadeInUp" data-delay="1.15s" href="{{ slider.product.get_url }}" class="st-btn-b b-radius">کشف کنید</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /single-slider -->
+                   {% endfor %}
+                    <div class="main-slider-paginations"></div>
+                </div>
+            </div>
+        </div>
 
 
 
 
-<!-- ========================= FOOTER ========================= -->
+    <!-- topsell__area-start -->
+    <section class="topsell__area-1 pt-15 rtl">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="section__head d-flex justify-content-between mb-10">
+                        <div class="section__title" style="margin-top: 50px; margin-bottom: 40px ">
+                            <h5 class="st-titile-d " >محصولات برتر روز</h5>
+                        </div>
+{#                        جهت نمایش تایم تخفیف                       #}
+                        <div class="offer-time">
+                            <span class="offer-title d-none d-sm-block"></span>
+                            <div class="countdown">
+                                <div class="countdown-inner b-radius">
+{#                                    <ul class="text-center">#}
+{#                                        <li><span data-days="">36</span> Days</li>#}
+{#                                        <li><span data-hours="">8</span> Hours</li>#}
+{#                                        <li><span data-minutes="">16</span> Mins</li>#}
+{#                                        <li><span data-seconds="">54</span> Secs</li>#}
+{#                                    </ul>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="product-bs-slider" >
+                    <div class="product-slider swiper-container">
+                        <div class="swiper-wrapper">
 
-<!-- ========================= FOOTER END // ========================= -->
+                            {% for pro in special_offers %}
 
-</body>
+                                <div class="product__item swiper-slide">
+                                    <div class="product__thumb fix">
+                                        <div class="product-image w-img">
+                                            <a href="{{ pro.get_url }}">
+                                                <img src="{{ pro.images.url }}" alt="product" class="w-img">
+                                            </a>
+                                        </div>
 
-</html>
+                                        <div class="product__offer">
+                                            {% if pro.discount is not none and  pro.discount is not 0 %}
+                                                <span class="discount">{{ pro.discount }}%</span>
+                                            {% endif %}
+                                        </div>
+                                        <div class="product-action">
+                                            {% comment %} <a data-toggle="modal" data-target="#productModalId-{{ forloop.counter }}" href="#" class="icon-box icon-box-1">
+                                                <i class="fal fa-eye"></i>
+                                                <i class="fal fa-eye"></i>
+                                            </a>  {% endcomment %}
+                                            <a href="#" class="icon-box icon-box-1">
+                                                <i class="fal fa-heart"></i>
+                                                <i class="fal fa-heart"></i>
+                                            </a>
+                                            <a href="#" class="icon-box icon-box-1">
+                                                <i class="fal fa-layer-group"></i>
+                                                <i class="fal fa-layer-group"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product__content">
+                                        <h6><a href="{{ pro.get_url }}">{{ pro.product_name }}</a></h6>
+                                        <div class=" mb-5 mt-3 mr-0 pr-0">
+                                            <ul>
+                                                <div class="rtl rate-review">
+                                                 <span class="rate-review">
+                                                  <i class=" {% if pro.average == 0.5 %} fa fa-star-half-o {% elif pro.average >= 1 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                     aria-hidden="true"></i>
+                                                  <i class=" {% if pro.average == 1.5 %} fa fa-star-half-o {% elif pro.average >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                     aria-hidden="true"></i>
+                                                  <i class=" {% if pro.average == 2.5 %} fa fa-star-half-o {% elif pro.average >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                     aria-hidden="true"></i>
+                                                  <i class=" {% if pro.average == 3.5 %} fa fa-star-half-o {% elif pro.average >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                     aria-hidden="true"></i>
+                                                  <i class=" {% if pro.average == 4.5 %} fa fa-star-half-o {% elif pro.average >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                     aria-hidden="true"></i>
 
+                                                 </span>
+                                                </div>
+                                            </ul>
+                                            <span style="font-weight: 200;font-size: 10px;">(  {{ pro.count_rating }} دیدگاه)</span>
+                                        </div>
+                                        <div class="price left " style="text-align: left; height: 30px">
+                                            {% if pro.discount == 0 or pro.discount == None or pro.discount == '0' %}
+
+                                                <span> {{ pro.price|intcomma:False }} تومان</span>
+                                            {% else %}
+                                                <span>{% call_sellprice pro.price pro.discount as price %} {{ price|intcomma:False }} تومان </span><br>
+                                                <del style="font-weight: 200;font-size: 13px; color: #6c6c6c">{{ pro.price|intcomma:False }} تومان </del>
+
+                                            {% endif %}
+                                        </div>
+
+
+                                    </div>
+                                    <div class="product__add-cart text-center">
+                                        <button src="" type="button" class="cart-btn product-modal-sidebar-open-btn d-flex align-items-center justify-content-center w-100">
+                                            <a href="{{ pro.get_url }}">مشاهده جزئیات بیشتر</a>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            {% endfor %}
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+   </main>
 {% endblock %}
+    <!-- shop modal start -->
+    {% comment %} {% for pro in special_offers %}
+        <form action="{% url 'add_cart' pro.id %}">
+            {% csrf_token %}
+            <div class="modal fade" id="productModalId-{{ forloop.counter }}" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered product__modal" role="document">
+                    <div class="modal-content">
+                        <div class="product__modal-wrapper p-relative">
+                            <div class="product__modal-close p-absolute">
+                                <button data-dismiss="modal"><i class="fal fa-times"></i></button>
+                            </div> 
+                            <div class="product__modal-inner ">
+                                <div class="row">
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                        <div class="product__modal-box">
+                                            <div class="tab-content" id="modalTabContent">
+                                                {% for i in pro.product_gallery %}
+                                                <div class="tab-pane fade show " id="nav{{ i.id }}" role="tabpanel" aria-labelledby="nav{{ i.id }}-tab">
+                                                    <div class="product__modal-img w-img" >
+                                                        <img  src="{{ i.image.url }}" alt="">
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                            <ul class="nav nav-tabs" id="modalTab" role="tablist">
+                                                {{ pro.productgallery }}
+                                                {% for i in pro.product_gallery %}
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link active" id="nav{{ i.id }}-tab" data-bs-toggle="tab" data-bs-target="#nav{{ i.id }}" type="button" role="tab" aria-controls="nav{{ i.id }}"
+                                                            aria-selected="true">
+                                                        <img   src="{{ i.image.url }}" alt="" style="width: 85px;height: 85px;">
+                                                    </button>
+                                                </li>
+                                                {% endfor %}
+                                               
+                                            </ul>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                        <div class="product__modal-content">
+                                            <h4><a href="{{ pro.get_url }}">{{ pro.product_name }}</a></h4>
+                                            <div class="product__review d-sm-flex">
+                                                <div class="rating rating__shop mb-10 mr-30">
+                                                    <ul>
+                                                        <i class=" {% if pro.average == 0.5 %} fa fa-star-half {% elif pro.average >= 1 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                           aria-hidden="true"></i>
+                                                        <i class=" {% if pro.average == 1.5 %} fa fa-star-half {% elif pro.average >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                           aria-hidden="true"></i>
+                                                        <i class=" {% if pro.average == 2.5 %} fa fa-star-half {% elif pro.average >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                           aria-hidden="true"></i>
+                                                        <i class=" {% if pro.average == 3.5 %} fa fa-star-half {% elif pro.average >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                           aria-hidden="true"></i>
+                                                        <i class=" {% if pro.average == 4.5 %} fa fa-star-half {% elif pro.average >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                           aria-hidden="true"></i>
+
+                                                    </ul>
+                                                </div>
+                                                <div class="product__add-review mb-15">
+                                                    <span>(  {{ pro.count_rating }} دیدگاه)</span>
+                                                </div>
+                                            </div>
+                                            <div class="product__price">
+                                                <span> {{ pro.price }} تومان </span>
+                                            </div>
+                                            <div class="product__modal-des mt-20 mb-15">
+                                                <ul>
+                                                    <li><a href="#"><i class="fas fa-circle"></i> Bass and Stereo Sound.</a></li>
+                                                    <li><a href="#"><i class="fas fa-circle"></i> Display with 3088 x 1440 pixels resolution.</a></li>
+                                                    <li><a href="#"><i class="fas fa-circle"></i> Memory, Storage & SIM: 12GB RAM, 256GB.</a></li>
+                                                    <li><a href="#"><i class="fas fa-circle"></i> Androi v10.0 Operating system.</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="product__stock mb-20">
+                                                
+                                            </div>
+                                            <div class="product__modal-form">
+                                                <form action="#">
+                                                    <div class="pro-quan-area d-lg-flex align-items-center">
+                                                        <div class="product-quantity mr-20 mb-25">
+                                                            <div class="cart-plus-minus p-relative"><input type="text" value="1"/></div>
+                                                        </div>
+                                                        <div class="pro-cart-btn mb-25">
+                                                            <button class="cart-btn" type="submit">افزودن به سبد خرید</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <div class="product__stock mb-30">
+                                                <ul>
+                                                    <li><a href="#">
+                                                        <span class="sku mr-10">SKU:</span>
+                                                        <span>Samsung C49J89: £875, Debenhams Plus</span></a>
+                                                    </li>
+                                                    <li><a href="#">
+                                                        <span class="cat mr-10">Categories:</span>
+                                                        <span>iPhone, Tablets</span></a>
+                                                    </li>
+                                                    <li><a href="#">
+                                                        <span class="tag mr-10">Tags:</span>
+                                                        <span>Smartphone, Tablets</span></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% endfor %}  {% endcomment %}
+    <!-- shop modal end -->
+    <!-- topsell__area-end -->
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--
+
+    {#     ========================= SECTION  =========================
+    {#    <section class="section-name padding-y-sm">#}
+    {#        <div class="container">#}
+    {##}
+    {#            <header class="section-heading " style="display:flex;#}
+    {#	-webkit-flex-direction: row-reverse; #}
+    {#	flex-direction: row-reverse;">#}
+    {#                <h3 class="section-title ">محصولات محبوب</h3>#}
+    {#                &nbsp;#}
+    {#                <button class="col-sm-3 col-md-1 col-lg-1 btn color-orange  btn-see-all" style="width: 85px" href="{% url 'store' %}">مشاهده همه</button>#}
+    {##}
+    {#            </header>sect-heading
+    {##}
+    {#            <div class="row" style="direction: rtl;">#}
+    {#                {% for product in products %}#}
+    {#                    <div class="col-md-3">#}
+    {#                        <div class="card card-product-grid" style="float: right;#}
+    {#				       width: 100%;#}
+    {#		               text-align: right;#}
+    {#		               padding: 20px;">#}
+    {#                            <a href="{{ product.get_url }}" class="img-wrap"> <img src="{{ product.images.url }}" alt="عکس محصول"> </a>#}
+    {#                            <figcaption style="margin-top: 10px;">#}
+    {#                                <a href="{{ product.get_url }}" class="title">{{ product.product_name }}</a>#}
+    {#                                <div style="float: left;" class="price mt-1">{{ product.price }} <span#}
+    {#                                        style="font-size: 10px; ">تومان</span></div> <!-- price-wrap.//br>#}
+    {##}
+    {#                                <div class="rating-star ltr">#}
+    {##}
+    {##}
+    {##}
+    {#                                        <span class="rtl">#}
+    {#                                        {% if product.average > 0 %}#}
+    {#                                              <i class=" fa fa-star{% if product.average < 0.5 %}-o {% elif product.average >= 0.5 and product.average < 1 %}-half-o {% endif %}" aria-hidden="true"></i>#}
+    {#                                              <i class=" fa fa-star{% if product.average < 1.5 %}-o {% elif product.average >= 1.5 and product.average < 2 %}-half-o {% endif %}" aria-hidden="true"></i>#}
+    {#                                              <i class=" fa fa-star{% if product.average < 2.5 %}-o {% elif  product.average >= 2.5 and product.average < 3 %}-half-o {% endif %}" aria-hidden="true"></i>#}
+    {#                                              <i class=" fa fa-star{% if product.average < 3.5 %}-o {% elif product.average >= 3.5 and product.average < 4 %}-half-o {% endif %}" aria-hidden="true"></i>#}
+    {#                                              <i class=" fa fa-star{% if product.average < 4.5 %}-o {% elif product.average >= 4.5 and product.average < 5 %}-half-o {% endif %}" aria-hidden="true"></i>#}
+    {#                                       {% endif %}#}
+    {#                                        </span>#}
+    {##}
+    {#                                    </div>#}
+    {##}
+    {#                            </figcaption>#}
+    {#                        </div>#}
+    {#                    </div> col.//
+    {#                {% endfor %}#}
+    {#            </div> <!-- row.// -->#}
+    {##}
+    {#        </div><!-- container // -->#}
+    {#    </section>#}
+    {#     ========================= SECTION  END// =========================
+    {##}
+    {##}
+    {##}
+    {##}
+    {#    <!-- ========================= FOOTER ========================= -->#}
+    {##}
+    {#    <!-- ========================= FOOTER END // ========================= -->#}
+    {##}
+    {#    #} -->

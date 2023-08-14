@@ -1,83 +1,499 @@
 {% load static %}
-<header class="section-header">
-	<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
-		<div class="container">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4"
-				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarTop4">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item dropdown">
-						<a href="#" class="nav-link"> فارسی </a>
-
-					</li>
-					<li class="nav-item dropdown">
-						<a href="#" class="nav-link"> USD </a>
-					</li>
-				</ul>
-				<ul class="navbar-nav">
-					<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> ایمیل </a></li>
-					<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> تماس با ما </a></li>
-				</ul> <!-- list-inline //  -->
-			</div> <!-- navbar-collapse .// -->
-		</div> <!-- container //  -->
-	</nav>
-
-	<section class="header-main border-bottom" style="direction: rtl;">
-		<div class="container">
-			<div class="row align-items-center">
-				<div class="col-lg-2 col-md-3 col-6 logo-marg">
-					<a href="{% url 'home'%}" class="brand-wrap">
-						<img class="logo" src="{% static './images/logo.png' %}">
-					</a> <!-- brand-wrap.// -->
-				</div>
-				<div class="col-lg col-sm col-md col-6 flex-grow-0">
-					<div class="category-wrap dropdown d-inline-block float-right">
-						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-bars"></i> دسته بندی‌ها
-						</button>
-						<div class="dropdown-menu">
-							{% for category in links%}
-							<a class="dropdown-item" href="{{category.get_url}}">{{category.category_name}} </a>
-							{% endfor %}
-						</div>
-					</div> <!-- category-wrap.// -->
-				</div> <!-- col.// -->
-				<a href="{% url 'store'%}" class="btn btn-outline-primary btn-store">فروشگاه</a>
-				<div class="col-lg  col-md-6 col-sm-12 col search">
-					<form action="#" class="search">
-						<div class="input-group w-100">
-							<input type="text" class="form-control" style="width:60%;" placeholder="Search" style="direction: rtl;">
-							<div class="input-group-append">
-								<button class="btn-primary" type="submit" style="border-radius: 8px;">
-									<i class="fa fa-search"></i>
-								</button>
-							</div>
-
-						</div>
-					</form> <!-- search-wrap .end// -->
-				</div> <!-- col.// -->
-				<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3 sec-login">
-					<div class="d-flex justify-content-end mb-3 mb-lg-0">
-						<div class="widget-header">
-							<small class="title text-muted">خوش آمدید!</small>
-							<div>
-								<a href="./signin.html">ورود</a> <span class="dark-transp"> | </span>
-								<a href="./register.html">ثبت نام</a>
-							</div>
-						</div>
-						<a href="./cart.html" class="widget-header pl-3 ml-3">
-							<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>
-							<span class="badge badge-pill badge-danger notify">0</span>
-						</a>
-					</div> <!-- widgets-wrap.// -->
-				</div> <!-- col.// -->
-			</div> <!-- row.// -->
-		</div> <!-- container.// -->
-	</section> <!-- header-main .// -->
+{% load mptt_tags %}
 
 
+<!-- header-start -->
+<header class="header rtl">
+    <div class="header-top">
+        <div class="container">
+            <div class="header-inner">
+                <div class="row align-items-center">
+                    <div class="col-xl-6 col-lg-7">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-mid">
+        <div class="container">
+            <div class="heade-mid-inner">
+                <div class="row align-items-center">
+
+                    <div class="col-xl-3 col-lg-3 col-md-2 ">
+                        <div class="header__info">
+                            <div class="logo">
+                                <a href="{% url 'home' %}" class="logo-image"><img src="{% static './images/logo.png' %}" alt="logo"></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-5 col-lg-4 col-md-1 col-sm-1 d-block d-lg-block col-3 search-main ">
+                        <form action="{% url 'search' %}" class="search " method="GET">
+
+                            <div class="header__search-box  ">
+                                <input type="text" class="search-input"  placeholder="جستجو.." name="keyword">
+                                <button class="button" type="submit"><i class="far fa-search" style="background: #f5f0f0;"></i></button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-5 col-md-8 col-sm-6 ">
+                        <div class="header-action">
+                            {% if user.id is none %}
+                                <div class="block-userlink">
+                                    <a class="icon-link" href="{% url 'login' %}">
+                                        <i class="flaticon-user"></i></a>
+                                    <span class="text ">
+                                    <div style="margin-right: -25px">
+                                        <a href="{% url 'login' %}"> ورود</a> <span class="dark-transp"> | </span>
+                                        <a href="{% url 'register' %}">ثبت نام</a>
+                                    </div></span>
+                                </div>
+                            {% else %}
+                                <div class="widget-header ml-3">
+                                    <a class="icon-link icon-link-user" href="{% url 'dashboard' %}">
+                                        <i class="flaticon-user"></i></a>
+                                    <div style="margin-right: -25px">
+
+                                        <a href="{% url 'logout' %}"> خروج</a> <span class="dark-transp"> | </span>
+                                        <a href="{% url 'dashboard' %}"> داشبورد</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+{#                        wish list                      #}
+
+{#                            <div class="block-wishlist action ">#}
+{#                                <a class="icon-link" href="wishlist.html">#}
+{#                                    <i class="flaticon-heart"></i>#}
+{#                                    <span class="count">0</span></a>#}
+{#                                <span class="text">#}
+{#                                         <div style="margin-right: -25px">#}
+{#                                            <span class="sub">علاقه مندی ها</span>#}
+{#                                         </div>#}
+{#                                </span>#}
+{##}
+{#                            </div>#}
+
+{#                        end wish list                       #}
+                            <div class="block-cart action">
+                                <a class="icon-link" href="{% url 'cart' %}">
+                                    <i class="flaticon-shopping-bag"></i>
+                                    <span class="count" style="margin-left: -10px">{{ cart_count }}</span></a>
+
+                                        <div style="margin-right: -15px">
+                                    <span class="sub">سبد خرید</span>
+
+                                        </div>
 
 
-</header> <!-- section-header.// -->
+                                <div class="cart">
+                                    <div class="cart__mini">
+                                        <ul>
+                                            <li>
+                                                <div class="cart__title">
+                                                    <h4 class="float-right">سبد خرید شما</h4>
+                                                    <span></span>
+                                                </div>
+                                            </li>
+                                            <li>
+
+                                                {% if cart_items is not None %}
+                                                  {% for cart_item in cart_items %}
+                                                    <div class="cart__item d-flex justify-content-between align-items-center">
+
+                                                        <div class="cart__inner d-flex" style="margin-right: 130px">
+                                                            <div class="cart__thumb">
+
+                                                                <a href="{{ cart_item.product.get_url }}" style="padding-left: 20px">
+
+                                                                    <img src="{{ cart_item.product.images.url }}" alt="عکس محصول" style="border-radius: 20px">
+                                                                </a>
+                                                            </div>
+                                                            <div class="cart__details float-left">
+                                                                <h6 class="pr-2"><a href="{{ cart_item.product.get_url }}"> {{ cart_item.product.product_name }} </a></h6>
+                                                                <p class="text-muted small" style="text-align: right;"><br>
+                                                                    {% if cart_item.variation.all %}
+                                                                        {% for item in cart_item.variation.all %}
+                                                                            {{ item.variation_value | capfirst }} : {{ item.variation_category |capfirst }} <br>
+                                                                        {% endfor %}
+                                                                    {% endif %}
+                                                                </p>
+                                                                <div class="cart__price">
+                                                                    <span>{{ cart_item.product.price }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="cart__sub d-flex justify-content-between align-items-center">
+                                                            <h6>جمع مبلغ</h6>
+                                                            <span class="cart__sub-total">{{ cart_item.sub_total }}</span>
+                                                        </div>
+                                                    </li>
+                                                    <li>
+                                                        <a href="{% url 'cart' %}" class="wc-cart mb-10">سبد خرید</a>
+                                                        <a href="{% url 'checkout' %}" class="wc-checkout">پرداخت</a>
+                                                    </li>
+                                                    {% endfor %}
+                                                {% else %}
+                                                    <p style="text-align: center; margin-top: 50px;">سبد خرید شما خالی می باشد</p><br>
+                                                    <button type="button" class=" wc-cart mb-10">خرید</button>
+
+
+                                                {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header__bottom" >
+        <div class="container ">
+            <div class="row g-0 align-items-center">
+                <div class="col-lg-2">
+                    <div class="cat__menu-wrapper side-border d-none d-lg-block">
+                        <div class="cat-toggle" id="cat-togg">
+                            <button type="button" class="cat-toggle-btn cat-toggle-btn-1"><i class="fal fa-bars " style="padding-left: 10px"></i>دسته بندی کالاها  </button>
+                            <div class="cat__menu" >
+                                <nav id="mobile-menu" style="display: block;">
+                                    <ul>
+
+                                       {% for main_category in main_categories %}
+                                        <li>
+                                            <a href="{{main_category.get_url}}">
+                                                {% if main_category.cat_image %}
+                                                <img class=""  style="width: 15px;  height: 15px" src="{{ main_category.cat_image.url }}" alt="عکس دسته بندی ها">
+                                                {% endif %}
+                                                {{ main_category }}
+                                            </a>
+                                            <ul class="mega-menu ">
+                                                {% for category in main_category.category_set.all %}
+                                                <li><a class="filter-checkbox"   href="{{category.get_url}}">{{ category }}</a>
+                                                    <ul class="mega-item">
+                                                        {% for sub_cat in category.subcategory_set.all %}
+                                                              <li ><a style="font-weight: 350" href="{{sub_cat.get_url}}">{{ sub_cat.name }}</a></li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                        {% endfor %}
+                                        {#                                        <li><a href="shop.html">Health &amp; Beauty</a></li>#}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-3">
+                    <div class="header__bottom-left d-flex d-xl-block align-items-center">
+                        <div class="side-menu d-lg-none mr-20 " >
+                            <button style="font-size: 13px; width: 100px" type="button" class="side-menu-btn offcanvas-toggle-btn "><i class="fas fa-bars " id="fa-brss"></i>دسته بندی ها</button>
+                            <div class="main-menu" >
+                                <nav id="mobile-menu" style="display: block;">
+                             <ul>
+                                <li><a href="{% url 'about_us' %}" >درباره ما</a></li>
+                             </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <div class="main-menu d-none d-lg-block ">
+                            <nav>
+
+                                <ul>
+                                    <li>
+                                        <a href="{% url 'home' %}" class=" {% if request.get_full_path == home %} active {% endif %}">خانه</a>
+{#                                        <ul class="megamenu-1">#}
+{#                                            <li><a href="index.html">صفحه خانه</a>#}
+{#                                                <ul class="mega-item">#}
+{#                                                    <li><a href="index.html" class="active home">Home One</a></li>#}
+{#                                                    <li><a href="index-2.html">Home Two</a></li>#}
+{#                                                    <li><a href="index-3.html">Home Three</a></li>#}
+{#                                                    <li><a href="product-details.html">Shop 3 Column</a></li>#}
+{#                                                    <li><a href="product-details.html">Shop 4 Column</a></li>#}
+{#                                                </ul>#}
+{#                                            </li>#}
+{#                                            <li><a href="shop.html">Product Pages</a>#}
+{#                                                <ul class="mega-item">#}
+{#                                                    <li><a href="product-details.html">Product Details</a></li>#}
+{#                                                    <li><a href="product-details.html">Product V2</a></li>#}
+{#                                                    <li><a href="product-details.html">Product V3</a></li>#}
+{#                                                    <li><a href="product-details.html">Varriable Product</a></li>#}
+{#                                                    <li><a href="product-details.html">External Product</a></li>#}
+{#                                                </ul>#}
+{#                                            </li>#}
+{#                                            <li><a href="shop.html">Other Pages</a>#}
+{#                                                <ul class="mega-item">#}
+{#                                                    <li><a href="product-details.html">wishlist</a></li>#}
+{#                                                    <li><a href="product-details.html">Shopping Cart</a></li>#}
+{#                                                    <li><a href="product-details.html">Checkout</a></li>#}
+{#                                                    <li><a href="product-details.html">Login</a></li>#}
+{#                                                    <li><a href="product-details.html">Register</a></li>#}
+{#                                                </ul>#}
+{#                                            </li>#}
+{#                                            <li><a href="shop.html">Phone &amp; Tablets</a>#}
+{#                                                <ul class="mega-item">#}
+{#                                                    <li><a href="product-details.html">Catagory 1</a></li>#}
+{#                                                    <li><a href="product-details.html">Catagory 2</a></li>#}
+{#                                                    <li><a href="product-details.html">Catagory 3</a></li>#}
+{#                                                    <li><a href="product-details.html">Catagory 4</a></li>#}
+{#                                                </ul>#}
+{#                                            </li>#}
+{#                                            <li><a href="shop.html">Phone &amp; Tablets</a>#}
+{#                                                <ul class="mega-item">#}
+{#                                                    <li><a href="product-details.html">Catagory 1</a></li>#}
+{#                                                    <li><a href="product-details.html">Catagory 2</a></li>#}
+{#                                                    <li><a href="product-details.html">Catagory 3</a></li>#}
+{#                                                    <li><a href="product-details.html">Catagory 4</a></li>#}
+{#                                                </ul>#}
+{#                                            </li>#}
+{#                                        </ul>#}
+                                    </li>
+                                    <li class="has-mega" ><a href="{% url 'about_us' %}">درباره ما</a>
+                                    </li>
+                                    <li class="has-mega"><a href="{% url 'store' %}">فروشگاه </a>
+                                    </li>
+{#                                    <li><a href="blog.html">Blog <i class="far fa-angle-down"></i></a>#}
+{#                                        <ul class="submenu">#}
+{#                                            <li><a href="blog.html">Blog</a></li>#}
+{#                                            <li><a href="blog-details.html">Blog Details</a></li>#}
+{#                                        </ul>#}
+{#                                    </li>#}
+                                    <li>
+                                        <a href="">صفحات <i class="far fa-angle-down"></i></a>
+                                        <ul class="submenu">
+                                            <li><a href="{% url 'dashboard' %}">داشبورد</a></li>
+                                            <li><a href="{% url 'cart' %}">سبد خرید</a></li>
+                                            <li><a href="{% url 'checkout' %}">پرداخت</a></li>
+                                            <li><a href="{% url 'contact_us' %}">ارتباط با ما</a></li>
+                                            <li><a href="404.html">خطای 404</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-9"  style="padding-right: 130px">
+                    <div class="shopeing-text text-sm-end d-non d-lg-block">
+                     <p><a href="{% url 'contact_us' %}">به کمک نیاز دارید؟</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</header>
+<!-- offcanvas area start -->
+    <div class="offcanvas__area">
+        <div class="offcanvas__wrapper">
+        <div class="offcanvas__close">
+            <button class="offcanvas__close-btn" id="offcanvas__close-btn">
+                <i class="fal fa-times"></i>
+            </button>
+        </div>
+        <div class="offcanvas__content">
+            <div class="offcanvas__logo mb-40">
+                <a href="index.html">
+                <img src="{% static './images/logo_persia.png' %}" alt="logo">
+                </a>
+            </div>
+            <div class="offcanvas__search mb-25">
+                <form action="#">
+
+                </form>
+            </div>
+            <div class="mobile-menu fix "></div>
+            <div class="offcanvas__action">
+
+            </div>
+        </div>
+        </div>
+    </div>
+    <!-- offcanvas area end -->
+    <div class="body-overlay"></div>
+    <!-- offcanvas area end -->
+<script>
+
+</script>
+<!-- header-end -->
+
+
+{#<header class="section-header">#}
+{#	<nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">#}
+{#		<div class="container">#}
+{#			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4"#}
+{#				aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">#}
+{#				<span class="navbar-toggler-icon"></span>#}
+{#			</button>#}
+{#			<div class="collapse navbar-collapse" id="navbarTop4">#}
+{#				<ul class="navbar-nav mr-auto">#}
+{#					<li class="nav-item dropdown">#}
+{#						<a href="#" class="nav-link"> فارسی </a>#}
+{##}
+{#					</li>#}
+{#					<li class="nav-item dropdown">#}
+{#						<a href="#" class="nav-link"> USD </a>#}
+{#					</li>#}
+{#				</ul>#}
+{#				<ul class="navbar-nav">#}
+{#					<li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> ایمیل </a></li>#}
+{#					<li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> تماس با ما </a></li>#}
+{#				</ul> <!-- list-inline //  -->#}
+{#			</div> <!-- navbar-collapse .// -->#}
+{#		</div> <!-- container //  -->#}
+{#	</nav>#}
+{##}
+{#	<section class="header-main border-bottom" style="direction: rtl;">#}
+{#		<div class="container" >#}
+{#			<div class="row align-items-center " >#}
+{#				<div class="col-lg-2 col-6 logo-marg " style="margin: 0" >#}
+{#					<a href="{% url 'home'%}" class="brand-wrap " style="margin: 0">#}
+{#						<img alt="لوگوی نخلان" style="height: 70px; width: 200px; margin: 0" src="{% static './images/logo.png' %} ">#}
+{#					</a> <!-- brand-wrap.// -->#}
+{#				</div>#}
+{#				<div class="col-lg col-sm col-md col-6 flex-grow-0">#}
+{#					<div class="category-wrap dropdown d-inline-block float-right">#}
+{#						<button type="button" class="btn  dropdown-toggle" data-toggle="dropdown">#}
+{#							<i class="fa fa-bars"></i> دسته بندی‌ کالا‌ها#}
+{#						</button>#}
+{#						<div class="dropdown-menu">#}
+{#							{% for category in links%}#}
+{#							<a class="dropdown-item" href="{{category.get_url}}">{{category.category_name}} </a>#}
+{#							{% endfor %}#}
+{#						</div>#}
+{#					</div> <!-- category-wrap.// -->#}
+{#				</div> <!-- col.// -->#}
+{#				<a href="{% url 'store' %}" class="btn  btn-store">فروشگاه</a>#}
+{#				<div class="col-lg  col-md-6 col-sm-12 col search">#}
+{#					<form action="{% url 'search' %}" class="search" method="GET">#}
+{#						<div class="input-group w-100">#}
+{#							<input type="text" class="form-control" style="width:60%;" placeholder="Search" style="direction: rtl;" name="keyword">#}
+{#							<div class="input-group-append">#}
+{#								<button class="" type="submit" style="border-radius: 8px;">#}
+{#									<i class="fa fa-search"></i>#}
+{#								</button>#}
+{#							</div>#}
+{##}
+{#						</div>#}
+{#					</form> <!-- search-wrap .end// -->#}
+{#				</div> <!-- col.// -->#}
+{#				<div class="col-lg-3 col-sm-6 col-8 order-2 order-lg-3 sec-login">#}
+{#					<div class="d-flex justify-content-end mb-3 mb-lg-0">#}
+{#					{% if user.id is none %}#}
+{#						<div class="widget-header ml-4">#}
+{#							<small class="title text-muted ml-4">خوش آمدید!</small>#}
+{#							<div>#}
+{#								<a href="{% url 'login' %}">ورود</a> <span class="dark-transp"> | </span>#}
+{#								<a href="{% url 'register' %}">ثبت نام</a>#}
+{#							</div>#}
+{#						</div>#}
+{#					{% else %}#}
+{#						<div class="widget-header ml-4">#}
+{#							<small class="title text-muted ml-0">خوش آمدید  {{user.first_name}}!</small>#}
+{#							<div>#}
+{#								<a href="{% url 'logout' %}"> خروج</a> <span class="dark-transp"> | </span>#}
+{#								<a href="{% url 'dashboard' %}"> داشبورد</a>#}
+{#							</div>#}
+{#						</div>#}
+{#					{% endif %}#}
+{#						<a href="{% url 'cart' %}" class="widget-header pl-3 ml-3">#}
+{#							<span class="badge badge-pill badge-danger notify">{{ cart_count }}</span>#}
+{#							<div class="icon icon-sm rounded-circle border"><i class="fa fa-shopping-cart"></i></div>#}
+{##}
+{#						</a>#}
+{#					</div> <!-- widgets-wrap.// -->#}
+{#				</div> <!-- col.// -->#}
+{#			</div> <!-- row.// -->#}
+{#		</div> <!-- container.// -->#}
+{#	</section> <!-- header-main .// -->#}
+{##}
+{##}
+{##}
+{##}
+{#</header> <!-- section-header.// -->#}
+
+
+{#برای بلاگ -#}
+{#                                        <div class="mega-menu">#}
+{#                                            <div class="container container-mega">#}
+{#                                                <ul>#}
+{#                                                    <li>#}
+{#                                                        <ul>#}
+{#                                                        <li class="title"><a href="shop.html">SHOP LAYOUT</a></li>#}
+{#                                                        <li><a href="shop.html">Pagination</a></li>#}
+{#                                                        <li><a href="shop.html">Ajax Load More</a></li>#}
+{#                                                        <li><a href="shop.html">Infinite Scroll</a></li>#}
+{#                                                        <li><a href="shop.html">Sidebar Right</a></li>#}
+{#                                                        <li><a href="shop.html">Sidebar Left</a></li>#}
+{#                                                        </ul>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <ul>#}
+{#                                                        <li class="title"><a href="shop.html">SHOP PAGES</a></li>#}
+{#                                                        <li><a href="shop.html">List View</a></li>#}
+{#                                                        <li><a href="shop.html">Small Products</a></li>#}
+{#                                                        <li><a href="shop.html">Large Products</a></li>#}
+{#                                                        <li><a href="shop.html">Shop — 3 Items</a></li>#}
+{#                                                        <li><a href="shop.html">Shop — 4 Items</a></li>#}
+{#                                                        <li><a href="shop.html">Shop — 5 Items</a></li>#}
+{#                                                        </ul>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <ul>#}
+{#                                                        <li class="title"><a href="shop.html">PRODUCT LAYOUT</a></li>#}
+{#                                                        <li><a href="shop.html">Description Sticky</a></li>#}
+{#                                                        <li><a href="shop.html">Product Carousel</a></li>#}
+{#                                                        <li><a href="shop.html">Gallery Modern</a></li>#}
+{#                                                        <li><a href="shop.html">Thumbnail Left</a></li>#}
+{#                                                        <li><a href="shop.html">Thumbnail Right</a></li>#}
+{#                                                        <li><a href="shop.html">Thumbnail Botttom</a></li>#}
+{#                                                        </ul>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <ul>#}
+{#                                                        <li class="title"><a href="shop.html">Basketball</a></li>#}
+{#                                                        <li><a href="shop.html">East Hampton Fleece</a></li>#}
+{#                                                        <li><a href="shop.html">Faxon Canvas Low</a></li>#}
+{#                                                        <li><a href="shop.html">Habitasse Dictumst</a></li>#}
+{#                                                        <li><a href="shop.html">Kaoreet Lobortis</a></li>#}
+{#                                                        <li><a href="shop.html">NikeCourt Zoom</a></li>#}
+{#                                                        <li><a href="shop.html">NikeCourts Air Zoom</a></li>#}
+{#                                                        </ul>#}
+{#                                                    </li>#}
+{#                                                    <li>#}
+{#                                                        <ul>#}
+{#                                                        <li class="title"><a href="shop.html">Basketball</a></li>#}
+{#                                                        <li><a href="shop.html">East Hampton Fleece</a></li>#}
+{#                                                        <li><a href="shop.html">Faxon Canvas Low</a></li>#}
+{#                                                        <li><a href="shop.html">Habitasse Dictumst</a></li>#}
+{#                                                        <li><a href="shop.html">Kaoreet Lobortis</a></li>#}
+{#                                                        <li><a href="shop.html">NikeCourt Zoom</a></li>#}
+{#                                                        <li><a href="shop.html">NikeCourts Air Zoom</a></li>#}
+{#                                                        </ul>#}
+{#                                                    </li>#}
+{#                                                    <li class="mega-image hover-effect" style="background-image: url(assets/img/bg/menu-item.jpg);">#}
+{#                                                        <ul>#}
+{#                                                          <li><a href="shop.html">#}
+{#                                                            <h4>Top Cameras <br> Bestseller Products</h4>#}
+{#                                                            <h5>4K</h5>#}
+{#                                                            <h6>Sale Up To <span>60% Off</span></h6>#}
+{#                                                          </a></li>#}
+{#                                                        </ul>#}
+{#                                                    </li>#}
+{#                                                </ul>#}
+{#                                            </div>#}
+{#                                            <div class="offer mt-40">#}
+{#                                                <p><b>30% OFF</b> the shipping of your first order with the code: <b>DUKA-SALE30</b></p>#}
+{#                                            </div>#}
+{#                                        </div>#}

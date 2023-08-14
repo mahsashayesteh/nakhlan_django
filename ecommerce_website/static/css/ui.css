@@ -1,16 +1,46 @@
 @charset "UTF-8";
-/* ==== BASE STYLES ====*/
+
+@import url("../fonts/IRANSans"); /* ==== BASE STYLES ====*/
+
 /* ==================== GLOBAL STYLES ======================= */
-@import url("https://rsms.me/inter/inter.css");
+a,body,h1,h2,h3,h4,h5,h6,p,span,input,textarea,ul,li,ol,div {
+  font-family: "IranSans", IranSans, sans-serif !important;
+  text-underline: none;
+
+}
+
+
+.links {
+  text-decoration: none;
+}
 html {
-  font-family: "Inter", sans-serif;
-  font-size: 15px;
+  font-family: "IranSans", IranSans, sans-serif !important;
+  font-weight: normal;
+  color: #666;
+  line-height: 26px;
+  font-size: 14px;
+  margin-right: 0;
 }
 
 /* ========================
 INCLUDE STYLES AND COMPONENTS
 ===================== */
 /* ================== HELPERS  =================== */
+:root{
+  --color-131921: #131921;
+  --color-3b4149: #3b4149;
+  --color-febd69: #febd69;
+  --color-232f3e: #232f3e;
+  --color-bf4800: #f56004;
+  --color-f5f5f7: #f5f5f7;
+  --color-ededed: #ededed;
+  --color-777777: #777777;
+  --color-1c1c1b: #1c1c1b;
+}
+
+body{
+  margin-right: 0;
+}
 a:hover {
   text-decoration: none;
 }
@@ -51,6 +81,18 @@ a:hover {
   line-height: 32px !important;
   font-size: 16px;
 }
+
+.outline-btn{
+  border-color: var(--color-1c1c1b);
+  color: var(--color-1c1c1b) ;
+}
+
+.outline-btn:hover{
+  background-color:var(--color-bf4800);
+  color: #ffffff ;
+  border: hidden;
+}
+
 
 .icon-sm {
   width: 48px;
@@ -140,12 +182,13 @@ a:hover {
 }
 
 .hover-bg:hover {
-  background: #3167eb;
+  background: #6422B8;
   /* For browsers that do not support gradients */
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
   /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right, #3167eb, #3167eb);
+  background: linear-gradient(to bottom right, #ffffff, #6422B8);
+  color: inherit ;
   /* Standard syntax */
   transition: 0.5s;
 }
@@ -248,7 +291,8 @@ article:after,
 }
 
 .bg-orange {
-  background-color: #ff9017;
+  background-color: var(--color-bf4800);
+  
 }
 
 .bg-green {
@@ -263,6 +307,11 @@ article:after,
   background-color: #fa3434;
 }
 
+.color-orange {
+  color:  var(--color-bf4800);
+}
+
+red
 .bg-gradient-blue {
   background: rgba(33, 37, 41, 0.4);
   /* For browsers that do not support gradients */
@@ -351,7 +400,7 @@ article:after,
   /* For Safari 5.1 to 6.0 */
   /* For Opera 11.1 to 12.0 */
   /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right, #3167eb, aqua);
+  background: linear-gradient(to bottom right, #ff9017, aqua);
   /* Standard syntax */
 }
 .overlay-gradient:hover:before {
@@ -450,7 +499,7 @@ p:last-child {
   color: #343a40;
 }
 .widget-header a:hover {
-  color: #3167eb;
+  color:  var(--color-bf4800);
 }
 .widget-header i {
   color: #969696;
@@ -467,7 +516,7 @@ p:last-child {
   right: -10px;
 }
 .widget-header:hover i {
-  color: #3167eb;
+  color: #ff9017;
 }
 
 /* desktop only */
@@ -480,7 +529,7 @@ p:last-child {
   color: inherit;
 }
 .section-footer ul a:hover {
-  color: #3167eb;
+  color: var(--color-bf4800);
 }
 .section-footer .logo-footer {
   height: 40px;
@@ -618,6 +667,13 @@ p:last-child {
   margin-left: 10px;
 }
 
+.btn_sub_riview{
+  width: 200px;
+  height: 40px;
+  background-color: var(--color-bf4800);
+  color: var(--color-ededed);
+}
+
 .itemside {
   position: relative;
   display: flex;
@@ -640,7 +696,7 @@ p:last-child {
   color: #212529;
 }
 .itemside a.title:hover {
-  color: #3167eb;
+  color:  var(--color-bf4800);
 }
 
 a.itemside {
@@ -762,7 +818,7 @@ ul.row, ul.row-sm {
   margin-bottom: 7px;
 }
 .list-check > li::before {
-  font-family: "Font Awesome 5 Free";
+  font-family: "Font IRANSansWeb";
   font-weight: 900;
   font-size: 12px;
   color: #00b517;
@@ -782,7 +838,7 @@ ul.row, ul.row-sm {
 }
 .list-normal li:before {
   content: "•";
-  color: #3167eb;
+  color:  var(--color-bf4800);
   display: inline-block;
   width: 1em;
   margin-left: -1em;
@@ -792,15 +848,27 @@ ul.row, ul.row-sm {
   list-style: none;
   margin: 0;
   padding-left: 0;
+  list-style-position:inside;
 }
 .list-menu li {
-  margin-bottom: 5px;
+  margin: 5px;
+  padding-right: 4px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  
+  border-bottom:1px solid #e4d6d6;
 }
 .list-menu a {
-  color: #343a40;
+  color: #222529;
+  
 }
 .list-menu a:hover {
-  color: #3167eb;
+  color: #fe300b;
+  
+}
+.list-menu li:hover {
+  
+  background-color:#f1eeead6;
 }
 
 .cols-two {
@@ -823,7 +891,7 @@ a[class*=card] {
   color: initial;
 }
 a[class*=card]:hover .title {
-  color: #3167eb;
+  color: var(--color-bf4800);
 }
 
 /* BASE STYLE FOR PRODUCT ITEM */
@@ -832,7 +900,7 @@ a[class*=card]:hover .title {
   display: block;
 }
 [class*=card-product] a.title:hover {
-  color: #3167eb;
+  color: #000000;
 }
 [class*=card-product] .badge {
   top: 10px;
@@ -884,7 +952,7 @@ a[class*=card]:hover .title {
   color: #ccc;
 }
 .card-product-grid .topbar a:hover {
-  color: #3167eb;
+  color:  var(--color-bf4800);
 }
 .card-product-grid .fix-height {
   height: 80px;
@@ -1041,13 +1109,15 @@ a[class*=card]:hover .title {
   text-align: center;
 }
 .item-logo img {
-  max-height: 65px;
+  max-height: 80px;
 }
 
 .notify {
   position: absolute;
   top: -4px;
-  right: -10px;
+  left: -200px;
+  width: 25px;
+  margin-right: 40px;
   display: inline-block;
   padding: 0.25em 0.6em;
   font-size: 12px;
@@ -1142,7 +1212,7 @@ a[class*=card]:hover .title {
   overflow: hidden;
 }
 .rating-stars li.stars-active i {
-  color: orange;
+  color:  var(--color-bf4800);
 }
 .rating-stars.stars-lg img {
   height: 20px;
@@ -1187,7 +1257,7 @@ a[class*=card]:hover .title {
   margin-top: 7px;
 }
 .tracking-wrap .step.active .icon {
-  background: #3167eb;
+  background: #ff9017;
   color: #fff;
 }
 .tracking-wrap .step.active .text {
@@ -1195,7 +1265,7 @@ a[class*=card]:hover .title {
   color: #000;
 }
 .tracking-wrap .step.active:before {
-  background: #3167eb;
+  background:  var(--color-bf4800);
 }
 
 .menu-category {
@@ -1287,9 +1357,18 @@ a[class*=card]:hover .title {
   opacity: 0;
 }
 .checkbox-btn input:checked ~ .btn {
-  border-color: #3167eb;
-  background-color: #3167eb;
+  border-color: var(--color-bf4800);
+  background-color:  var(--color-bf4800);
   color: #fff;
+}
+
+.list-group-item .active{
+   background-color:  var(--color-bf4800);
+   color: white;
+}
+
+.list-group-item{
+  color: black;
 }
 
 .btn-check {
@@ -1304,8 +1383,8 @@ a[class*=card]:hover .title {
   opacity: 0;
 }
 .btn-check input:checked ~ .btn {
-  border-color: #3167eb;
-  background-color: #3167eb;
+  border-color: var(--color-bf4800);
+  background-color:  var(--color-bf4800);
   color: #fff;
 }
 .btn-check:hover:not(.active) {
@@ -1324,7 +1403,7 @@ a[class*=card]:hover .title {
   left: 18px;
 }
 .js-check.active {
-  border-color: #3167eb;
+  border-color:  var(--color-bf4800);
 }
 .js-check:hover:not(.active) {
   border-color: #ccc;
@@ -1397,6 +1476,20 @@ a[class*=card]:hover .title {
   min-width: 80px;
 }
 
+
+/* ================ PAGES REGISTER ================== */
+.form-register label{
+    float: right;
+}
+
+.card-title{
+  text-align: right;
+}
+
+/* .section-register{
+  background: url("/static/images/misc/background_register.png") 50% 0 no-repeat fixed;
+} */
+
 /* ================ PAGES HEADER ================== */
 /* ====================== shopping-cart ==================== */
 .table-shopping-cart.table td, .table-shopping-cart.table th {
@@ -1404,12 +1497,14 @@ a[class*=card]:hover .title {
   padding-right: 1.25rem;
 }
 .table-shopping-cart .price-wrap {
+  
   line-height: 1.2;
 }
 .table-shopping-cart .price {
   font-weight: bold;
   margin-right: 5px;
   display: block;
+  
 }
 
 /*# sourceMappingURL=ui.css.map */

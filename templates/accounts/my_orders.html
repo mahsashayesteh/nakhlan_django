@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="section-conten padding-y bg rtl text-right">
+
+        <div class="container ">
+            {% include 'includes/alerts.html' %}
+            <div class="row">
+                {% include 'includes/dashboard_sidbar.html' %}
+                <main class="col-md-9">
+                    <article class="card">
+                        <header class="card-header">
+                            <strong class="d-inline-block mr-3">تاریخچه سفارشات شما</strong>
+
+                        </header>
+                        <div class="card-body text-center">
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">سفارش #</th>
+                                            <th scope="col">نام پرداخت کننده</th>
+                                            <th scope="col">تلفن</th>
+                                            <th scope="col">مجموع سفارش</th>
+                                            <th scope="col">ِتاریخ</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        {% for order in orders %}
+
+                                        <tr>
+                                            <th scope="row"><a href="{% url 'order_detail' order.order_number %}">{{ order.order_number }}</a></th>
+                                            <td>{{ order.full_name }}</td>
+                                            <td>{{ order.phone }}</td>
+                                            <td>{{ order.order_total }} &nbsp; تومان </td>
+                                            <td>{{ order.created_at }}</td>
+                                        </tr>
+
+                                        {% endfor %}
+
+
+                                      </tbody>
+
+                                    </table>
+                                </div>
+                            </div> <!-- row.// -->
+                        </div> <!-- card-body .// -->
+                    </article> <!-- order-group.// -->
+                </main>
+            </div> <!-- row.// -->
+        </div>
+
+
+    </section>
+
+{% endblock %}

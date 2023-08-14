@@ -1,5 +1,6 @@
-from .models import Category
+from .models import MainCategory, Category, SubCategory
 
-def menu_links(requst):
-    links = Category.objects.all()
-    return dict(links = links)
+def menu_links(request):
+    main_categories = MainCategory.objects.all()
+    categories = Category.objects.all()
+    return dict(main_categories=main_categories, categories=categories)

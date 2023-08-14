@@ -1,180 +1,877 @@
 {% extends 'base.html' %}
+{% load product_tags %}
+{% load humanize %}
 {% load static %}
 {% block content %}
-<!-- ========================= SECTION PAGETOP ========================= -->
-<section class="section-pagetop bg">
-    <div class="container">
-        <h2 class="title-page">Our Store</h2>
 
-    </div> <!-- container //  -->
-</section>
-<!-- ========================= SECTION INTRO END// ========================= -->
-<section class="section-content padding-y">
-    <div class="container">
-
-        <div class="row">
-           
-            <main class="col-md-9">
-
-                <header class="border-bottom mb-4 pb-3">
-                    <div class="form-inline">
-                        <span class="mr-md-auto" style="direction:rtl;"> {{product_count}} کالا </span>
-
+    <main class="rtl">
+        <!-- breadcrumb__area-start -->
+        <section class="breadcrumb__area box-plr-75">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xxl-12">
+                        <div class="breadcrumb__wrapper">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url 'home' %}">خانه</a></li> &nbsp; / &nbsp;
+                                    <li class=" active" aria-current="page">فروشگاه</li>
+                                </ol>
+                            </nav>
+                        </div>
                     </div>
-                </header><!-- sect-heading -->
+                </div>
+            </div>
+        </section>
+        <!-- breadcrumb__area-end -->
 
-                <div class="row" style="direction: rtl;">
-                    {% for product in products %}
-                    <div class="col-md-4">
-                        <figure class="card card-product-grid" style=" width: 100%;
-                text-align: right;
-                padding: 20px;">
-                            <div class="img-wrap">
-                                <a href="{{ product.get_url }}"><img src={{product.images.url}}></a>
-
-                            </div> <!-- img-wrap.// -->
-                            <figcaption style="width: 100%;">
-                                <div class="fix-height">
-                                    <a href="{{ product.get_url}}" class="title"
-                                        style="align-items: center; margin-top: 10px;">{{ product.product_name}}</a>
-                                    <div class="price-wrap mt-2" style="font-size: 15px; float: left; direction: rtl;">
-                                        <span class="price"> {{product.price}} <span
-                                                style="font-size: 15px;">تومان</span></span>
-
-                                    </div> <!-- price-wrap.// -->
-                                </div>
-                                <a href="#" class="btn btn-block btn-primary">افزودن به سبد </a>
-                            </figcaption>
-                        </figure>
-                    </div> <!-- col.// -->
-                    {% endfor %}
-                    
-                    
-                </div> <!-- row end.// -->
-               
-
-
-
-                <nav class="mt-4" style="direction: rtl; " aria-label="Page navigation sample">
-                    <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link" href="#">قبلی</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">بعدی</a></li>
-                    </ul>
-                </nav>
-
-            </main> <!-- col.// -->
-            <aside class="col-md-3">
-
-                <div class="card" >
-                    <article class="filter-group" >
-                        <header class="card-header" >
-                            <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"
-                                class="" >
-                                <i class="icon-control fa fa-chevron-down" style="float: left;"></i>
-                                <h6 class="title" style="margin-block-end: 0px; float: right;" >دسته بندی ها</h6>
-                                
-                            </a>
-                        </header>
-                        <div class="filter-content collapse show" id="collapse_1" style="">
-                            <div class="card-body">
-
-                                <ul class="list-menu">
-                                    <li><a href="{% url 'store' %}" style="float: right;">تمام محصولات </a></li>
-                                    {% for category in links %}
-                                    <li><a href="{{ category.get_url }}" style="float: right;">{{category.category_name}} </a></li>
+        <!-- shop-area-start -->
+        <div class="shop-area mb-20">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-4">
+                        <div class="product-widget mb-30">
+                            <h5 class="pt-title">دسته بندی های کالا</h5>
+                            <div class="widget-category-list mt-20">
+                                <form action="#">
+                                    {% for category in categories %}
+                                        <div class="single-widget-category">
+                                            <input type="checkbox" data-filter="category" id="{{ category.id }}" value="{{ category.id }}" class="filter-checkbox">
+                                            <label for="{{ category.id }}">{{ category.name }} <span>&nbsp;({{ category.product_set.all.count }})</span></label>
+                                        </div>
                                     {% endfor %}
+                                </form>
+                            </div>
+                        </div>
+                        <div class="product-widget mb-30">
+                            <h5 class="pt-title">فیلتر قیمت</h5>
+                            <div class="price__slider mt-30">
+                                <input type="range" class="multi-range success" style="color:#e7c4c4;" value="FilterPrice" min="{{ min_price.price__min }}" max="{{ max_price.price__max }}"
+                                       id="rangeInput" oninput="maxPrice.value=this.value" width="400px;"/>
+                                <div>
+
+                                    <form action="" class="s-form mt-20" method="get">
+                                        <input type="number" id="maxPrice" readonly="" name="FilterPrice" onkeyup="rangeInput.value=this.value"
+                                               value="{{ FilterPrice|intcomma:False }}{{ minMaxPrice.price__min|intcomma:False }}"> <b>تومان</b>
+                                        <button type="submit" id="priceFilterBtn" class="tp-btn-square-lg bg-orange"> فیلتر کردن</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {#                    فیلتر بر اساس رنگ    #}
+                        {#                        <div class="product-widget mb-30">#}
+                        {#                            <h5 class="pt-title">Choose Color</h5>#}
+                        {#                            <div class="product__color mt-20">#}
+                        {#                                <ul>#}
+                        {#                                    <li>#}
+                        {#                                        <a href="#" class="black"></a>#}
+                        {#                                    </li>#}
+                        {#                                    <li>#}
+                        {#                                        <a href="#" class="blue"></a>#}
+                        {#                                    </li>#}
+                        {#                                    <li>#}
+                        {#                                        <a href="#" class="red"></a>#}
+                        {#                                    </li>#}
+                        {#                                    <li>#}
+                        {#                                        <a href="#" class="yellow"></a>#}
+                        {#                                    </li>#}
+                        {#                                    <li>#}
+                        {#                                        <a href="#" class="pink"></a>#}
+                        {#                                    </li>#}
+                        {#                                    <li>#}
+                        {#                                        <a href="#" class="brown"></a>#}
+                        {#                                    </li>#}
+                        {#                                    <li>#}
+                        {#                                        <a href="#" class="green"></a>#}
+                        {#                                    </li>#}
+                        {#                                    <li>#}
+                        {#                                        <a href="#" class="oragne"></a>#}
+                        {#                                    </li>#}
+                        {#                                </ul>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                        {#                    فیلتر بر اساس امتیاز دهی دیدگاه ها#}
+                        {#                        <div class="product-widget mb-30">#}
+                        {#                            <h5 class="pt-title">Choose Rating</h5>#}
+                        {#                            <div class="widget-category-list mt-20">#}
+                        {#                                <form action="#">#}
+                        {#                                    <div class="single-widget-rating">#}
+                        {#                                        <input type="checkbox" id="star-item-1" name="star-item">#}
+                        {#                                        <label for="star-item-1">#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <span>(54)</span>#}
+                        {#                                        </label>#}
+                        {#                                    </div>#}
+                        {#                                    <div class="single-widget-rating">#}
+                        {#                                        <input type="checkbox" id="star-item-2" name="star-item">#}
+                        {#                                        <label for="star-item-2">#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <span>(37)</span>#}
+                        {#                                        </label>#}
+                        {#                                    </div>#}
+                        {#                                    <div class="single-widget-rating">#}
+                        {#                                        <input type="checkbox" id="star-item-3" name="star-item">#}
+                        {#                                        <label for="star-item-3">#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <span>(7)</span>#}
+                        {#                                        </label>#}
+                        {#                                    </div>#}
+                        {#                                    <div class="single-widget-rating">#}
+                        {#                                        <input type="checkbox" id="star-item-4" name="star-item">#}
+                        {#                                        <label for="star-item-4">#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <span>(5)</span>#}
+                        {#                                        </label>#}
+                        {#                                    </div>#}
+                        {#                                    <div class="single-widget-rating">#}
+                        {#                                        <input type="checkbox" id="star-item-5" name="star-item">#}
+                        {#                                        <label for="star-item-5">#}
+                        {#                                            <i class="fas fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <i class="fal fa-star"></i>#}
+                        {#                                            <span>(3)</span>#}
+                        {#                                        </label>#}
+                        {#                                    </div>#}
+                        {#                                </form>#}
+                        {#                            </div>#}
+                        {#                        </div>#}
+                        {% comment %} <div class="product-widget mb-30">
+                            <h5 class="pt-title">سایزها</h5>
+                            <div class="widget-category-list mt-20">
+                                <form action="#">
+                                    {% for size in sizes %}
+                                    <div class="single-widget-category">
+                                        <input type="checkbox" id="choose-item-{{size.id}}" name="choose-item">
+                                        <label for="choose-item-{{size.id}}">{{size}} <span>(12)</span></label>
+                                    </div>
+                                    {% endfor %}
+                                </form>
+                            </div>
+                        </div> {% endcomment %}
+                        <div class="product-widget mb-30">
+                            <h5 class="pt-title">برند</h5>
+                            <div class="widget-category-list mt-20">
+                                <form action="#">
+                                    {% for brand in brands %}
+                                        <div class="single-widget-category">
+                                            <input type="checkbox" data-filter="brand" id="brand-{{ brand.id }}" value="{{ brand.id }}" class="filter-checkbox">
+                                            <label for="brand-{{ brand.id }}" style="">{{ brand }} <span >&nbsp;({{ brand.product_set.all.count }})</span> </label>
+                                        </div>
+                                    {% endfor %}
+                                </form>
+                            </div>
+                        </div>
+                        <div class="product-widget mb-30">
+                            <h5 class="pt-title">Special Offers</h5>
+                            <div class="product__sm mt-20">
+                                <ul>
+                                    <li class="product__sm-item d-flex align-items-center">
+                                        <div class="product__sm-thumb mr-20">
+                                            <a href="product-details.html">
+                                                <img src="assets/img/product/sm-1.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="product__sm-content">
+                                            <h5 class="product__sm-title">
+                                                <a href="product-details.html">Classic Leather Backpack Daypack 2022</a>
+                                            </h5>
+                                            <div class="product__sm-price">
+                                                <span class="price">$300.00</span>
+                                            </div>
+                                        </div>
+                                    </li>
 
                                 </ul>
-
-                            </div> <!-- card-body.// -->
+                            </div>
                         </div>
-                   <article class="filter-group">
-							<header class="card-header">
-								<a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true"
-									class="">
-									<i class="icon-control fa fa-chevron-down" style="float: left;"></i>
-									<h6 class="title"style="float: right;">سایزها </h6>
-								</a>
-							</header>
-							<div class="filter-content collapse show" id="collapse_4" style="">
-								<div class="card-body">
-									<label class="checkbox-btn">
-										<input type="checkbox">
-										<span class="btn btn-light"> XS </span>
-									</label>
+                    </div>
+                    <div class="col-xl-9 col-lg-8">
+                        <div class="shop-banner mb-30">
+                            <div class="banner-image">
+                                <img class="banner-l" src="{% static '..//static//images//banner//banner-store.png' %}" alt="">
 
-									<label class="checkbox-btn">
-										<input type="checkbox">
-										<span class="btn btn-light"> SM </span>
-									</label>
+                                <div class="banner-content text-center">
+                                    <p class="banner-text mb-30">Hurry Up! </p>
+                                    <a href="shop.html" class="st-btn-d b-radius" style="margin-right: 80px; margin-top: 60px; border-radius: 40%">کشف کنید!</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-lists-top">
+                            <div class="product__filter-wrap">
+                                <div class="row align-items-center">
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
+                                        <div class="product__filter d-sm-flex align-items-center">
+                                            <div class="product__col">
+                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link active" id="FourCol-tab" data-toggle="tab" data-target="#FourCol" type="button" role="tab" aria-controls="FourCol"
+                                                                aria-selected="true">
+                                                            <i class="fal fa-th"></i>
+                                                        </button>
+                                                    </li>
+                                                    <li class="nav-item" role="presentation">
+                                                        <button class="nav-link" id="FiveCol-tab" data-toggle="tab" data-target="#FiveCol" type="button" role="tab" aria-controls="FiveCol"
+                                                                aria-selected="false">
+                                                            <i class="fal fa-list"></i>
+                                                        </button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="product__result pl-60">
+                                                <p>Showing 1-20 of 29 relults</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
+                                        <div class="product__filter-right d-flex align-items-center justify-content-md-end">
+                                            <div class="product__sorting product__show-no">
+                                                <select>
+                                                    <option>10</option>
+                                                    <option>20</option>
+                                                    <option>30</option>
+                                                    <option>40</option>
+                                                </select>
+                                            </div>
+                                            <div class="product__sorting product__show-position ml-20">
+                                                <select>
+                                                    <option>Latest</option>
+                                                    <option>New</option>
+                                                    <option>Up comeing</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-content" id="productGridTabContent">
+                            <div class="tab-pane fade  show active" id="FourCol" role="tabpanel" aria-labelledby="FourCol-tab">
+                                <div class="tp-wrapper">
+                                    <div class="row g-0" id="filteredProducts">
+                                        {% if products %}
+                                            {% for product in products %}
+                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                    <div class="product__item product__item-d">
+                                                        <div class="product__thumb fix">
+                                                            <div class="product-image w-img">
+                                                                <a href="{{ product.get_url }}">
+                                                                    <img src="{{ product.images.url }}" alt="product" class="w-img">
+                                                                </a>
+                                                            </div>
+                                                            <div class="product-action">
+                                                                {#                                                                <a href="#" class="icon-box icon-box-1" data-toggle="modal" data-target="#productModalId">#}
+                                                                {#                                                                    <i class="fal fa-eye"></i>#}
+                                                                {#                                                                    <i class="fal fa-eye"></i>#}
+                                                                {#                                                                </a>#}
+                                                                {#                                                                <a href="#" class="icon-box icon-box-1">#}
+                                                                {#                                                                    <i class="fal fa-heart"></i>#}
+                                                                {#                                                                    <i class="fal fa-heart"></i>#}
+                                                                {#                                                                </a>#}
+                                                                {#                                                                <a href="#" class="icon-box icon-box-1">#}
+                                                                {#                                                                    <i class="fal fa-layer-group"></i>#}
+                                                                {#                                                                    <i class="fal fa-layer-group"></i>#}
+                                                                {#                                                                </a>#}
+                                                            </div>
+                                                        </div>
+                                                        <div class="product__content-3">
+                                                            <h6><a href="{{ product.get_url }}">{{ product.product_name }}</a></h6>
+                                                            <div class="rating mb-5">
+                                                                <div class="rtl rate-review">
 
-									<label class="checkbox-btn">
-										<input type="checkbox">
-										<span class="btn btn-light"> LG </span>
-									</label>
 
-									<label class="checkbox-btn">
-										<input type="checkbox">
-										<span class="btn btn-light"> XXL </span>
-									</label>
-								</div><!-- card-body.// -->
-							</div>
-						</article> <!-- filter-group .// -->
+                                                                    <i class=" {% if product.avg == 0.5 %} fa fa-star-half-o {% elif product.avg >= 1 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                                       aria-hidden="true"></i>
+                                                                    <i class=" {% if product.avg == 1.5 %} fa fa-star-half-o {% elif product.avg >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                                       aria-hidden="true"></i>
+                                                                    <i class=" {% if product.avg == 2.5 %} fa fa-star-half-o {% elif product.avg >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                                       aria-hidden="true"></i>
+                                                                    <i class=" {% if product.avg == 3.5 %} fa fa-star-half-o {% elif product.avg >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                                       aria-hidden="true"></i>
+                                                                    <i class=" {% if product.avg == 4.5 %} fa fa-star-half-o {% elif product.avg >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                                                       aria-hidden="true"></i>
 
-						<article class="filter-group">
-							<header class="card-header">
-								<a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true"
-									class="">
-									<i class="icon-control fa fa-chevron-down" style="float: left;"></i>
-									<h6 class="title" style="float: right;">حدود قیمت </h6>
-								</a>
-							</header>
-							<div class="filter-content collapse show" id="collapse_3" style="">
-								<div class="card-body">
+                                                                </div>&nbsp;&nbsp;
+                                                                <span>({{ product.count_review }})</span>
+                                                            </div>
+                                                            <div class="price left " style="text-align: left; height: 30px">
+                                                                {% if product.discount == 0 or product.discount == None or product.discount == '0' %}
 
-									<div class="form-row">
-                                        <div class="form-group text-right col-md-6">
-											<label style="float: left;">حداکثر</label>
-											<select class="mr-2 form-control">
-												<option value="50">$50</option>
-												<option value="100">$100</option>
-												<option value="150">$150</option>
-												<option value="200">$200</option>
-												<option value="500">$500</option>
-												<option value="1000">$1000</option>
-												<option value="2000">$2000+</option>
-											</select>
-										</div>
-										<div class="form-group col-md-6">
-											<label style="float: right;">حداقل</label>
-											<!-- <input class="form-control" placeholder="$0" type="number"> -->
-											<select class="mr-2 form-control">
-												<option value="0">$0</option>
-												<option value="50">$50</option>
-												<option value="100">$100</option>
-												<option value="150">$150</option>
-												<option value="200">$200</option>
-												<option value="500">$500</option>
-												<option value="1000">$1000</option>
-											</select>
-										</div>
-										
-									</div> <!-- form-row.// -->
-									<button class="btn btn-block btn-primary">Apply</button>
-								</div><!-- card-body.// -->
-							</div>
-						</article> <!-- filter-group .// -->
+                                                                    <span> {{ product.price|intcomma:False }} تومان </span>
+                                                                {% else %}
+                                                                    <span>{% call_sellprice product.price product.discount as price %} {{ price|intcomma:False }} تومان </span><br>
+                                                                    <del style="font-weight: 200;font-size: 13px; color: #6c6c6c">{{ product.price|intcomma:False }} تومان</del>
 
-                </div> <!-- card.// -->
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
 
-            </aside> <!-- col.// -->
+                                                    </div>
 
+                                                </div>
+                                            {% endfor %}
+                                        {% else %}
+                                            {#  زمانی که محصولی یافت نشد  #}
+                                            <div style="margin-left: 300px;"> <!-- show not find product-->#}
+
+                                                <img id="not_find_product" style="height: 300px; width: 300px; " src="{% static '..//static//images//not_find//not_find_product.svg' %}">
+                                                <div>
+                                                    <span style="padding-left:20px ; font-size: 25px;">کالایی با این مشخصات پیدا نکردیم</span><img style="height: 50px; width: 35px; "
+                                                                                                                                                   src="{% static '..//static//images//icons//danger.png' %}">
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {#                        جهت نمایش محصولات با گرید متفاوت#}
+                            {#                            <div class="tab-pane fade" id="FiveCol" role="tabpanel" aria-labelledby="FiveCol-tab">#}
+                            {#                                <div class="tp-wrapper-2">#}
+                            {#                                    <div class="single-item-pd">#}
+                            {#                                        <div class="row align-items-center">#}
+                            {#                                            <div class="col-xl-9">#}
+                            {#                                                <div class="single-features-item single-features-item-df b-radius mb-20">#}
+                            {#                                                    <div class="row  g-0 align-items-center">#}
+                            {#                                                        <div class="col-md-4">#}
+                            {#                                                            <div class="features-thum">#}
+                            {#                                                                <div class="features-product-image w-img">#}
+                            {#                                                                    <a href="product-details.html"><img src="assets/img/product/sm-1.jpg" alt=""></a>#}
+                            {#                                                                </div>#}
+                            {#                                                                <div class="product__offer">#}
+                            {#                                                                    <span class="discount">-15%</span>#}
+                            {#                                                                </div>#}
+                            {#                                                                <div class="product-action">#}
+                            {#                                                                    <a href="#" class="icon-box icon-box-1" data-toggle="modal" data-target="#productModalId">#}
+                            {#                                                                        <i class="fal fa-eye"></i>#}
+                            {#                                                                        <i class="fal fa-eye"></i>#}
+                            {#                                                                    </a>#}
+                            {#                                                                    <a href="#" class="icon-box icon-box-1">#}
+                            {#                                                                        <i class="fal fa-heart"></i>#}
+                            {#                                                                        <i class="fal fa-heart"></i>#}
+                            {#                                                                    </a>#}
+                            {#                                                                    <a href="#" class="icon-box icon-box-1">#}
+                            {#                                                                        <i class="fal fa-layer-group"></i>#}
+                            {#                                                                        <i class="fal fa-layer-group"></i>#}
+                            {#                                                                    </a>#}
+                            {#                                                                </div>#}
+                            {#                                                            </div>#}
+                            {#                                                        </div>#}
+                            {#                                                        <div class="col-md-8">#}
+                            {#                                                            <div class="product__content product__content-d">#}
+                            {#                                                                <h6><a href="product-details.html">Classic Leather Backpack Daypack 2022</a></h6>#}
+                            {#                                                                <div class="rating mb-5">#}
+                            {#                                                                    <ul class="rating-d">#}
+                            {#                                                                        <li><a href="#"><i class="fal fa-star"></i></a></li>#}
+                            {#                                                                        <li><a href="#"><i class="fal fa-star"></i></a></li>#}
+                            {#                                                                        <li><a href="#"><i class="fal fa-star"></i></a></li>#}
+                            {#                                                                        <li><a href="#"><i class="fal fa-star"></i></a></li>#}
+                            {#                                                                        <li><a href="#"><i class="fal fa-star"></i></a></li>#}
+                            {#                                                                    </ul>#}
+                            {#                                                                    <span>(01 review)</span>#}
+                            {#                                                                </div>#}
+                            {#                                                                <div class="features-des">#}
+                            {#                                                                    <ul>#}
+                            {#                                                                        <li><a href="product-details.html"><i class="fas fa-circle"></i> Bass and Stereo Sound.</a></li>#}
+                            {#                                                                        <li><a href="product-details.html"><i class="fas fa-circle"></i> Display with 3088 x 1440 pixels resolution.</a></li>#}
+                            {#                                                                        <li><a href="product-details.html"><i class="fas fa-circle"></i> Memory, Storage &amp; SIM: 12GB RAM, 256GB.</a></li>#}
+                            {#                                                                        <li><a href="product-details.html"><i class="fas fa-circle"></i> Androi v10.0 Operating system.</a></li>#}
+                            {#                                                                    </ul>#}
+                            {#                                                                </div>#}
+                            {#                                                            </div>#}
+                            {#                                                        </div>#}
+                            {#                                                    </div>#}
+                            {#                                                </div>#}
+                            {#                                            </div>#}
+                            {#                                            <div class="col-xl-3">#}
+                            {#                                                <div class="product-stock mb-15">#}
+                            {#                                                    <h5>Availability: <span> 940 in stock</span></h5>#}
+                            {#                                                    <h6>$220.00 -#}
+                            {#                                                        <del> $240.00</del>#}
+                            {#                                                    </h6>#}
+                            {#                                                </div>#}
+                            {#                                                <div class="stock-btn ">#}
+                            {#                                                    <button type="button" class="cart-btn d-flex mb-10 align-items-center justify-content-center w-100">#}
+                            {#                                                        افزودن به سبد#}
+                            {#                                                    </button>#}
+                            {#                                                    <button type="button" class="wc-checkout d-flex align-items-center justify-content-center w-100" data-toggle="modal"#}
+                            {#                                                            data-target="#productModalId">#}
+                            {#                                                        Quick View#}
+                            {#                                                    </button>#}
+                            {#                                                </div>#}
+                            {#                                            </div>#}
+                            {#                                        </div>#}
+                            {#                                    </div>#}
+                            {#                                    #}
+                            <div class="tp-pagination text-center">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="basic-pagination pt-30 pb-30">
+                                            <nav>
+                                                <ul>
+                                                    {% if products.has_other_pages %}
+                                                        <ul>
+                                                            {% if products.has_previous %}
+                                                                <li class="page-item "><a class="page-link" href="?page={{ products.pervious_page_number }}">قبلی</a></li>
+                                                            {% else %}
+                                                                <li class="page-item disabled"><a class="page-link" href="#">قبلی</a></li>
+                                                            {% endif %}
+                                                            {% for i in products.paginator.page_range %}
+                                                                {% if products.number == i %}
+                                                                    <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                                                                {% else %}
+                                                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                            {% if product.has_next %}
+                                                                <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">بعدی</a></li>
+                                                            {% else %}
+                                                                <li class="page-item disabled"><a class="page-link" href="#">بعدی</a></li>
+                                                            {% endif %}
+
+                                                        </ul>
+                                                    {% endif %}
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- shop-area-end -->
 
-    </div> <!-- container .//  -->
-</section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
-{% endblock%}
+        {#         shop modal start #}
+        <div class="modal fade" id="productModalId" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered product__modal" role="document">
+                <div class="modal-content">
+                    <div class="product__modal-wrapper p-relative">
+                        <div class="product__modal-close p-absolute">
+                            <button data-bs-dismiss="modal"><i class="fal fa-times"></i></button>
+                        </div>
+                        <div class="product__modal-inner">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="product__modal-box">
+                                        <div class="tab-content" id="modalTabContent">
+                                            <div class="tab-pane fade show active" id="nav1" role="tabpanel" aria-labelledby="nav1-tab">
+                                                <div class="product__modal-img w-img">
+                                                    <img src="assets/img/quick-view/quick-view-1.jpg" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="nav2" role="tabpanel" aria-labelledby="nav2-tab">
+                                                <div class="product__modal-img w-img">
+                                                    <img src="assets/img/quick-view/quick-view-2.jpg" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="nav3" role="tabpanel" aria-labelledby="nav3-tab">
+                                                <div class="product__modal-img w-img">
+                                                    <img src="assets/img/quick-view/quick-view-3.jpg" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="nav4" role="tabpanel" aria-labelledby="nav4-tab">
+                                                <div class="product__modal-img w-img">
+                                                    <img src="assets/img/quick-view/quick-view-4.jpg" alt="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <ul class="nav nav-tabs" id="modalTab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="nav1-tab" data-bs-toggle="tab" data-bs-target="#nav1" type="button" role="tab" aria-controls="nav1"
+                                                        aria-selected="true">
+                                                    <img src="assets/img/quick-view/quick-nav-1.jpg" alt="">
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="nav2-tab" data-bs-toggle="tab" data-bs-target="#nav2" type="button" role="tab" aria-controls="nav2" aria-selected="false">
+                                                    <img src="assets/img/quick-view/quick-nav-2.jpg" alt="">
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="nav3-tab" data-bs-toggle="tab" data-bs-target="#nav3" type="button" role="tab" aria-controls="nav3" aria-selected="false">
+                                                    <img src="assets/img/quick-view/quick-nav-3.jpg" alt="">
+                                                </button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="nav4-tab" data-bs-toggle="tab" data-bs-target="#nav4" type="button" role="tab" aria-controls="nav4" aria-selected="false">
+                                                    <img src="assets/img/quick-view/quick-nav-4.jpg" alt="">
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div class="product__modal-content">
+                                        <h4><a href="product-details.html">Samsung C49J89: £875, Debenhams Plus</a></h4>
+                                        <div class="product__review d-sm-flex">
+                                            <div class="rating rating__shop mb-10 mr-30">
+                                                <ul>
+                                                    <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                                    <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="product__add-review mb-15">
+                                                <span>01 review</span>
+                                            </div>
+                                        </div>
+                                        <div class="product__price">
+                                            <span>$109.00 – $307.00</span>
+                                        </div>
+                                        <div class="product__modal-des mt-20 mb-15">
+                                            <ul>
+                                                <li><a href="#"><i class="fas fa-circle"></i> Bass and Stereo Sound.</a></li>
+                                                <li><a href="#"><i class="fas fa-circle"></i> Display with 3088 x 1440 pixels resolution.</a></li>
+                                                <li><a href="#"><i class="fas fa-circle"></i> Memory, Storage & SIM: 12GB RAM, 256GB.</a></li>
+                                                <li><a href="#"><i class="fas fa-circle"></i> Androi v10.0 Operating system.</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="product__stock mb-20">
+                                            <span class="mr-10">Availability :</span>
+                                            <span>1795 in stock</span>
+                                        </div>
+                                        <div class="product__modal-form">
+                                            <form action="#">
+                                                <div class="pro-quan-area d-lg-flex align-items-center">
+                                                    <div class="product-quantity mr-20 mb-25">
+                                                        <div class="cart-plus-minus p-relative"><input type="text" value="1"/></div>
+                                                    </div>
+                                                    <div class="pro-cart-btn mb-25">
+                                                        <button class="cart-btn" type="submit">Add to cart</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="product__stock mb-30">
+                                            <ul>
+                                                <li><a href="#">
+                                                    <span class="sku mr-10">SKU:</span>
+                                                    <span>Samsung C49J89: £875, Debenhams Plus</span></a>
+                                                </li>
+                                                <li><a href="#">
+                                                    <span class="cat mr-10">Categories:</span>
+                                                    <span>iPhone, Tablets</span></a>
+                                                </li>
+                                                <li><a href="#">
+                                                    <span class="tag mr-10">Tags:</span>
+                                                    <span>Smartphone, Tablets</span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- shop modal end -->
+
+    </main>
+
+    <script>
+        $(document).ready(function () {
+            $(".filter-checkbox").on('click', function () {
+                var filter_object = {};
+                $(".filter-checkbox").each(function (index, ele) {
+                    var filter_value = $(this).val();
+                    var filter_key = $(this).data('filter');
+                    console.log(filter_key, filter_value);
+                    filter_object[filter_key] = Array.from(document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')).map(function (el) {
+                        return el.value;
+                    });
+                });
+                $.ajax({
+                    url: '{% url 'filter-data' %}',
+                    data: filter_object,
+                    dataType: 'json',
+                    success: function (res) {
+                        $("#filteredProducts").html(res.data);
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {#<!-- ========================= SECTION PAGETOP ========================= -->#}
+    {#<!-- <section class="section-pagetop bg text-right">#}
+    {#    <div class="container ">#}
+    {#        {% if 'search' in request.path %}#}
+    {#          <h2 class="title-page">نتیجه جستجو</h2>#}
+    {#        {% else %}#}
+    {#          <h2 class="title-page">فروشگاه ما</h2>#}
+    {#        {% endif %}#}
+    {##}
+    {#    </div> #}
+    {#</section> -->#}
+    {#<!-- ========================= SECTION INTRO END// ========================= -->#}
+    {#<section class="section-content padding-y">#}
+    {#    <div class="container">#}
+    {##}
+    {#        <div class="row">#}
+    {#           #}
+    {#            <main class="col-md-9">#}
+    {#                {% if products %}#}
+    {#                <header class="border-bottom mb-4 pb-3">#}
+    {#                    <div class="form-inline">#}
+    {#                        <span class="mr-md-auto" style="direction:rtl;"> {{product_count}} کالا </span>#}
+    {##}
+    {#                    </div>#}
+    {#                </header><!-- sect-heading -->#}
+    {#                #}
+    {#                <div class="row" style="direction: rtl; ">#}
+    {#                    #}
+    {#                    {% for product in products %}#}
+    {#                    <div class="col-md-4 m-0 p-0" style="border: 1px solid #f1eeee;">#}
+    {##}
+    {#                        <figure class=" card-product-grid" style=" width: 100%; text-align: right; padding: 20px;">#}
+    {#                            <div class="img-wrap">#}
+    {#                                <a href="{{ product.get_url }}"><img src={{product.images.url}}></a>#}
+    {#                            </div> <!-- img-wrap.// -->#}
+    {##}
+    {#                            <figcaption style="width: 100%;">#}
+    {#                                <div class="fix-height">#}
+    {#                                    <a href="{{ product.get_url}}" class="title"#}
+    {#                                        style="align-items: center; margin-top: 10px;">{{ product.product_name}}</a>#}
+    {##}
+    {#                                    <div class="float-left">#}
+    {#                                         ({{ avg }})&nbsp <i class=" fa fa-star " style="color: gold" aria-hidden="true"></i>#}
+    {#                                    </div>#}
+    {##}
+    {#                                    <div class="price-wrap mt-5" style="font-size: 15px; float: left; direction: rtl;">#}
+    {#                                        <span class="price"> {{product.price}} <span#}
+    {#                                                style="font-size: 15px;">تومان</span></span>#}
+    {##}
+    {#                                    </div> <!-- price-wrap.// -->#}
+    {#                                </div>#}
+    {#                                <a href="{{ product.get_url }}" class="btn btn-block btn-primary">مشاهده جزئیات</a>#}
+    {#                            </figcaption>#}
+    {#                        </figure>#}
+    {#                    </div> <!-- col.// -->#}
+    {#                    #}
+    {#                    {% endfor %}#}
+    {#                    #}
+    {#                    #}
+    {#                    #}
+    {#                </div> <!-- row end.// -->#}
+    {#                {% else %}#}
+    {#                <div style="margin-left: 300px;"> <!-- show not find product-->#}
+    {#                    #}
+    {#                    <img id="not_find_product" style="height: 300px; width: 300px; " src="{% static '..//static//images//not_find//not_find_product.svg' %}">#}
+    {#                    <div>#}
+    {#                        <span style="padding-left:20px ; font-size: 25px;" >کالایی با این مشخصات پیدا نکردیم</span><img style="height: 50px; width: 35px; " src="{% static '..//static//images//icons//danger.png' %}">#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#                {% endif %}#}
+    {#                #}
+    {##}
+    {##}
+    {##}
+    {#                <nav class="mt-4" style="direction: rtl; " aria-label="Page navigation sample">#}
+    {#                  {% if products.has_other_pages %}  #}
+    {#                    <ul class="pagination">#}
+    {#                      {% if products.has_previous %}  #}
+    {#                        <li class="page-item "><a class="page-link" href="?page={{ products.pervious_page_number }}">قبلی</a></li>#}
+    {#                       {% else %} #}
+    {#                         <li class="page-item disabled"><a class="page-link" href="#">قبلی</a></li>#}
+    {#                      {% endif %} #}
+    {#                      {% for i in products.paginator.page_range %} #}
+    {#                       {% if products.number == i %}  #}
+    {#                            <li class="page-item active"><a class="page-link" href="#">{{i}}</a></li>#}
+    {#                          {% else %} #}
+    {#                             <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>#}
+    {#                       {% endif %} #}
+    {#                      {% endfor %} #}
+    {#                      {% if product.has_next %}  #}
+    {#                        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">بعدی</a></li>#}
+    {#                       {% else %} #}
+    {#                        <li class="page-item disabled"><a class="page-link" href="#">بعدی</a></li>#}
+    {#                      {% endif %}  #}
+    {#                         #}
+    {#                    </ul>#}
+    {#                  {% endif %}#}
+    {#                </nav>#}
+    {##}
+    {#            </main> <!-- col.// -->#}
+    {#            <aside class="col-md-3">#}
+    {##}
+    {#                <div class="card" >#}
+    {#                    <article class="filter-group" >#}
+    {#                        <header class="card-header" >#}
+    {#                            <a href="#" data-toggle="collapse" data-target="#collapse_1" aria-expanded="true"#}
+    {#                                class="" >#}
+    {#                                <i class="icon-control fa fa-chevron-down" style="float: left;"></i>#}
+    {#                                <h6 class="title black" style="margin-block-end: 0px; float: right;" >دسته بندی ها</h6>#}
+    {#                                #}
+    {#                            </a>#}
+    {#                        </header>#}
+    {#                        <div class="filter-content collapse show" id="collapse_1" style="">#}
+    {#                            <div class="card-body">#}
+    {##}
+    {#                                <ul class="list-menu">#}
+    {#                                    <li class="outline-btn-grouping"><a href="{% url 'store' %}" style="float: right;" >تمام محصولات </a></li>#}
+    {#                                    {% for category in main_category %}#}
+    {#                                    <li class="outline-btn-grouping"><a href="{{ category.get_url }}" style="float: right;" >{{category.category_name}} </a></li>#}
+    {#                                    {% endfor %}#}
+    {##}
+    {#                                </ul>#}
+    {##}
+    {#                            </div> <!-- card-body.// -->#}
+    {#                        </div>#}
+    {#                   <article class="filter-group">#}
+    {#							<header class="card-header">#}
+    {#								<a href="#" data-toggle="collapse" data-target="#collapse_4" aria-expanded="true"#}
+    {#									class="">#}
+    {#									<i class="icon-control fa fa-chevron-down" style="float: left;"></i>#}
+    {#									<h6 class="title"style="float: right;">سایزها </h6>#}
+    {#								</a>#}
+    {#							</header>#}
+    {#							<div class="filter-content collapse show" id="collapse_4" style="">#}
+    {#								<div class="card-body">#}
+    {#									<label class="checkbox-btn">#}
+    {#										<input type="checkbox">#}
+    {#										<span class="btn btn-light"> XS </span>#}
+    {#									</label>#}
+    {##}
+    {#									<label class="checkbox-btn">#}
+    {#										<input type="checkbox">#}
+    {#										<span class="btn btn-light"> SM </span>#}
+    {#									</label>#}
+    {##}
+    {#									<label class="checkbox-btn">#}
+    {#										<input type="checkbox">#}
+    {#										<span class="btn btn-light"> LG </span>#}
+    {#									</label>#}
+    {##}
+    {#									<label class="checkbox-btn">#}
+    {#										<input type="checkbox">#}
+    {#										<span class="btn btn-light"> XXL </span>#}
+    {#									</label>#}
+    {#								</div><!-- card-body.// -->#}
+    {#							</div>#}
+    {#						</article> <!-- filter-group .// -->#}
+    {##}
+    {#						<article class="filter-group">#}
+    {#							<header class="card-header">#}
+    {#								<a href="#" data-toggle="collapse" data-target="#collapse_3" aria-expanded="true"#}
+    {#									class="">#}
+    {#									<i class="icon-control fa fa-chevron-down" style="float: left;"></i>#}
+    {#									<h6 class="title" style="float: right;">حدود قیمت </h6>#}
+    {#								</a>#}
+    {#							</header>#}
+    {#							<div class="filter-content collapse show" id="collapse_3" style="">#}
+    {#								<div class="card-body">#}
+    {##}
+    {#									<div class="form-row">#}
+    {#                                        <div class="form-group text-right col-md-6">#}
+    {#											<label style="float: left;">حداکثر</label>#}
+    {#											<select class="mr-2 form-control">#}
+    {#												<option value="50">$50</option>#}
+    {#												<option value="100">$100</option>#}
+    {#												<option value="150">$150</option>#}
+    {#												<option value="200">$200</option>#}
+    {#												<option value="500">$500</option>#}
+    {#												<option value="1000">$1000</option>#}
+    {#												<option value="2000">$2000+</option>#}
+    {#											</select>#}
+    {#										</div>#}
+    {#										<div class="form-group col-md-6">#}
+    {#											<label style="float: right;">حداقل</label>#}
+    {#											<!-- <input class="form-control" placeholder="$0" type="number"> -->#}
+    {#											<select class="mr-2 form-control">#}
+    {#												<option value="0">$0</option>#}
+    {#												<option value="50">$50</option>#}
+    {#												<option value="100">$100</option>#}
+    {#												<option value="150">$150</option>#}
+    {#												<option value="200">$200</option>#}
+    {#												<option value="500">$500</option>#}
+    {#												<option value="1000">$1000</option>#}
+    {#											</select>#}
+    {#										</div>#}
+    {#										#}
+    {#									</div> <!-- form-row.// -->#}
+    {#									<button class="btn btn-block btn-primary">Apply</button>#}
+    {#								</div><!-- card-body.// -->#}
+    {#							</div>#}
+    {#						</article> <!-- filter-group .// -->#}
+    {##}
+    {#                </div> <!-- card.// -->#}
+    {##}
+    {#            </aside> <!-- col.// -->#}
+    {##}
+    {#        </div>#}
+    {##}
+    {#    </div> <!-- container .//  -->#}
+    {#</section>#}
+    {#<!-- ========================= SECTION CONTENT END// ========================= -->#}
+{% endblock %}

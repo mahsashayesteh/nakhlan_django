@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 import pytz
 import os
+from django.contrib.messages import constants as messages
+from decouple import config
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -22,10 +25,10 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_d!d-%2b#1hufa@ogs+@j)t4f!*ajn_y(+q8(10%gbdtgai3hr'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool) #True
 
 ALLOWED_HOSTS = []
 
@@ -33,15 +36,26 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_persian',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_jalali',
     'category',
     'accounts',
     'store',
+    'carts',
+    'orders',
+    'admin_honeypot',
+    'django_mptt_admin',
+    'mptt',
+    'django_quill',
+    'django.contrib.humanize',
+
+
 ]
 
 MIDDLEWARE = [
@@ -52,7 +66,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
+
+SESSION_EXPIRE_SECONDS = 30  # 4 hour
+
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+
+SESSION_TIMEOUT_REDIRECT = 'accounts/login'
 
 ROOT_URLCONF = 'ecommerce_website.urls'
 
@@ -68,11 +89,19 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "category.context_processors.menu_links"
+                "category.context_processors.menu_links",
+                "carts.context_processors.counter",
+                "store.context_processors.section_links",
+
             ],
+             'libraries': {
+            'product_tags': 'store.templatetags.product_tags',
+        }
         },
     },
 ]
+
+
 
 WSGI_APPLICATION = 'ecommerce_website.wsgi.application'
 
@@ -119,8 +148,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa'
 TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
@@ -138,7 +167,35 @@ STATUS_ROOT = BASE_DIR /'static'
 STATICFILES_DIRS = [
     'ecommerce_website/static'
 ]
+
 # media files configuration
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR /'media'
+
+MESSAGE_TAGS = {
+       messages.ERROR : 'danger',
+}
+
+#SMTP CONFIGURATION
+EMAIL_HOST=config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_HOST_USER =config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD =config('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+
+
+import django
+from django.utils.encoding import smart_str
+django.utils.encoding.smart_text = smart_str
+
+import locale
+locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
+
+import django
+from django.utils.translation import gettext
+django.utils.translation.ugettext = gettext
+
+
+from django.db import connections, transaction
+from django.core.cache import cache # This is the memcache cache.
 

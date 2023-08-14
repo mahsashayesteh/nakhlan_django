@@ -1,20 +1,249 @@
 {% load static %}
-<footer class="section-footer border-top">
-	<div class="container">
-		<section class="footer-bottom border-top row">
-			<div class="col-md-2">
-				<p class="text-muted"> &copy 2023 Nakhlan </p>
-			</div>
-			<div class="col-md-8 text-md-center">
-				<span  class="px-2">Nakhlanshop@gmail.com</span>
-				<span  class="px-2">098-9120899277</span>
-				<span  class="px-2">تهران - بازار بزرگ </span>
-			</div>
-			<div class="col-md-2 text-md-right text-muted">
-				<i class="fab fa-lg fa-cc-visa"></i>
-				<i class="fab fa-lg fa-cc-paypal"></i>
-				<i class="fab fa-lg fa-cc-mastercard"></i>
-			</div>
-		</section>
-	</div><!-- //container -->
-</footer>
+<!-- footer-start -->
+    <footer class="rtl">
+        <hr>
+        <div class="fotter-area ">
+            <img style="height: 40px; width: 150px; margin-right: 100px; margin-bottom: -50px" src="{% static 'images/logo_persia.png' %}">
+            <div class="footer__top pt-80 pb-15">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-4 order-last-md">
+                            <div class="row">
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                    <div class="footer__widget">
+                                        <div class="footer__widget-title">
+                                            <h4>خدمات مشریان</h4>
+                                        </div>
+                                        <div class="footer__widget-content">
+                                            <div class="footer__link">
+                                                <ul>
+                                                    <li><a href="{% url 'edit_profile' %}">تکمیل پروفایل</a></li>
+                                                    <li><a href="{% url 'store' %}">ثبت سفارش</a></li>
+                                                    <li><a href="{% url 'my_orders' %}">سفارشات من</a></li>
+                                                    <li><a href="">به کمک نیاز دارید؟</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-7 col-lg-8 order-first-md">
+                            <div class="footer__top-left">
+                                <div class="row">
+
+                                    <div class="col-xl-7 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="row">
+
+                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+                                                <div class="footer__widget">
+                                                    <div class="footer__widget-title">
+                                                        <h4>حساب کاربری من</h4>
+                                                    </div>
+                                                    <div class="footer__widget-content">
+                                                        <div class="footer__link">
+                                                            <ul>
+                                                                <li><a href="faq.html"></a></li>
+                                                                <li><a href="{% url 'checkout' %}">پرداخت</a></li>
+                                                                <li><a href="{% url 'cart' %}">سبد خرید</a></li>
+                                                                 <li><a href="{% url 'change_password' %}">تغییر رمز عبور</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="footer__widget">
+                                        <div class="footer__widget-title">
+                                            <h4>لینک سریع</h4>
+                                        </div>
+                                        <div class="footer__widget-content">
+                                            <div class="footer__link">
+                                                <ul>
+                                                    <li><a href="{% url 'dashboard' %}">داشبورد</a></li>
+                                                    <li><a href="">پیگیری سفارشات</a></li>
+                                                    <li><a href="{% url 'store' %}">فروشگاه</a></li>
+                                                    <li><a href="{% url 'login' %}">ورود به حساب کاربری</a></li>
+                                                    <li><a href="{% url 'register' %}">ثبت نام</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div></div>
+                                    </div><div class="col-xl-5 col-lg-6 col-md-6 col-sm-6">
+                                        <div class="footer__widget">
+                                            <div class="footer__widget-title mb-20">
+                                                <h4>درباره فروشگاه</h4>
+                                            </div>
+                                            <div class="footer__widget-content">
+                                                <p class="footer-text mb-35"> ماموریت ما ارائه بهترین تجربه مشتری در صنعت پوشاک است.</p>
+
+                                                <div class="footer__hotline d-flex align-items-center mb-10">
+                                                    <div class="icon mr-0">
+                                                        <i class="fal fa-headset"></i>
+
+                                                    </div>
+
+                                                    <div class=" text ltr " >
+                                                        <h4 style="margin-right: -1px">.سوالی دارید؟ با ما تماس بگیرید</h4>
+                                                        <div><span ><a class="text ltr" href="tel:098-991-630-4606">(+09) 0991 630 4606</a></span></div>
+                                                    </div>
+                                                </div>
+                                                <div class="footer__info">
+                                                    <ul>
+                                                        <li>
+                                                            <span>آدرس:  <a target="_blank" href="https://goo.gl/maps/35.689250, 51.389600">بازار بزرگ تهران، مسجد امام(ره). </a></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <div class="container">
+                    <div class="footer__bottom-content pt-55 pb-45">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="footer__links text-center mb-25">
+                                    <p>
+                                        <a href="{% url 'store' %}">سفارش</a>
+                                        <a href="{% url 'my_orders' %}">سفارشات من</a>
+                                        <a href="faq.html">کمک</a>
+                                        <a href="{% url 'about_us' %}">درباره ما</a>
+
+                                    </p>
+                                </div>
+                                <div class="payment-image text-center mb-25">
+                                    <a href="contact.html"><img src="{% static 'images/payment/payment.png' %}" alt=""></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- footer-end -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.thumb a').click(function (e) {
+            e.preventDefault()
+            $('.mainImage img').attr('src', $(this).attr("href"));
+        });
+    });
+
+
+    persian = {0: '۰', 1: '۱', 2: '۲', 3: '۳', 4: '۴', 5: '۵', 6: '۶', 7: '۷', 8: '۸', 9: '۹'};
+    var nodes = document.querySelectorAll('input[type=text]');
+    for (var i = 0; i < nodes.length; i++) {
+        var list = nodes[i].value.match(/[0-9]/g);
+        if (list != null && list.length !== 0) {
+            for (var j = 0; j < list.length; j++) {
+                nodes[i].value = nodes[i].value.replace(list[j], persian[list[j]]);
+            }
+        }
+    }
+
+    persian = {0: '۰', 1: '۱', 2: '۲', 3: '۳', 4: '۴', 5: '۵', 6: '۶', 7: '۷', 8: '۸', 9: '۹'};
+
+    function traverse(el) {
+        if (el.nodeType === 3) {
+            var list = el.data.match(/[0-9]/g);
+            if (list != null && list.length !== 0) {
+                for (var i = 0; i < list.length; i++)
+                    el.data = el.data.replace(list[i], persian[list[i]]);
+            }
+        }
+        for (var i = 0; i < el.childNodes.length; i++) {
+            traverse(el.childNodes[i]);
+        }
+    }
+
+    traverse(document.body);
+
+</script>
+
+<script>
+$(document).ready(function(){
+	$(".filter-checkbox").on('click', function(){
+		var filter_object={};
+		$(".filter-checkbox").each(function(index,ele){
+			var filter_value=$(this).val();
+			var filter_key=$(this).data('filter');
+			console.log(filter_key,filter_value);
+			filter_object[filter_key]=Array.from(document.querySelectorAll('input[data-filter='+filter_key+']:checked')).map(function(el){
+			 	return el.value;
+			});
+		});
+		$.ajax({
+			url:'{% url 'filter-data' %}',
+			data:filter_object,
+			dataType:'json',
+			success:function(res){
+				$("#filteredProducts").html(res.data);
+			}
+		});
+	});
+});
+</script>
+
+
+<style>
+   input[type=range]{
+   -webkit-appearance: none;
+   width:100%;
+   }
+   input[type=range]::-webkit-slider-runnable-track {
+   width: 1000px;
+   height: 5px;
+   background: #FCBE00;
+   border: none;
+   border-radius: 3px;
+   }
+   input[type=range]::-webkit-slider-thumb {
+   -webkit-appearance: none;
+   border: none;
+   height: 16px;
+   width: 16px;
+   border-radius: 50%;
+   background: goldenrod;
+   margin-top: -5px;
+   }
+   input[type=range]:focus {
+   outline: none;
+   }
+   input[type=range]:focus::-webkit-slider-runnable-track {
+   background: #FCBE00;
+   }
+
+</style>
+
+
+<script src="{% static '../static/js/waypoints.js' %}"></script>
+<script src="{% static '../static/js/waypoints.js' %}"></script>
+<script src="{% static '../static/js/meanmenu.js' %}"></script>
+<script src="{% static '../static/js/swiper-bundle.js' %}"></script>
+<script src="{% static '../static/js/tweenmax.js' %}"></script>
+<script src="{% static '../static/js/owl-carousel.js' %}"></script>
+<script src="{% static '../static/js/magnific-popup.js' %}"></script>
+<script src="{% static '../static/js/parallax.js' %}"></script>
+<script src="{% static '../static/js/backtotop.js' %}"></script>
+<script src="{% static '../static/js/nice-select.js' %}"></script>
+<script src="{% static '../static/js/countdown.min.js' %}"></script>
+<script src="{% static '../static/js/counterup.js' %}"></script>
+<script src="{% static '../static/js/wow.js' %}"></script>
+<script src="{% static '../static/js/isotope-pkgd.js' %}"></script>
+<script src="{% static '../static/js/imagesloaded-pkgd.js' %}"></script>
+<script src="{% static '../static/js/ajax-form.js' %}"></script>
+<script src="{% static '../static/js/main.js' %}"></script>

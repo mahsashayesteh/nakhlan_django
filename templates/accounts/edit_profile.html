@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="section-conten padding-y bg rtl text-right">
+
+        <div class="container ">
+            {% include 'includes/alerts.html' %}
+            <div class="row">
+                {% include 'includes/dashboard_sidbar.html' %}
+                <main class="col-md-9">
+                    <article class="card">
+                        <header class="card-header">
+                            <strong class="d-inline-block mr-3">ویرایش پروفایل</strong>
+
+                        </header>
+                        <div class="card-body text-right">
+                            <div class="text-center mb-3">
+                                {% if use_pro.profile_picture %}
+
+                                <img src="{{ use_pro.profile_picture.url }}" width="100px" style="border-radius: 50px">
+                                {% else %}
+                                <img src="" width="100px" style="border-radius: 50px">
+                                {% endif %}
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                   <form action="{% url 'edit_profile' %}" method="post" enctype="multipart/form-data">
+                                       {% csrf_token %}
+                                        <div class="form-row">
+                                          <div class="form-group col-md-6">
+                                             <label>نام: </label>
+                                              {{ user_form.first_name }}
+                                          </div>
+                                            <div class="form-group col-md-6">
+                                             <label>نام خانوادگی: </label>
+                                             {{ user_form.last_name }}
+                                          </div>
+                                            <div class="form-group col-md-6">
+                                             <label>شماره تلفن: </label>
+                                              {{ user_form.phone_number }}
+                                          </div>
+                                            <di class="form-group col-md-6">
+                                             <label>عکس پروفایل </label>
+                                              {{ profile_form.profile_picture }}
+                                          </di>
+                                            <div class="form-group col-md-12">
+                                             <label>آدرس: </label>
+                                                {{ profile_form.full_address }}
+                                          </div>
+                                        </div>
+                                        <input type="submit" value="ذخیره" class="cart-btn form-control mt-2">
+                                   </form>
+                                </div>
+                            </div> <!-- row.// -->
+                        </div> <!-- card-body .// -->
+                    </article> <!-- order-group.// -->
+                </main>
+            </div> <!-- row.// -->
+        </div>
+
+
+    </section>
+
+{% endblock %}
