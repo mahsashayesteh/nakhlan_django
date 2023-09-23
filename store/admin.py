@@ -14,14 +14,14 @@ class ProductGalleryInline(admin.TabularInline):
     extra = 4
 
 class AdditionalInformationTabular(admin.TabularInline):
-    model =  Additional_Infomation
+    model = Additional_Infomation
     extra = 4
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('product_name', 'price', 'stock', 'category', 'sub_category','section', 'shamsi_date_created', 'shamsi_date_modified', 'is_available')
+    list_display = ('product_name', 'price', 'stock', 'category', 'sub_category', 'shamsi_date_created', 'shamsi_date_modified', 'is_available')
     prepopulated_fields = {'slug': ('product_name',)}
     inlines = (ProductGalleryInline, AdditionalInformationTabular,)
-    list_editable = ('category', 'section','sub_category')
+    list_editable = ('category', 'sub_category')
 
     # show date in shamsi format
     @admin.display(description='زمان ایجاد')

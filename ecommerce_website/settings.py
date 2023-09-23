@@ -11,15 +11,20 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+
+import export as export
 import pytz
 import os
 from django.contrib.messages import constants as messages
 from decouple import config
 
+import sys
+import io
+
+sys.stdout = io .TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -28,10 +33,9 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool) #True
+DEBUG = config('DEBUG', default=True, cast=bool)  # True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -47,6 +51,7 @@ INSTALLED_APPS = [
     'category',
     'accounts',
     'store',
+    'blogs',
     'carts',
     'orders',
     'admin_honeypot',
@@ -54,8 +59,10 @@ INSTALLED_APPS = [
     'mptt',
     'django_quill',
     'django.contrib.humanize',
-
-
+    'ajax_select',
+    'ckeditor',
+    'ckeditor_uploader',
+    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -80,8 +87,8 @@ ROOT_URLCONF = 'ecommerce_website.urls'
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR,'templates')],
-        
+        "DIRS": [os.path.join(BASE_DIR, 'templates')],
+
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -94,14 +101,12 @@ TEMPLATES = [
                 "store.context_processors.section_links",
 
             ],
-             'libraries': {
-            'product_tags': 'store.templatetags.product_tags',
-        }
+            'libraries': {
+                'product_tags': 'store.templatetags.product_tags',
+            }
         },
     },
 ]
-
-
 
 WSGI_APPLICATION = 'ecommerce_website.wsgi.application'
 
@@ -120,11 +125,10 @@ DATABASES = {
         'PORT': '3306',
 
         'OPTIONS': {
-           'init_command': "SET sql_mode='STRICT_TRANS_TABLES'" ,
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -144,12 +148,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
 # LANGUAGE_CODE = 'en-us'
 LANGUAGE_CODE = 'fa'
+
+import locale
+locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
+
 TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
@@ -158,44 +165,94 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATUS_ROOT = BASE_DIR /'static'
+STATUS_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
     'ecommerce_website/static'
 ]
 
 # media files configuration
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR /'media'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 MESSAGE_TAGS = {
-       messages.ERROR : 'danger',
+    messages.ERROR: 'danger',
 }
 
-#SMTP CONFIGURATION
-EMAIL_HOST=config('EMAIL_HOST')
+# SMTP CONFIGURATION
+EMAIL_HOST = config('EMAIL_HOST')
 EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER =config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD =config('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
-
 
 import django
 from django.utils.encoding import smart_str
+
 django.utils.encoding.smart_text = smart_str
 
-import locale
-locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
 
 import django
 from django.utils.translation import gettext
+
 django.utils.translation.ugettext = gettext
 
+from ckeditor.configs import DEFAULT_CONFIG
 
-from django.db import connections, transaction
-from django.core.cache import cache # This is the memcache cache.
+CKEDITOR_UPLOAD_PATH = "Media/uploads/"
+CKEDITOR_IMAGE_BACKEND = "pillow"
+CKEDITOR_THUMBNAIL_SIZE = (300, 300)
+CKEDITOR_IMAGE_QUALITY = 40
+CKEDITOR_BROWSE_SHOW_DIRS = True
+CKEDITOR_ALLOW_NONIMAGE_FILES = True
+CKEDITOR_UPLOAD_SLUGIFY_FILENAME = False
+CKEDITOR_JQUERY_URL = 'http://libs.baidu.com/jquery/2.0.3/jquery.min.js'
+
+CUSTOM_TOOLBAR = [
+    {
+        "name": "document",
+        "items": [
+            "Styles", "Format", "Bold", "Italic", "Underline", "Strike", "-",
+            "TextColor", "BGColor", "-",
+            "JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock",
+        ],
+    },
+    {
+        "name": "widgets",
+        "items": [
+            "Undo", "Redo", "-",
+            "NumberedList", "BulletedList", "-",
+            "Outdent", "Indent", "-",
+            "Link", "Unlink", "-",
+            "Image", "CodeSnippet", "Table", "HorizontalRule", "Smiley", "SpecialChar", "-",
+            "Blockquote", "-",
+            "ShowBlocks", "Maximize",
+        ],
+    },
+]
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': (
+            ['div', 'Source', '-', 'Save', 'NewPage', 'Preview', '-', 'Templates'],
+            ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Print', 'SpellChecker', 'Scayt'],
+            ['Undo', 'Redo', '-', 'Find', 'Replace', '-', 'SelectAll', 'RemoveFormat'],
+            ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField'],
+            ['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', 'Blockquote'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak'],
+            ['Styles', 'Format', 'Font', 'FontSize'],
+            ['TextColor', 'BGColor'],
+            ['Maximize', 'ShowBlocks', '-', 'About', 'pbckcode'],
+        ),
+    }
+}
+
+
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 30242880
 

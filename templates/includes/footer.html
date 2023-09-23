@@ -1,137 +1,143 @@
 {% load static %}
 <!-- footer-start -->
-    <footer class="rtl">
-        <hr>
-        <div class="fotter-area ">
-            <img style="height: 40px; width: 150px; margin-right: 100px; margin-bottom: -50px" src="{% static 'images/logo_persia.png' %}">
-            <div class="footer__top pt-80 pb-15">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-5 col-lg-4 order-last-md">
-                            <div class="row">
-                                <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
-                                    <div class="footer__widget">
-                                        <div class="footer__widget-title">
-                                            <h4>خدمات مشریان</h4>
-                                        </div>
-                                        <div class="footer__widget-content">
-                                            <div class="footer__link">
-                                                <ul>
-                                                    <li><a href="{% url 'edit_profile' %}">تکمیل پروفایل</a></li>
-                                                    <li><a href="{% url 'store' %}">ثبت سفارش</a></li>
-                                                    <li><a href="{% url 'my_orders' %}">سفارشات من</a></li>
-                                                    <li><a href="">به کمک نیاز دارید؟</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
+<footer class="rtl">
+    <hr>
+    <div class="fotter-area ">
+        <img style="height: 40px; width: 150px; margin-right: 100px; margin-bottom: -50px"
+             src="{% static 'images/logo_persia.png' %}">
+        <div class="footer__top pt-80 pb-15">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-5 col-lg-4 order-last-md">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6">
+                                <div class="footer__widget">
+                                    <div class="footer__widget-title">
+                                        <h4>خدمات مشریان</h4>
                                     </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-xl-7 col-lg-8 order-first-md">
-                            <div class="footer__top-left">
-                                <div class="row">
-
-                                    <div class="col-xl-7 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="row">
-
-                                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
-                                                <div class="footer__widget">
-                                                    <div class="footer__widget-title">
-                                                        <h4>حساب کاربری من</h4>
-                                                    </div>
-                                                    <div class="footer__widget-content">
-                                                        <div class="footer__link">
-                                                            <ul>
-                                                                <li><a href="faq.html"></a></li>
-                                                                <li><a href="{% url 'checkout' %}">پرداخت</a></li>
-                                                                <li><a href="{% url 'cart' %}">سبد خرید</a></li>
-                                                                 <li><a href="{% url 'change_password' %}">تغییر رمز عبور</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
-                                    <div class="footer__widget">
-                                        <div class="footer__widget-title">
-                                            <h4>لینک سریع</h4>
-                                        </div>
-                                        <div class="footer__widget-content">
-                                            <div class="footer__link">
-                                                <ul>
-                                                    <li><a href="{% url 'dashboard' %}">داشبورد</a></li>
-                                                    <li><a href="">پیگیری سفارشات</a></li>
-                                                    <li><a href="{% url 'store' %}">فروشگاه</a></li>
-                                                    <li><a href="{% url 'login' %}">ورود به حساب کاربری</a></li>
-                                                    <li><a href="{% url 'register' %}">ثبت نام</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div></div>
-                                    </div><div class="col-xl-5 col-lg-6 col-md-6 col-sm-6">
-                                        <div class="footer__widget">
-                                            <div class="footer__widget-title mb-20">
-                                                <h4>درباره فروشگاه</h4>
-                                            </div>
-                                            <div class="footer__widget-content">
-                                                <p class="footer-text mb-35"> ماموریت ما ارائه بهترین تجربه مشتری در صنعت پوشاک است.</p>
-
-                                                <div class="footer__hotline d-flex align-items-center mb-10">
-                                                    <div class="icon mr-0">
-                                                        <i class="fal fa-headset"></i>
-
-                                                    </div>
-
-                                                    <div class=" text ltr " >
-                                                        <h4 style="margin-right: -1px">.سوالی دارید؟ با ما تماس بگیرید</h4>
-                                                        <div><span ><a class="text ltr" href="tel:098-991-630-4606">(+09) 0991 630 4606</a></span></div>
-                                                    </div>
-                                                </div>
-                                                <div class="footer__info">
-                                                    <ul>
-                                                        <li>
-                                                            <span>آدرس:  <a target="_blank" href="https://goo.gl/maps/35.689250, 51.389600">بازار بزرگ تهران، مسجد امام(ره). </a></span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                    <div class="footer__widget-content">
+                                        <div class="footer__link">
+                                            <ul>
+                                                <li><a href="{% url 'edit_profile' %}">تکمیل پروفایل</a></li>
+                                                <li><a href="{% url 'store' %}">ثبت سفارش</a></li>
+                                                <li><a href="{% url 'my_orders' %}">سفارشات من</a></li>
+                                                <li><a href="">به کمک نیاز دارید؟</a></li>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="footer__bottom">
-                <div class="container">
-                    <div class="footer__bottom-content pt-55 pb-45">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="footer__links text-center mb-25">
-                                    <p>
-                                        <a href="{% url 'store' %}">سفارش</a>
-                                        <a href="{% url 'my_orders' %}">سفارشات من</a>
-                                        <a href="faq.html">کمک</a>
-                                        <a href="{% url 'about_us' %}">درباره ما</a>
+                    <div class="col-xl-7 col-lg-8 order-first-md">
+                        <div class="footer__top-left">
+                            <div class="row">
 
-                                    </p>
-                                </div>
-                                <div class="payment-image text-center mb-25">
-                                    <a href="contact.html"><img src="{% static 'images/payment/payment.png' %}" alt=""></a>
-                                </div>
+                                <div class="col-xl-7 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="row">
 
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 ">
+                                            <div class="footer__widget">
+                                                <div class="footer__widget-title">
+                                                    <h4>حساب کاربری من</h4>
+                                                </div>
+                                                <div class="footer__widget-content">
+                                                    <div class="footer__link">
+                                                        <ul>
+                                                            <li><a href="faq.html"></a></li>
+                                                            <li><a href="{% url 'checkout' %}">پرداخت</a></li>
+                                                            <li><a href="{% url 'cart' %}">سبد خرید</a></li>
+                                                            <li><a href="{% url 'change_password' %}">تغییر رمز عبور</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                            <div class="footer__widget">
+                                                <div class="footer__widget-title">
+                                                    <h4>لینک سریع</h4>
+                                                </div>
+                                                <div class="footer__widget-content">
+                                                    <div class="footer__link">
+                                                        <ul>
+                                                            <li><a href="{% url 'dashboard' %}">داشبورد</a></li>
+                                                            <li><a href="">پیگیری سفارشات</a></li>
+                                                            <li><a href="{% url 'store' %}">فروشگاه</a></li>
+                                                            <li><a href="{% url 'login' %}">ورود به حساب کاربری</a></li>
+                                                            <li><a href="{% url 'register' %}">ثبت نام</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-lg-6 col-md-6 col-sm-6">
+                                    <div class="footer__widget">
+                                        <div class="footer__widget-title mb-20">
+                                            <h4>درباره فروشگاه</h4>
+                                        </div>
+                                        <div class="footer__widget-content">
+                                            <p class="footer-text mb-35"> ماموریت ما ارائه بهترین تجربه مشتری در صنعت پوشاک
+                                                است.</p>
+
+                                            <div class="footer__hotline d-flex align-items-center mb-10">
+                                                <div class="icon mr-0">
+                                                    <i class="fal fa-headset"></i>
+
+                                                </div>
+
+                                                <div class=" text ltr ">
+                                                    <h4 style="margin-right: -1px">.سوالی دارید؟ با ما تماس بگیرید</h4>
+                                                    <div><span><a class="text ltr"
+                                                                  href="tel:098-991-630-4606">(+09) 0991 630 4606</a></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="footer__info">
+                                                <ul>
+                                                    <li>
+                                                        <span>آدرس:  <a target="_blank"
+                                                                        href="https://goo.gl/maps/35.689250, 51.389600">بازار بزرگ تهران، مسجد امام(ره). </a></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </footer>
-    <!-- footer-end -->
+        <div class="footer__bottom">
+            <div class="container">
+                <div class="footer__bottom-content pt-55 pb-45">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="footer__links text-center mb-25">
+                                <p>
+                                    <a href="{% url 'store' %}">سفارش</a>
+                                    <a href="{% url 'my_orders' %}">سفارشات من</a>
+                                    <a href="faq.html">کمک</a>
+                                    <a href="{% url 'about_us' %}">درباره ما</a>
+
+                                </p>
+                            </div>
+                            <div class="payment-image text-center mb-25">
+                                <a href="contact.html"><img src="{% static 'images/payment/payment.png' %}" alt=""></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer-end -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -173,59 +179,90 @@
     traverse(document.body);
 
 </script>
-
+{#استفاده از ajax  بر ای فیلتر کردن بر اساس دسته بندی و برند#}
 <script>
-$(document).ready(function(){
-	$(".filter-checkbox").on('click', function(){
-		var filter_object={};
-		$(".filter-checkbox").each(function(index,ele){
-			var filter_value=$(this).val();
-			var filter_key=$(this).data('filter');
-			console.log(filter_key,filter_value);
-			filter_object[filter_key]=Array.from(document.querySelectorAll('input[data-filter='+filter_key+']:checked')).map(function(el){
-			 	return el.value;
-			});
-		});
-		$.ajax({
-			url:'{% url 'filter-data' %}',
-			data:filter_object,
-			dataType:'json',
-			success:function(res){
-				$("#filteredProducts").html(res.data);
-			}
-		});
-	});
-});
+    $(document).ready(function () {
+        $(".filter-checkbox").on('click', function () {
+            var filter_object = {};
+            $(".filter-checkbox").each(function (index, ele) {
+                var filter_value = $(this).val();
+                var filter_key = $(this).data('filter');
+                console.log(filter_key, filter_value);
+                filter_object[filter_key] = Array.from(document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')).map(function (el) {
+                    return el.value;
+                });
+            });
+            $.ajax({
+                url: '{% url 'filter-data' %}',
+                data: filter_object,
+                dataType: 'json',
+                success: function (res) {
+                    $(".filteredProducts").html(res.data);
+                }
+            });
+        });
+    });
 </script>
 
+{# استفاده از ajax برای فیلتر کردن بر اساس جدیدترین ها یا پرفروش ترین ها و ....#}
+
+<script>
+    $(document).ready(function () {
+        const $selectionbutton = $('.selection-button');
+         const handeler = $( ".selection-button" ).on('click',function(event) {
+            event.preventDefault();
+            var element = $(this); //button that was clicked
+            $selectionbutton.off('click', handeler);
+            $.ajax({
+                url: '{% url 'ajax_select_urls' %}',
+                method: 'GET',
+                data: {
+                    filter_category: element.attr("data")
+                },
+                dataType: 'json',
+                success: function (res) {
+                    $(".filteredProducts").html(res.data);
+                },
+                error: function (xhr, errmsg, err) {
+                    console.log("error")
+
+                }
+            });
+        });
+    });
+</script>
 
 <style>
-   input[type=range]{
-   -webkit-appearance: none;
-   width:100%;
-   }
-   input[type=range]::-webkit-slider-runnable-track {
-   width: 1000px;
-   height: 5px;
-   background: #FCBE00;
-   border: none;
-   border-radius: 3px;
-   }
-   input[type=range]::-webkit-slider-thumb {
-   -webkit-appearance: none;
-   border: none;
-   height: 16px;
-   width: 16px;
-   border-radius: 50%;
-   background: goldenrod;
-   margin-top: -5px;
-   }
-   input[type=range]:focus {
-   outline: none;
-   }
-   input[type=range]:focus::-webkit-slider-runnable-track {
-   background: #FCBE00;
-   }
+    input[type=range] {
+        -webkit-appearance: none;
+        width: 100%;
+    }
+
+    input[type=range]::-webkit-slider-runnable-track {
+        width: 1000px;
+        height: 5px;
+        background: #FCBE00;
+        border: none;
+        border-radius: 3px;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: goldenrod;
+        margin-top: -5px;
+    }
+
+    input[type=range]:focus {
+        outline: none;
+    }
+
+    input[type=range]:focus::-webkit-slider-runnable-track {
+        background: #FCBE00;
+    }
 
 </style>
 

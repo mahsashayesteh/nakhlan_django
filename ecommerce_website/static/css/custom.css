@@ -141,3 +141,15 @@ ul.thumb li img{
   border-bottom: 1px solid #e3dbdb;
 }
 
+.selection-button{
+  border:hidden;
+  background-color: #ffffff;
+  margin-right: 5px;
+  margin-left: 5px;
+  color: #3e3e3f;
+
+}
+.selection-button:focus {
+  color:  var(--color-bf4800);
+  border-bottom:1px solid #eeeeee;
+}

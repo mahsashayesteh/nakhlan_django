@@ -1,72 +1,142 @@
 {% load humanize %}
 {% load static %}
 {% load product_tags %}
-{% if product|length < 1 %}
-<div style="margin-left: 300px;"> <!-- show not find product-->#}
 
-                        <img id="not_find_product" style="height: 300px; width: 300px; " src="{% static '..//static//images//not_find//not_find_product.svg' %}">
+
+<div class="tab-content" id="productGridTabContent">
+    <div class="tab-pane fade  show active" id="FourCol" role="tabpanel" aria-labelledby="FourCol-tab">
+        <div class="tp-wrapper">
+            <div class="product__result pr-60">
+                <p> {{ product_count }} کالا</p>
+            </div>
+            <div class="row g-0">
+                {% if product %}
+                    {% for pro in products %}
+                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                            <div class="product__item product__item-d">
+
+                                <div class="product__thumb fix">
+                                    <div class="product-image w-img">
+                                        <a href="{{ pro.get_url }}">
+                                            <img src="{{ pro.images.url }}" alt="product"
+                                                 class="w-img">
+                                        </a>
+                                    </div>
+                                    <div class="product-action">
+                                        {#                                                                <a href="#" class="icon-box icon-box-1" data-toggle="modal" data-target="#productModalId">#}
+                                        {#                                                                    <i class="fal fa-eye"></i>#}
+                                        {#                                                                    <i class="fal fa-eye"></i>#}
+                                        {#                                                                </a>#}
+                                        {#                                                                <a href="#" class="icon-box icon-box-1">#}
+                                        {#                                                                    <i class="fal fa-heart"></i>#}
+                                        {#                                                                    <i class="fal fa-heart"></i>#}
+                                        {#                                                                </a>#}
+                                        {#                                                                <a href="#" class="icon-box icon-box-1">#}
+                                        {#                                                                    <i class="fal fa-layer-group"></i>#}
+                                        {#                                                                    <i class="fal fa-layer-group"></i>#}
+                                        {#                                                                </a>#}
+                                    </div>
+                                </div>
+                                <div class="product__content-3">
+                                    <h6><a href="{{ pro.get_url }}">{{ pro.product_name }}</a>
+                                    </h6>
+                                    <div class="rating mb-5">
+                                        <div class="rtl rate-review">
+
+
+                                            <i class=" {% if pro.avg == 0.5 %} fa fa-star-half-o {% elif pro.avg >= 1 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                               aria-hidden="true"></i>
+                                            <i class=" {% if pro.avg == 1.5 %} fa fa-star-half-o {% elif pro.avg >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                               aria-hidden="true"></i>
+                                            <i class=" {% if pro.avg == 2.5 %} fa fa-star-half-o {% elif pro.avg >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                               aria-hidden="true"></i>
+                                            <i class=" {% if pro.avg == 3.5 %} fa fa-star-half-o {% elif pro.avg >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                               aria-hidden="true"></i>
+                                            <i class=" {% if pro.avg == 4.5 %} fa fa-star-half-o {% elif pro.avg >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                               aria-hidden="true"></i>
+
+                                        </div>&nbsp;&nbsp;
+                                        <span>({{ pro.count_review }})</span>
+                                    </div>
+                                    <div class="price left " style="text-align: left; height: 30px">
+                                        {% if pro.discount == 0 or pro.discount == None or pro.discount == '0' %}
+
+                                            <span> {{ pro.price|intcomma:False }} تومان </span>
+                                        {% else %}
+                                            <span>{% call_sellprice pro.price pro.discount as price %} {{ price|intcomma:False }} تومان </span>
+                                            <br>
+                                            <del style="font-weight: 200;font-size: 13px; color: #6c6c6c">{{ pro.price|intcomma:False }}
+                                                تومان
+                                            </del>
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    {#  زمانی که محصولی یافت نشد  #}
+                    <div style="margin-left: 300px;"> <!-- show not find product-->#}
+
+                        <img id="not_find_product" style="height: 300px; width: 300px; "
+                             src="{% static '..//static//images//not_find//not_find_product.png' %}">
                         <div>
-                            <span style="padding-left:20px ; font-size: 25px;" >کالایی با این مشخصات پیدا نکردیم</span><img style="height: 50px; width: 35px; " src="{% static '..//static//images//icons//danger.png' %}">
+                            <span style="padding-left:20px ; font-size: 25px;">کالایی با این مشخصات پیدا نکردیم</span><img
+                                style="height: 50px; width: 35px; "
+                                src="{% static '..//static//images//icons//danger.png' %}">
                         </div>
                     </div>
-{% else %}
-{% for i in product %}
-    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-        <div class="product__item product__item-d">
-            <div class="product__thumb fix">
-                <div class="product-image w-img">
-                    <a href="{{ i.get_url }}">
-                        <img src="{{ i.images.url }}" alt="product">
-                    </a>
-                </div>
-                <div class="product-action">
-                    <a href="#" class="icon-box icon-box-1" data-toggle="modal" data-target="#productModalId">
-                        <i class="fal fa-eye"></i>
-                        <i class="fal fa-eye"></i>
-                    </a>
-                    <a href="#" class="icon-box icon-box-1">
-                        <i class="fal fa-heart"></i>
-                        <i class="fal fa-heart"></i>
-                    </a>
-                    <a href="#" class="icon-box icon-box-1">
-                        <i class="fal fa-layer-group"></i>
-                        <i class="fal fa-layer-group"></i>
-                    </a>
-                </div>
+                {% endif %}
             </div>
-            <div class="product__content-3">
-                <h6><a href="{{ i.get_url }}">{{ i.product_name }}</a></h6>
-                <div class="rating mb-5">
-                    <div class="rtl rate-review">
-
-
-                        <i class=" {% if i.avg == 0.5 %} fa fa-star-half-o {% elif i.avg >= 1 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                           aria-hidden="true"></i>
-                        <i class=" {% if i.avg == 1.5 %} fa fa-star-half-o {% elif i.avg >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                           aria-hidden="true"></i>
-                        <i class=" {% if i.avg == 2.5 %} fa fa-star-half-o {% elif i.avg >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                           aria-hidden="true"></i>
-                        <i class=" {% if i.avg == 3.5 %} fa fa-star-half-o {% elif i.avg >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                           aria-hidden="true"></i>
-                        <i class=" {% if i.avg == 4.5 %} fa fa-star-half-o {% elif i.avg >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                           aria-hidden="true"></i>
-
-                    </div>&nbsp;&nbsp;
-                    <span>({{ i.count_review }})</span>
-                </div>
-                <div class="price left " style="text-align: left; height: 30px">
-                    {% if i.discount is not 0 or i.discount is not None or i.discount is not '0' %}
-                        {{ i.discount }}
-                        <span>{% call_sellprice i.price i.discount as price %} {{ price|intcomma:False }} تومان </span><br>
-                        <del style="font-weight: 200;font-size: 13px; color: #6c6c6c"> تومان{{ i.price|intcomma:False }}</del>
-                    {% elif i.discount is 0 or i.discount is None or i.discount is  '0' %}
-                        <span>تومان {{ i.price|intcomma:False }}</span>
-                    {% endif %}
-                </div>
-            </div>
-
         </div>
-
     </div>
-{% endfor %}
-{% endif %}
+
+    {#                        جهت نمایش محصولات با گرید متفاوت#}
+
+
+    <div class="tp-pagination text-center">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="basic-pagination pt-30 pb-30" id="filteredProducts">
+                    <nav>
+                        <ul>
+                            {% if products.has_other_pages %}
+                                <ul>
+                                    {% if products.has_previous %}
+                                        <li class="page-item "><a class="page-link"
+                                                                  href="?page={{ products.pervious_page_number }}">قبلی</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled"><a class="page-link"
+                                                                          href="#">قبلی</a></li>
+                                    {% endif %}
+                                    {% for i in products.paginator.page_range %}
+                                        {% if products.number == i %}
+                                            <li class="page-item active"><a class="page-link"
+                                                                            href="#">{{ i }}</a></li>
+                                        {% else %}
+                                            <li class="page-item"><a class="page-link"
+                                                                     href="?page={{ i }}">{{ i }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if products.has_next %}
+                                        <li class="page-item"><a class="page-link"
+                                                                 href="?page={{ products.next_page_number }}">بعدی</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item disabled"><a class="page-link"
+                                                                          href="#">بعدی</a></li>
+                                    {% endif %}
+
+                                </ul>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

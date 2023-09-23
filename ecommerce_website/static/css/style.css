@@ -221,6 +221,10 @@ input {
 .w-img{
     height: 270px;
 }
+
+.w-img-blog{
+    height: 100px;
+}
 w-img-about{
     height: auto;
 }
@@ -5923,6 +5927,7 @@ w-img-about{
     border-bottom: 2px solid #f3f3f3;
     padding-bottom: 16px;
     line-height: 1;
+    margin-left: 40%;
 }
 
 .featured-author p {
@@ -5979,7 +5984,7 @@ w-img-about{
     display: inline-block;
     position: absolute;
     top: 0;
-    right: 0;
+    right: 120;
 }
 
 .feed-content h6 {

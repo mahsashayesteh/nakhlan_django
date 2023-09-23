@@ -170,6 +170,7 @@
                                        {% for main_category in main_categories %}
                                         <li>
                                             <a href="{{main_category.get_url}}">
+
                                                 {% if main_category.cat_image %}
                                                 <img class=""  style="width: 15px;  height: 15px" src="{{ main_category.cat_image.url }}" alt="عکس دسته بندی ها">
                                                 {% endif %}

@@ -15,32 +15,37 @@ mydb = mysql.connector.connect(
 )
 mycursor = mydb.cursor()
 
-
+sliders = []
 def home(request):
-    products = Product.objects.all().filter(is_available=True).order_by('created_date')
+    global sliders
 
-    for product in products:
+    products = Product.objects.all().filter(is_available=True).order_by('created_date')
+    product_special_offer = Product.objects.all().filter( section__name_show='special offer').order_by('created_date')
+
+    for product in product_special_offer:
+
+        sliders = Slider.objects.all()
+
         fetch_reviews = (
-            " SELECT AVG(rating) as avgrating FROM ecommerce_website.store_reviewrating  WHERE status=1 and product_id={};").format(product.id)
+            "SELECT AVG(rating) as avgrating, COUNT(rating)  as count_rating FROM ecommerce_website.store_reviewrating  WHERE "
+            "status=1 and product_id={};").format(product.id)
         mycursor.execute(fetch_reviews)
         reviews_sql = mycursor.fetchall()
-
         average = 0
 
         if reviews_sql[0][0] is not None:
             product.average = reviews_sql[0][0]
-            product.id = product.id
+            product.count_rating =reviews_sql[0][1]
+
+            reviews = ReviewRating.objects.filter(product_id=product.id, status=True)
         else:
             product.average = 0
-            product.id = product.id
+            product.count_rating = 0
 
-        reviews = ReviewRating.objects.filter(product_id=product.id, status=True)
-        sliders = Slider.objects.all()
     context = {
         'products': products,
-        'reviews': reviews,
-        'product.id': product.id,
         'sliders':sliders,
+        'product_special_offer':product_special_offer,
     }
 
     return render(request, 'home.html', context)

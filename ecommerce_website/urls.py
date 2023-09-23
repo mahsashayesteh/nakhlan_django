@@ -19,16 +19,18 @@ from . import views
 from django.conf.urls.static import static
 from django.conf import settings
 
-
 urlpatterns = [
-    path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
-    path('management_security_dashboard/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('about_us/', views.about_us, name='about_us'),
-    path('contact_us/', views.contact_us, name='contact_us'),
-    path('store/', include('store.urls')),
-    path('cart/', include('carts.urls')),
-    path('accounts/', include('accounts.urls')),
-    path('orders/', include('orders.urls')),
+                  path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
+                  path('management_security_dashboard/', admin.site.urls),
+                  path('', views.home, name='home'),
+                  path('about_us/', views.about_us, name='about_us'),
+                  path('contact_us/', views.contact_us, name='contact_us'),
+                  path('store/', include('store.urls')),
+                  path('cart/', include('carts.urls')),
+                  path('accounts/', include('accounts.urls')),
+                  path('orders/', include('orders.urls')),
+                  path('blogs/', include('blogs.urls')),
 
-] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+
+
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

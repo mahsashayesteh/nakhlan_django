@@ -3,6 +3,37 @@
 {% load humanize %}
 {% block content %}
     {% load static %}
+    <!-- offcanvas area start -->
+    <div class="offcanvas__area">
+        <div class="offcanvas__wrapper">
+            <div class="offcanvas__close">
+                <button class="offcanvas__close-btn" id="offcanvas__close-btn">
+                    <i class="fal fa-times"></i>
+                </button>
+            </div>
+            <div class="offcanvas__content">
+                <div class="offcanvas__logo mb-40">
+                    <a href="index.html">
+                        <img src="assets/img/logo/logo-white.png" alt="logo">
+                    </a>
+                </div>
+                <div class="offcanvas__search mb-25">
+                    <form action="#">
+                        <input type="text" placeholder="What are you searching for?">
+                        <button type="submit"><i class="far fa-search"></i></button>
+                    </form>
+                </div>
+                <div class="mobile-menu fix"></div>
+                <div class="offcanvas__action">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- offcanvas area end -->
+    <div class="body-overlay"></div>
+    <!-- offcanvas area end -->
+
     <main class="rtl">
         <!-- page-banner-area-start -->
         <div class="page-banner-area page-banner-height" data-background="{% static 'images/banner/page-banner-about-us.png' %}">
@@ -11,7 +42,8 @@
                     <div class="col-xl-12">
                         <div class="page-banner-content text-center">
                             <h3>درباره ما</h3>
-                            <p>آرامشی شگفت انگیز همه جانم را فرا گرفته است، مثل این صبح های شیرین تابستانی که با تمام وجود از آن لذت می برم.</p>
+                            <p>آرامشی شگفت انگیز همه جانم را فرا گرفته است، مثل این صبح های شیرین تابستانی که با تمام وجود از آن
+                                لذت می برم.</p>
                             <div class="page-bottom-btn mt-55">
                                 <a href="{% url 'store' %}" class="st-btn-4">کشف کنید</a>
                             </div>
@@ -32,7 +64,8 @@
                             <h4>سلام,</h4>
                             <h5 class="banner-t mb-30">با 10 سال سابقه </h5>
                             <p class="about-text">بیش از 10 سال است که نیاز مشتریان عزیزم را در خصوص پوشاک تامین میکنم.</p>
-                            <p>در کنار شما مشتریان (دوستای عزیزم) یاد گرفتیم و بزرگ شدیم هر روز بیشتر از دیروز به فکر تامین نیازهای شما هستیم.</p></div>
+                            <p>در کنار شما مشتریان (دوستای عزیزم) یاد گرفتیم و بزرگ شدیم هر روز بیشتر از دیروز به فکر تامین
+                                نیازهای شما هستیم.</p></div>
                     </div>
                     <div class="col-xl-6 col-lg-6">
                         <div class="about-image w-img">
@@ -63,7 +96,8 @@
                                 <i class="fal fa-share-square"></i>
                             </div>
                             <h6>انتخاب ثبت سفارش </h6>
-                            <p> کاربرا می تواند در قسمت جزِئیات کالاها با افزودن محصول به سبد خرید خود و تکمیل مراحل خرید، سفارش خود را ثبت کنند.<a style="color: orangered" href="{% url 'store' %}">فروشگاه</a>
+                            <p> کاربرا می تواند در قسمت جزِئیات کالاها با افزودن محصول به سبد خرید خود و تکمیل مراحل خرید، سفارش
+                                خود را ثبت کنند.<a style="color: orangered" href="{% url 'store' %}">فروشگاه</a>
                                 <br> <br></p>
                             <div class="s-count-number" style="text-align: left; float: left">
                                 <span>01</span>
@@ -76,8 +110,9 @@
                                 <i class="fal fa-file"></i>
                             </div>
                             <h6>بررسی و ارسال محصول توسط فروشگاه نخلان</h6>
-                            <p> سفارشات ثبت شده توسط فروشگاه نخلان برسی و سپس محصولات به صورت خاص و زیبا بسته بندی شده و برای مشتریان ارسال می گردد.<a style="color: orangered"
-                                                                                                                                                       href="{% url 'store' %}">فروشگاه</a></p>
+                            <p> سفارشات ثبت شده توسط فروشگاه نخلان برسی و سپس محصولات به صورت خاص و زیبا بسته بندی شده و برای
+                                مشتریان ارسال می گردد.<a style="color: orangered"
+                                                         href="{% url 'store' %}">فروشگاه</a></p>
                             <div class="s-count-number">
                                 <span>02</span>
                             </div>
@@ -89,7 +124,8 @@
                                 <i class="fal fa-thumbs-up"></i>
                             </div>
                             <h6> دریافت سفارش توسط مشتریان </h6>
-                            <p>زمان دریافت سفارشات متغییر بوده در بازه زمانی 3 الی 5 روز می باشد. در صورتی که مشتری عزیز از سفارش رضایت داشتند می تواند پیام رضایت خود را طریق صفحه ارتباط با ما در میان
+                            <p>زمان دریافت سفارشات متغییر بوده در بازه زمانی 3 الی 5 روز می باشد. در صورتی که مشتری عزیز از سفارش
+                                رضایت داشتند می تواند پیام رضایت خود را طریق صفحه ارتباط با ما در میان
                                 بگذارند.</p>
                             <div class="s-count-number">
                                 <span>03</span>
@@ -115,8 +151,8 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-6 col-lg-6">
-                    <div class="main-abs mb-30">
-                        <div class="ab-counter-image w-img ">
+                        <div class="main-abs mb-30">
+                            <div class="ab-counter-image w-img ">
 
                                 <img src="{% static 'images/about/ab-01.png' %}" alt="">
                             </div>
@@ -127,7 +163,7 @@
                                             <div class="counter-icon mr-10">
                                                 <img src="{% static 'images/about/c-icon-01.png' %}" alt="">
                                             </div>
-                                            <div class="counter_info " >
+                                            <div class="counter_info ">
                                                 <span class="counter">1200</span>
                                                 <p>+</p>
                                             </div>
@@ -141,8 +177,8 @@
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6">
-                    <div class="main-abs mb-30">
-                        <div class="ab-counter-image w-img mb-40">
+                        <div class="main-abs mb-30">
+                            <div class="ab-counter-image w-img mb-40">
                                 <img src="{% static 'images/about/ab-02.png' %}" alt="">
                             </div>
                             <div class="row">
@@ -155,8 +191,8 @@
                                             </div>
                                             <div class="counter_info">
                                                 <span class="counter">1000</span>
-                                               <p>+</p>
-                                           </div>
+                                                <p>+</p>
+                                            </div>
                                         </div>
                                         <h5>کاربر آنلاین</h5>
                                     </div>

@@ -7,6 +7,7 @@ from category.models import Category, MainCategory, SubCategory
 from django.urls import reverse
 from accounts.models import Account, UserProfile
 
+
 from django_jalali.db import models as jmodels
 from django.db.models import Avg
 
@@ -23,6 +24,7 @@ from django.db.models import Avg
 
 class Section(models.Model):
     name = models.CharField(max_length=100, verbose_name="نام")
+    name_show = models.CharField(max_length=100, verbose_name="نام_جهت نمایش", default='null')
 
     def __str__(self):
         return self.name
@@ -31,6 +33,7 @@ class Section(models.Model):
 class BrandsName(models.Model):
     name = models.CharField(max_length=250)
     is_available = models.BooleanField(default=True, verbose_name="فعال است")
+
     def __str__(self):
         return self.name
 
@@ -39,8 +42,8 @@ class Product(models.Model):
     product_name = models.CharField(max_length=200, unique=True, verbose_name="نام کالا")
     slug = models.SlugField(max_length=200, unique=True)
     brand = models.ForeignKey(BrandsName, on_delete=models.DO_NOTHING, null=True)
-    product_information = QuillField(null=True, verbose_name= "اطلاعات کالا" , blank=True)
-    description = QuillField( blank=True, verbose_name="توضیحات" , null=True)
+    product_information = QuillField(null=True, verbose_name="اطلاعات کالا", blank=True)
+    description = QuillField(blank=True, verbose_name="توضیحات", null=True)
     price = models.IntegerField(verbose_name="قیمت")
     discount = models.IntegerField(null=True, verbose_name="تخفیف")
     tags = models.CharField(max_length=100, null=True, verbose_name="تگ")
@@ -96,7 +99,7 @@ class Variation(models.Model):
 class ReviewRating(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="کالا")
     user = models.ForeignKey(Account, on_delete=models.CASCADE, verbose_name="کاربر ")
-    
+
     subject = models.CharField(max_length=256, blank=True, verbose_name="موضوع")
     review = models.TextField(max_length=500, blank=True, verbose_name="دیدگاه")
     rating = models.FloatField(verbose_name="رتبه بندی")
@@ -120,15 +123,15 @@ class ProductGallery(models.Model):
         verbose_name = 'productgallery',
         verbose_name_plural = 'product gallery'
 
+
 class Slider(models.Model):
     discount_deal = (
-        ('پیشنهاد ویژه','پیشنهاد ویژه'),
-        ('جدیدترین ها','جدیدترین ها'),
+        ('پیشنهاد ویژه', 'پیشنهاد ویژه'),
+        ('جدیدترین ها', 'جدیدترین ها'),
     )
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name="کالا", default=None)
-    image=models.ImageField(upload_to='photos/slider_imgs')
+    image = models.ImageField(upload_to='photos/slider_imgs')
     discount_deal = models.CharField(choices=discount_deal, max_length=100, default=0)
-
 
     def __str__(self):
         return self.product.product_name

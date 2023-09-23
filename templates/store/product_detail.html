@@ -2,52 +2,56 @@
 {% load product_tags %}
 {% load humanize %}
 {% block content %}
-
     {% load static %}
 
 
-        <!-- product-details-start -->
-        <div class="product-details rtl" style=" margin-top: 50px;">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="product__details-nav d-sm-flex align-items-start">
+    <!-- product-details-start -->
+    <div class="product-details rtl" style=" margin-top: 50px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="product__details-nav d-sm-flex align-items-start">
 
-                            <ul class="nav nav-tabs flex-sm-column justify-content-between" id="productThumbTab" role="tablist">
+                        <ul class="nav nav-tabs flex-sm-column justify-content-between" id="productThumbTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link " id="thumb-tab" data-toggle="tab" data-target="#thumb" type="button"
+                                        role="tab" aria-controls="thumb" aria-selected="true">
+                                    <img src="{{ single_product.images.url }}" alt="" style='height:85px; width:85px;'>
+                                </button>
+                            </li>
+                            {% for i in product_gallery.all %}
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link " id="thumb-tab" data-toggle="tab" data-target="#thumb" type="button" role="tab" aria-controls="thumb" aria-selected="true">
-                                        <img src="{{ single_product.images.url }}" alt="" style='height:85px; width:85px;'>
+                                    <button class="nav-link " id="thumb{{ i.id }}-tab" data-toggle="tab"
+                                            data-target="#thumb{{ i.id }}" type="button" role="tab"
+                                            aria-controls="thumb{{ i.id }}" aria-selected="true">
+                                        <img src="{{ i.image.url }}" alt="" style='height:85px; width:85px;'>
                                     </button>
-                                  </li>
-                                {% for i in product_gallery.all %}
-                                <li class="nav-item" role="presentation">
-                                  <button class="nav-link " id="thumb{{ i.id }}-tab" data-toggle="tab" data-target="#thumb{{ i.id }}" type="button" role="tab" aria-controls="thumb{{ i.id }}" aria-selected="true">
-                                      <img src="{{i.image.url}}" alt="" style='height:85px; width:85px;'>
-                                  </button>
                                 </li>
+                            {% endfor %}
+
+                        </ul>
+                        <div class="product__details-thumb">
+                            <div class="tab-content" id="productThumbContent">
+                                <div class="tab-pane fade show active" id="thumb" role="tabpanel" aria-labelledby="thumb-tab">
+                                    <div class="product__details-nav-thumb w-img">
+                                        <img src="{{ single_product.images.url }}" alt="عکس محصول"
+                                             style='height:400px; width:350px;'>
+                                    </div>
+                                </div>
+                                {% for i in product_gallery.all %}
+                                    <div class="tab-pane fade show " id="thumb{{ i.id }}" role="tabpanel"
+                                         aria-labelledby="thumb{{ i.id }}-tab">
+                                        <div class="product__details-nav-thumb w-img">
+                                            <img src="{{ i.image.url }}" alt="">
+                                        </div>
+                                    </div>
                                 {% endfor %}
-                                
-                            </ul>
-                            <div class="product__details-thumb">
-                                <div class="tab-content" id="productThumbContent">
-                                    <div class="tab-pane fade show active" id="thumb" role="tabpanel" aria-labelledby="thumb-tab">
-                                        <div class="product__details-nav-thumb w-img">
-                                            <img src="{{ single_product.images.url}}" alt="عکس محصول" style='height:400px; width:350px;' >
-                                        </div>
-                                    </div>
-                                    {% for i in product_gallery.all %}
-                                    <div class="tab-pane fade show " id="thumb{{ i.id }}" role="tabpanel" aria-labelledby="thumb{{ i.id }}-tab">
-                                        <div class="product__details-nav-thumb w-img">
-                                            <img src="{{i.image.url}}" alt="" >
-                                        </div>
-                                    </div>
-                                    {% endfor %}
-                                    
-                                  </div>
+
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                </div>
+                <div class="col-xl-6">
                     <form action="{% url 'add_cart' single_product.id %} " method="POST">
                         {% csrf_token %}
                         <div class="product__details-content">
@@ -55,70 +59,78 @@
                             <div class="pd-rating mb-10">
                                 <ul class="rating">
                                     <div class="rtl rate-review">
-                                        
-                                         <i class=" {% if avg == 0.5 %} fa fa-star-half-o {% elif avg >= 1 %} fa fa-star {% else %} fal fa-star  {% endif %}"
-                                            aria-hidden="true"></i>
-                                         <i class=" {% if avg == 1.5 %} fa fa-star-half-o {% elif avg >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                                            aria-hidden="true"></i>
-                                         <i class=" {% if avg == 2.5 %} fa fa-star-half-o {% elif avg >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                                            aria-hidden="true"></i>
-                                         <i class=" {% if avg == 3.5 %} fa fa-star-half-o {% elif avg >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                                            aria-hidden="true"></i>
-                                         <i class=" {% if avg == 4.5 %} fa fa-star-half-o {% elif avg >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                                            aria-hidden="true"></i>
-                                        
+
+                                        <i class=" {% if avg == 0.5 %} fa fa-star-half-o {% elif avg >= 1 %} fa fa-star {% else %} fal fa-star  {% endif %}"
+                                           aria-hidden="true"></i>
+                                        <i class=" {% if avg == 1.5 %} fa fa-star-half-o {% elif avg >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                           aria-hidden="true"></i>
+                                        <i class=" {% if avg == 2.5 %} fa fa-star-half-o {% elif avg >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                           aria-hidden="true"></i>
+                                        <i class=" {% if avg == 3.5 %} fa fa-star-half-o {% elif avg >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                           aria-hidden="true"></i>
+                                        <i class=" {% if avg == 4.5 %} fa fa-star-half-o {% elif avg >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                           aria-hidden="true"></i>
+
                                     </div>
                                 </ul>
                                 <span>({{ count }} دیدگاه)</span>
-                                
+
                             </div>
                             {% if single_product.discount is not None or single_product.discount is not 0 %}
-                            <div class="price mb-10">
-                                <span>{% call_sellprice single_product.price single_product.discount as price %} {{ price|intcomma:False }}  تومان </span>&nbsp&nbsp<del>{{single_product.price|intcomma}}</del>
-                            </div>
-                            {%  else %}
-                             <div class="price mb-10">
-                                <span>{{ single_product.price|intcomma:False }} تومان</span>
-                            </div>
+                                <div class="price mb-10">
+                                    <span>{% call_sellprice single_product.price single_product.discount as price %} {{ price|intcomma:False }}  تومان </span>&nbsp&nbsp
+                                    <del>{{ single_product.price|intcomma }}</del>
+                                </div>
+                            {% else %}
+                                <div class="price mb-10">
+                                    <span>{{ single_product.price|intcomma:False }} تومان</span>
+                                </div>
                             {% endif %}
                             <div class="features-des mb-20 mt-10">
                                 <ul>
-                                    <li><a href=''> {{single_product.product_information.html|safe}} </a></li>
-                                    
+                                    <li><a href=''> {{ single_product.product_information.html|safe }} </a></li>
+
                                 </ul>
                             </div>
                             <div class="row">
-                                    <div class="item-option-select">
-                                        {% if single_product.variation_set.colors %}
-                                            <h6 style="text-align: right;">رنگ</h6>
-                                            <select name="color" class="form-control float-end" required>
-                                                <option value='' disabled selected> انتخاب</option>
-                                                {% for i in single_product.variation_set.colors %}
-                                                    <option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        {% endif %}
-                                    </div>
+                                <div class="item-option-select">
+                                    {% if single_product.variation_set.colors %}
+                                        <h6 style="text-align: right;">رنگ</h6>
+                                        <select name="color" class="form-control float-end" required>
+                                            <option value='' disabled selected> انتخاب</option>
+                                            {% for i in single_product.variation_set.colors %}
+                                                <option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
                                 </div>
-                                <div class="row">
-                                    <div class="item-option-select">
-                                        {% if single_product.variation_set.sizes %}
-                                            <h6 style="text-align: right;">اندازه</h6>
-                                            <select name="size" class="form-control float-end" required="required" title="لطفا این فیلد تکمیل گردد">
-                                                <option class="align-right text-right " style="direction: rtl" value=''  disabled selected> انتخاب</option>
-                                                {% for i in single_product.variation_set.sizes %}
-                                                    <option class="align-right text-right" style="direction: rtl" value="{{ i.variation_value | lower }}"> {{ i.variation_value | capfirst }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        {% endif %}
-                                    
-                                    </div>
+                            </div>
+                            <div class="row">
+                                <div class="item-option-select">
+                                    {% if single_product.variation_set.sizes %}
+                                        <h6 style="text-align: right;">اندازه</h6>
+                                        <select name="size" class="form-control float-end" required="required"
+                                                title="لطفا این فیلد تکمیل گردد">
+                                            <option class="align-right text-right " style="direction: rtl" value='' disabled
+                                                    selected> انتخاب
+                                            </option>
+                                            {% for i in single_product.variation_set.sizes %}
+                                                <option class="align-right text-right" style="direction: rtl"
+                                                        value="{{ i.variation_value | lower }}"> {{ i.variation_value | capfirst }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %}
 
                                 </div>
-                            
+
+                            </div>
+
                             <div class="cart-option mb-15">
                                 <div class="product-quantity mr-20">
-                                    <div class="cart-plus-minus p-relative"><input name="quantity" type="text" value="1"><div class="dec qtybutton">-</div><div class="inc qtybutton">+</div></div>
+                                    <div class="cart-plus-minus p-relative"><input name="quantity" type="text" value="1">
+                                        <div class="dec qtybutton">-</div>
+                                        <div class="inc qtybutton">+</div>
+                                    </div>
                                 </div>
                                 <button type="submit" href="{% url 'cart' %}" class="cart-btn">افزودن به سبد</button>
                             </div>
@@ -127,7 +139,7 @@
                                     <div class="dm-item mr-20">
                                         <a href="#"><i class="fal fa-heart"></i>افزودن به مورد علاقه ها</a>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="d-meta-left">
                                     <div class="dm-item">
@@ -139,190 +151,218 @@
                                 <div class="product_info">
                                         <span class="sku_wrapper">
                                         <span class="title">برند:</span>
-                                        <span class="sku">{{ single_product.brand}}</span>
+                                        <span class="sku">{{ single_product.brand }}</span>
                                     </span>
                                     <span class="posted_in">
                                         <span class="title">دسته بندی:</span>
-                                        <a href="#">{{single_product.category}}</a>
+                                        <a href="#">{{ single_product.category }}</a>
                                         
                                     </span>
                                     <span class="tagged_as">
                                         <span class="title">تگ ها:</span>
-                                        <a href="#">{{ single_product.tags}}</a>, 
+                                        <a href="#">{{ single_product.tags }}</a>,
                                         
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </form>
-                    </div>
                 </div>
             </div>
         </div>
-        <!-- product-details-end -->
+    </div>
+    <!-- product-details-end -->
 
-        <!-- product-details-des-start -->
-        <div class="product-details-des mt-40 mb-60 rtl">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="product__details-des-tab">
-                            <ul class="nav nav-tabs" id="productDesTab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                  <button class="nav-link active" id="des-tab" data-toggle="tab" data-target="#des" type="button" role="tab" aria-controls="des" aria-selected="true">توضیحات </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="aditional-tab" data-toggle="tab" data-target="#aditional" type="button" role="tab" aria-controls="aditional" aria-selected="false">اطلاعات تکمیلی</button>
-                                  </li>
-                                <li class="nav-item" role="presentation">
-                                  <button class="nav-link" id="review-tab" data-toggle="tab" data-target="#review" type="button" role="tab" aria-controls="review" aria-selected="false">دیدگاه ({{count}}) </button>
-                                </li>
-                              </ul>
-                        </div>
+    <!-- product-details-des-start -->
+    <div class="product-details-des mt-40 mb-60 rtl">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="product__details-des-tab">
+                        <ul class="nav nav-tabs" id="productDesTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="des-tab" data-toggle="tab" data-target="#des" type="button"
+                                        role="tab" aria-controls="des" aria-selected="true">توضیحات
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="aditional-tab" data-toggle="tab" data-target="#aditional"
+                                        type="button" role="tab" aria-controls="aditional" aria-selected="false">اطلاعات تکمیلی
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="review-tab" data-toggle="tab" data-target="#review" type="button"
+                                        role="tab" aria-controls="review" aria-selected="false">دیدگاه ({{ count }})
+                                </button>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                <div class="tab-content" id="prodductDesTaContent">
-                    <div class="tab-pane fade active show" id="des" role="tabpanel" aria-labelledby="des-tab">
-                        <div class="product__details-des-wrapper text-right" style=" direction: rtl" >
-                            {{ single_product.description.html|safe}}
-                            </div>
+            </div>
+            <div class="tab-content" id="prodductDesTaContent">
+                <div class="tab-pane fade active show" id="des" role="tabpanel" aria-labelledby="des-tab">
+                    <div class="product__details-des-wrapper text-right" style=" direction: rtl">
+                        {{ single_product.description.html.safe }}
                     </div>
-                    <div class="tab-pane fade" id="aditional" role="tabpanel" aria-labelledby="aditional-tab">
-                        <div class="product__desc-info">
-                            <ul>
-                                {% for i in single_product.additional_infomation_set.all %}
-                               <li>
-                                  <h6>{{i.specification}}</h6>
-                                  <span>{{i.detail}}</span>
-                               </li>
-                              {% endfor %}
-                            </ul>
-                         </div>
+                </div>
+                <div class="tab-pane fade" id="aditional" role="tabpanel" aria-labelledby="aditional-tab">
+                    <div class="product__desc-info">
+                        <ul>
+                            {% for i in single_product.additional_infomation_set.all %}
+                                <li>
+                                    <h6>{{ i.specification }}</h6>
+                                    <span>{{ i.detail }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     </div>
-                    <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                        <div class="product__details-review">
-                            <div class="row">
-                                <div class="col-xl-4">
-                                    <div class="review-rate">
+                </div>
+                <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+                    <div class="product__details-review">
+                        <div class="row">
+                            <div class="col-xl-4">
+                                <div class="review-rate">
 
-                                          <h5>{{ avg|default_if_none:'0' }}</h5>
+                                    <h5>{{ avg|default_if_none:'0' }}</h5>
 
-                                        <div class="review-star rate-review">
-                                            <i class=" {% if avg == 0.5 %} fa fa-star-half-o {% elif avg >= 1 %} fa fa-star {% else %} fal fa-star  {% endif %}"
-                                                aria-hidden="true"></i>
-                                             <i class=" {% if avg == 1.5 %} fa fa-star-half-o {% elif avg >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                                                aria-hidden="true"></i>
-                                             <i class=" {% if avg == 2.5 %} fa fa-star-half-o {% elif avg >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                                                aria-hidden="true"></i>
-                                             <i class=" {% if avg == 3.5 %} fa fa-star-half-o {% elif avg >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                                                aria-hidden="true"></i>
-                                             <i class=" {% if avg == 4.5 %} fa fa-star-half-o {% elif avg >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
-                                                aria-hidden="true"></i>
-                                        </div>
-                                        <span class="review-count">{{count}} دیدگاه</span>
+                                    <div class="review-star rate-review">
+                                        <i class=" {% if avg == 0.5 %} fa fa-star-half-o {% elif avg >= 1 %} fa fa-star {% else %} fal fa-star  {% endif %}"
+                                           aria-hidden="true"></i>
+                                        <i class=" {% if avg == 1.5 %} fa fa-star-half-o {% elif avg >= 2 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                           aria-hidden="true"></i>
+                                        <i class=" {% if avg == 2.5 %} fa fa-star-half-o {% elif avg >= 3 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                           aria-hidden="true"></i>
+                                        <i class=" {% if avg == 3.5 %} fa fa-star-half-o {% elif avg >= 4 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                           aria-hidden="true"></i>
+                                        <i class=" {% if avg == 4.5 %} fa fa-star-half-o {% elif avg >= 5 %} fa fa-star {% else %} fal fa-star {% endif %}"
+                                           aria-hidden="true"></i>
                                     </div>
+                                    <span class="review-count">{{ count }} دیدگاه</span>
                                 </div>
-                                <div class="col-xl-8">
-                                    <div class="review-des-infod">
-                                        <h6>{{count}} دیدگاه برای "<span>{{single_product.product_name}}</span>"</h6>
-                                        {% if reviews %}
-                                         {% for review in reviews %}
-                                        <div class="review-details-des">
+                            </div>
+                            <div class="col-xl-8">
+                                <div class="review-des-infod">
+                                    <h6>{{ count }} دیدگاه برای "<span>{{ single_product.product_name }}</span>"</h6>
+                                    {% if reviews %}
+                                        {% for review in reviews %}
+                                            <div class="review-details-des">
 
-                                            <div class="author-image ml-15">
-                                                <a href="#"><img src="{{review.user.userprofile.profile_picture.url}}" alt=""></a>
-                                            </div>
-                                            <div class="review-details-content">
-                                                <div class="str-info">
-                                                    <div class="review-star mr-15 rtl rate-review">
-                                                        <i class=" fa fa-star{% if review.rating == 0.5 %}-half-o {% elif review.rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
-                                                        <i class=" fa fa-star{% if review.rating == 1.5 %}-half-o {% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
-                                                        <i class=" fa fa-star{% if review.rating == 2.5 %}-half-o {% elif review.rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
-                                                        <i class=" fa fa-star{% if review.rating == 3.5 %}-half-o {% elif review.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
-                                                        <i class=" fa fa-star{% if review.rating == 4.5 %}-half-o {% elif review.rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
-                                                    </div>
-                                                    <div class="add-review-option">
-                                                        <a href="#"></a>
-                                                    </div>
+                                                <div class="author-image ml-15">
+                                                    <a href="#"><img src="{{ review.user.userprofile.profile_picture.url }}"
+                                                                     alt=""></a>
                                                 </div>
-                                                <div class="name-date mb-30">
-                                                    <h6> {{ review.user.full_name }} – <span> {{ review.update_at }} </span></h6>
+                                                <div class="review-details-content">
+                                                    <div class="str-info">
+                                                        <div class="review-star mr-15 rtl rate-review">
+                                                            <i class=" fa fa-star{% if review.rating == 0.5 %}-half-o {% elif review.rating < 1 %}-o {% endif %}"
+                                                               aria-hidden="true"></i>
+                                                            <i class=" fa fa-star{% if review.rating == 1.5 %}-half-o {% elif review.rating < 2 %}-o {% endif %}"
+                                                               aria-hidden="true"></i>
+                                                            <i class=" fa fa-star{% if review.rating == 2.5 %}-half-o {% elif review.rating < 3 %}-o {% endif %}"
+                                                               aria-hidden="true"></i>
+                                                            <i class=" fa fa-star{% if review.rating == 3.5 %}-half-o {% elif review.rating < 4 %}-o {% endif %}"
+                                                               aria-hidden="true"></i>
+                                                            <i class=" fa fa-star{% if review.rating == 4.5 %}-half-o {% elif review.rating < 5 %}-o {% endif %}"
+                                                               aria-hidden="true"></i>
+                                                        </div>
+                                                        <div class="add-review-option">
+                                                            <a href="#"></a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="name-date mb-30">
+                                                        <h6> {{ review.user.full_name }} – <span> {{ review.update_at }} </span>
+                                                        </h6>
+                                                    </div>
+                                                    <h6>{{ review.subject }}</h6>
+                                                    <p>{{ review.review }}</p>
                                                 </div>
-                                                <h6>{{review.subject}}</h6>
-                                                <p>{{review.review}}</p>
                                             </div>
-                                        </div>
                                         {% endfor %}
-                                        {% endif%}
-                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-xl-12">
-                                    <div class="product__details-comment ">
-                                        <form action="{% url 'submit_review' single_product.id %}" method="POST">
-                                            {% csrf_token %}
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="product__details-comment ">
+                                    <form action="{% url 'submit_review' single_product.id %}" method="POST">
+                                        {% csrf_token %}
                                         <div class="comment-title mb-20">
-                                           <h3>دیدگاه خود را با دیگران به اشتراک بگذارید.</h3>
-                                           
+                                            <h3>دیدگاه خود را با دیگران به اشتراک بگذارید.</h3>
+
                                         </div>
                                         <div class="comment-rating mb-20">
-                                           <span>امتیاز کلی</span>
-                                           <ul>
-                                            <div class="rate" style='margin-bottom:-10px'>
-                                                <input type="radio" name="rating" id="rating10" value="5" required><label for="rating10" title="5"></label>
-                                                <input type="radio" name="rating" id="rating9" value="4.5" required><label for="rating9" title="4.5" class="half"></label>
-                                                <input type="radio" name="rating" id="rating8" value="4" required><label for="rating8" title="4"></label>
-                                                <input type="radio" name="rating" id="rating7" value="3.5" required><label for="rating7" title="3.5" class="half"></label>
-                                                <input type="radio" name="rating" id="rating6" value="3" required><label for="rating6" title="3"></label>
-                                                <input type="radio" name="rating" id="rating5" value="2.5" required><label for="rating5" title="2.5" class="half"></label>
-                                                <input type="radio" name="rating" id="rating4" value="2" required><label for="rating4" title="2"></label>
-                                                <input type="radio" name="rating" id="rating3" value="1.5" required><label for="rating3" title="1.5" class="half"></label>
-                                                <input type="radio" name="rating" id="rating2" value="1" required><label for="rating2" title="1"></label>
-                                                <input type="radio" name="rating" id="rating1" value="0.5" required><label for="rating1" title="0.5" class="half"></label>
-                                            </div>
-                                           </ul>
+                                            <span>امتیاز کلی</span>
+                                            <ul>
+                                                <div class="rate" style='margin-bottom:-10px'>
+                                                    <input type="radio" name="rating" id="rating10" value="5" required><label
+                                                        for="rating10" title="5"></label>
+                                                    <input type="radio" name="rating" id="rating9" value="4.5" required><label
+                                                        for="rating9" title="4.5" class="half"></label>
+                                                    <input type="radio" name="rating" id="rating8" value="4" required><label
+                                                        for="rating8" title="4"></label>
+                                                    <input type="radio" name="rating" id="rating7" value="3.5" required><label
+                                                        for="rating7" title="3.5" class="half"></label>
+                                                    <input type="radio" name="rating" id="rating6" value="3" required><label
+                                                        for="rating6" title="3"></label>
+                                                    <input type="radio" name="rating" id="rating5" value="2.5" required><label
+                                                        for="rating5" title="2.5" class="half"></label>
+                                                    <input type="radio" name="rating" id="rating4" value="2" required><label
+                                                        for="rating4" title="2"></label>
+                                                    <input type="radio" name="rating" id="rating3" value="1.5" required><label
+                                                        for="rating3" title="1.5" class="half"></label>
+                                                    <input type="radio" name="rating" id="rating2" value="1" required><label
+                                                        for="rating2" title="1"></label>
+                                                    <input type="radio" name="rating" id="rating1" value="0.5" required><label
+                                                        for="rating1" title="0.5" class="half"></label>
+                                                </div>
+                                            </ul>
                                         </div>
                                         <div class="comment-input-box">
 
-                                              <div class="row">
+                                            <div class="row">
                                                 <div class="col-xxl-12 col-xl-12">
                                                     <div class=" comment-input">
-                                                       <input class='form-control' type="text" placeholder="نام" name='name'>
+                                                        <input class='form-control' type="text" placeholder="نام" name='name'>
                                                     </div>
-                                                 </div>
-                                                 <div class="col-xxl-12 col-xl-12">
+                                                </div>
+                                                <div class="col-xxl-12 col-xl-12">
                                                     <div class="comment-input ">
-                                                       <input  class='form-control' type="text" placeholder="موضوع" name='subject'>
+                                                        <input class='form-control' type="text" placeholder="موضوع"
+                                                               name='subject'>
                                                     </div>
-                                                 </div>
-                                                 <div class="col-xxl-12">
-                                                       <textarea placeholder="دیدگاه شما" class="form-control comment-input comment-textarea" name='review'></textarea>
-                                                 </div>
-                                                 
-                                                 <div class="col-xxl-12">
+                                                </div>
+                                                <div class="col-xxl-12">
+                                                    <textarea placeholder="دیدگاه شما"
+                                                              class="form-control comment-input comment-textarea"
+                                                              name='review'></textarea>
+                                                </div>
+
+                                                <div class="col-xxl-12">
                                                     <div class="comment-submit">
                                                         {% if user.is_authenticated %}
-                                                        <input type="submit" class=' form-control cart-btn' value="ارسال دیدگاه" class="form-control">
-                                                    {% else %}
-                                                        <p> کاربر گرامی! برای ثبت دیدگاه ابتدا وارد شوید. <a style= 'color: #f56004;' href="{% url 'login' %}">ورود</a></p>
-                                                    {% endif %}
+                                                            <input type="submit" class=' form-control cart-btn'
+                                                                   value="ارسال دیدگاه" class="form-control">
+                                                        {% else %}
+                                                            <p> کاربر گرامی! برای ثبت دیدگاه ابتدا وارد شوید. <a
+                                                                    style='color: #f56004;' href="{% url 'login' %}">ورود</a></p>
+                                                        {% endif %}
                                                     </div>
                                                     {% include 'includes/alerts.html' %}
-                                                 </div>
-                                              </div>
-                                           </form>
-                                        </div>
-                                     </div>
-
+                                                </div>
+                                            </div>
+                                    </form>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- product-details-des-end -->
+    </div>
+    </div>
+    <!-- product-details-des-end -->
 
 
 
@@ -352,8 +392,8 @@
     <!-- <section class="section-content padding-y bg">
         <div class="container"> -->
 
-            <!-- ============================ COMPONENT 1 ================================= -->
-            <!-- <div class="card" style="direction: rtl;">
+    <!-- ============================ COMPONENT 1 ================================= -->
+    <!-- <div class="card" style="direction: rtl;">
                 <div class="row no-gutters">
                     <aside class="col-md-6">
                         <article class="gallery-wrap">
@@ -395,7 +435,8 @@
                                             <select name="color" class="form-control" required>
                                                 <option value='' disabled selected> انتخاب</option>
                                                 {% for i in single_product.variation_set.colors %}
-                                                    <option value="{{ i.variation_value | lower }}">{{ i.variation_value | capfirst }}</option>
+                                                    <option value="{{ i.variation_value | lower }}">
+        {{ i.variation_value | capfirst }}</option>
                                                 {% endfor %}
                                             </select>
                                         {% endif %}
@@ -408,7 +449,8 @@
                                             <select name="size" class="form-control" required>
                                                 <option value='' disabled selected> انتخاب</option>
                                                 {% for i in single_product.variation_set.sizes %}
-                                                    <option value="{{ i.variation_value | lower }}"> {{ i.variation_value | capfirst }}</option>
+                                                    <option value="{{ i.variation_value | lower }}">
+        {{ i.variation_value | capfirst }}</option>
                                                 {% endfor %}
                                             </select>
                                         {% endif %}

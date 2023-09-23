@@ -5,6 +5,7 @@
 {% block content %}
 
     <main class="rtl">
+
         <!-- breadcrumb__area-start -->
         <section class="breadcrumb__area box-plr-75">
             <div class="container">
@@ -35,28 +36,37 @@
                                 <form action="#">
                                     {% for category in categories %}
                                         <div class="single-widget-category">
-                                            <input type="checkbox" data-filter="category" id="{{ category.id }}" value="{{ category.id }}" class="filter-checkbox">
-                                            <label for="{{ category.id }}">{{ category.name }} <span>&nbsp;({{ category.product_set.all.count }})</span></label>
+                                            <input type="checkbox" data-filter="category" id="{{ category.id }}"
+                                                   value="{{ category.id }}" class="filter-checkbox">
+                                            <label for="{{ category.id }}">{{ category.name }}
+                                                <span>&nbsp;({{ category.product_set.all.count }})</span></label>
                                         </div>
                                     {% endfor %}
                                 </form>
                             </div>
                         </div>
-                        <div class="product-widget mb-30">
+                        {#                    فیلتر بر اساس قیمت کالاها            #}
+                        <div class="product-widget mb-30" class="">
                             <h5 class="pt-title">فیلتر قیمت</h5>
                             <div class="price__slider mt-30">
-                                <input type="range" class="multi-range success" style="color:#e7c4c4;" value="FilterPrice" min="{{ min_price.price__min }}" max="{{ max_price.price__max }}"
+                                <input type="range" class="multi-range success" style="color:#e7c4c4;" value="FilterPrice"
+                                       min="{{ min_price.price__min }}" max="{{ max_price.price__max }}"
                                        id="rangeInput" oninput="maxPrice.value=this.value" width="400px;"/>
                                 <div>
 
                                     <form action="" class="s-form mt-20" method="get">
-                                        <input type="number" id="maxPrice" readonly="" name="FilterPrice" onkeyup="rangeInput.value=this.value"
-                                               value="{{ FilterPrice|intcomma:False }}{{ minMaxPrice.price__min|intcomma:False }}"> <b>تومان</b>
-                                        <button type="submit" id="priceFilterBtn" class="tp-btn-square-lg bg-orange"> فیلتر کردن</button>
+                                        <input type="number" id="maxPrice" readonly="" name="FilterPrice"
+                                               onkeyup="rangeInput.value=this.value"
+                                               value="{{ FilterPrice|intcomma:False }}{{ minMaxPrice.price__min|intcomma:False }}">
+                                        <b>تومان</b>
+                                        <button type="submit" id="priceFilterBtn" class="tp-btn-square-lg bg-orange"> فیلتر کردن
+                                        </button>
                                     </form>
                                 </div>
                             </div>
                         </div>
+
+<div>
                         {#                    فیلتر بر اساس رنگ    #}
                         {#                        <div class="product-widget mb-30">#}
                         {#                            <h5 class="pt-title">Choose Color</h5>#}
@@ -152,7 +162,9 @@
                         {#                                </form>#}
                         {#                            </div>#}
                         {#                        </div>#}
+</div>
                         {% comment %} <div class="product-widget mb-30">
+{#                        فیلتر بر اساس سایزهای محصولات          #}
                             <h5 class="pt-title">سایزها</h5>
                             <div class="widget-category-list mt-20">
                                 <form action="#">
@@ -171,8 +183,10 @@
                                 <form action="#">
                                     {% for brand in brands %}
                                         <div class="single-widget-category">
-                                            <input type="checkbox" data-filter="brand" id="brand-{{ brand.id }}" value="{{ brand.id }}" class="filter-checkbox">
-                                            <label for="brand-{{ brand.id }}" style="">{{ brand }} <span >&nbsp;({{ brand.product_set.all.count }})</span> </label>
+                                            <input type="checkbox" data-filter="brand" id="brand-{{ brand.id }}"
+                                                   value="{{ brand.id }}" class="filter-checkbox">
+                                            <label for="brand-{{ brand.id }}" style="">{{ brand }}
+                                                <span>&nbsp;({{ brand.product_set.all.count }})</span> </label>
                                         </div>
                                     {% endfor %}
                                 </form>
@@ -202,77 +216,78 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-9 col-lg-8">
+                    <div class="col-xl-9 col-lg-8" >
                         <div class="shop-banner mb-30">
                             <div class="banner-image">
                                 <img class="banner-l" src="{% static '..//static//images//banner//banner-store.png' %}" alt="">
 
                                 <div class="banner-content text-center">
                                     <p class="banner-text mb-30">Hurry Up! </p>
-                                    <a href="shop.html" class="st-btn-d b-radius" style="margin-right: 80px; margin-top: 60px; border-radius: 40%">کشف کنید!</a>
+                                    <a href="shop.html" class="st-btn-d b-radius"
+                                       style="margin-right: 80px; margin-top: 60px; border-radius: 40%">کشف کنید!</a>
                                 </div>
                             </div>
                         </div>
+
                         <div class="product-lists-top">
                             <div class="product__filter-wrap">
                                 <div class="row align-items-center">
-                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6" >
                                         <div class="product__filter d-sm-flex align-items-center">
                                             <div class="product__col">
                                                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                                                     <li class="nav-item" role="presentation">
-                                                        <button class="nav-link active" id="FourCol-tab" data-toggle="tab" data-target="#FourCol" type="button" role="tab" aria-controls="FourCol"
+                                                        <button class="nav-link active" id="FourCol-tab" data-toggle="tab"
+                                                                data-target="#FourCol" type="button" role="tab"
+                                                                aria-controls="FourCol"
                                                                 aria-selected="true">
                                                             <i class="fal fa-th"></i>
                                                         </button>
                                                     </li>
-                                                    <li class="nav-item" role="presentation">
-                                                        <button class="nav-link" id="FiveCol-tab" data-toggle="tab" data-target="#FiveCol" type="button" role="tab" aria-controls="FiveCol"
-                                                                aria-selected="false">
-                                                            <i class="fal fa-list"></i>
-                                                        </button>
-                                                    </li>
+                                                    {#                                                    <li class="nav-item" role="presentation">#}
+                                                    {#                                                        <button class="nav-link" id="FiveCol-tab" data-toggle="tab" data-target="#FiveCol" type="button" role="tab" aria-controls="FiveCol"#}
+                                                    {#                                                                aria-selected="false">#}
+                                                    {#                                                            <i class="fal fa-list"></i>#}
+                                                    {#                                                        </button>#}
+                                                    {#                                                    </li>#}
                                                 </ul>
                                             </div>
-                                            <div class="product__result pl-60">
-                                                <p>Showing 1-20 of 29 relults</p>
-                                            </div>
+
                                         </div>
                                     </div>
                                     <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
                                         <div class="product__filter-right d-flex align-items-center justify-content-md-end">
-                                            <div class="product__sorting product__show-no">
-                                                <select>
-                                                    <option>10</option>
-                                                    <option>20</option>
-                                                    <option>30</option>
-                                                    <option>40</option>
-                                                </select>
-                                            </div>
-                                            <div class="product__sorting product__show-position ml-20">
-                                                <select>
-                                                    <option>Latest</option>
-                                                    <option>New</option>
-                                                    <option>Up comeing</option>
-                                                </select>
+                                           <div class="product__sorting product__show-position ml-20">
+                                            <form action="#" >
+                                                 {% csrf_token %}
+                                                 {% for sec in filter_sec %}
+                                                        <input type="button" data-filter="filter_section" class="selection-button" value="{{ sec.name }}" data="{{ sec.id }}" data_url />
+                                                 {% endfor %}
+                                            </form>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-content" id="productGridTabContent">
+                    <div class="filteredProducts" >
+                        <div class="tab-content " id="productGridTabContent " >
                             <div class="tab-pane fade  show active" id="FourCol" role="tabpanel" aria-labelledby="FourCol-tab">
                                 <div class="tp-wrapper">
-                                    <div class="row g-0" id="filteredProducts">
+                                <div class="product__result pr-60">
+                                                <p> {{ product_count }} کالا</p>
+                                            </div>
+                                    <div class="row g-0" >
                                         {% if products %}
                                             {% for product in products %}
-                                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
                                                     <div class="product__item product__item-d">
                                                         <div class="product__thumb fix">
                                                             <div class="product-image w-img">
                                                                 <a href="{{ product.get_url }}">
-                                                                    <img src="{{ product.images.url }}" alt="product" class="w-img">
+                                                                    <img src="{{ product.images.url }}" alt="product"
+                                                                         class="w-img">
                                                                 </a>
                                                             </div>
                                                             <div class="product-action">
@@ -291,7 +306,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="product__content-3">
-                                                            <h6><a href="{{ product.get_url }}">{{ product.product_name }}</a></h6>
+                                                            <h6><a href="{{ product.get_url }}">{{ product.product_name }}</a>
+                                                            </h6>
                                                             <div class="rating mb-5">
                                                                 <div class="rtl rate-review">
 
@@ -315,8 +331,11 @@
 
                                                                     <span> {{ product.price|intcomma:False }} تومان </span>
                                                                 {% else %}
-                                                                    <span>{% call_sellprice product.price product.discount as price %} {{ price|intcomma:False }} تومان </span><br>
-                                                                    <del style="font-weight: 200;font-size: 13px; color: #6c6c6c">{{ product.price|intcomma:False }} تومان</del>
+                                                                    <span>{% call_sellprice product.price product.discount as price %} {{ price|intcomma:False }} تومان </span>
+                                                                    <br>
+                                                                    <del style="font-weight: 200;font-size: 13px; color: #6c6c6c">{{ product.price|intcomma:False }}
+                                                                        تومان
+                                                                    </del>
 
                                                                 {% endif %}
                                                             </div>
@@ -330,17 +349,22 @@
                                             {#  زمانی که محصولی یافت نشد  #}
                                             <div style="margin-left: 300px;"> <!-- show not find product-->#}
 
-                                                <img id="not_find_product" style="height: 300px; width: 300px; " src="{% static '..//static//images//not_find//not_find_product.svg' %}">
+                                                <img id="not_find_product" style="height: 300px; width: 300px; "
+                                                     src="{% static '..//static//images//not_find//not_find_product.png' %}">
                                                 <div>
-                                                    <span style="padding-left:20px ; font-size: 25px;">کالایی با این مشخصات پیدا نکردیم</span><img style="height: 50px; width: 35px; "
-                                                                                                                                                   src="{% static '..//static//images//icons//danger.png' %}">
+                                                    <span style="padding-left:20px ; font-size: 25px;">کالایی با این مشخصات پیدا نکردیم</span><img
+                                                        style="height: 50px; width: 35px; "
+                                                        src="{% static '..//static//images//icons//danger.png' %}">
                                                 </div>
                                             </div>
                                         {% endif %}
                                     </div>
                                 </div>
                             </div>
-                            {#                        جهت نمایش محصولات با گرید متفاوت#}
+
+                         {#                        جهت نمایش محصولات با گرید متفاوت#}
+                            <div>
+
                             {#                            <div class="tab-pane fade" id="FiveCol" role="tabpanel" aria-labelledby="FiveCol-tab">#}
                             {#                                <div class="tp-wrapper-2">#}
                             {#                                    <div class="single-item-pd">#}
@@ -418,30 +442,41 @@
                             {#                                        </div>#}
                             {#                                    </div>#}
                             {#                                    #}
+                            </div>
+
+
                             <div class="tp-pagination text-center">
                                 <div class="row">
                                     <div class="col-xl-12">
-                                        <div class="basic-pagination pt-30 pb-30">
+                                        <div class="filteredProducts basic-pagination pt-30 pb-30" >
                                             <nav>
                                                 <ul>
                                                     {% if products.has_other_pages %}
                                                         <ul>
                                                             {% if products.has_previous %}
-                                                                <li class="page-item "><a class="page-link" href="?page={{ products.pervious_page_number }}">قبلی</a></li>
+                                                                <li class="page-item "><a class="page-link"
+                                                                                          href="?page={{ products.pervious_page_number }}">قبلی</a>
+                                                                </li>
                                                             {% else %}
-                                                                <li class="page-item disabled"><a class="page-link" href="#">قبلی</a></li>
+                                                                <li class="page-item disabled"><a class="page-link"
+                                                                                                  href="#">قبلی</a></li>
                                                             {% endif %}
                                                             {% for i in products.paginator.page_range %}
                                                                 {% if products.number == i %}
-                                                                    <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+                                                                    <li class="page-item active"><a class="page-link"
+                                                                                                    href="#">{{ i }}</a></li>
                                                                 {% else %}
-                                                                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                                                                    <li class="page-item"><a class="page-link"
+                                                                                             href="?page={{ i }}">{{ i }}</a></li>
                                                                 {% endif %}
                                                             {% endfor %}
-                                                            {% if product.has_next %}
-                                                                <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">بعدی</a></li>
+                                                            {% if products.has_next %}
+                                                                <li class="page-item"><a class="page-link"
+                                                                                         href="?page={{ products.next_page_number }}">بعدی</a>
+                                                                </li>
                                                             {% else %}
-                                                                <li class="page-item disabled"><a class="page-link" href="#">بعدی</a></li>
+                                                                <li class="page-item disabled"><a class="page-link"
+                                                                                                  href="#">بعدی</a></li>
                                                             {% endif %}
 
                                                         </ul>
@@ -453,6 +488,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -472,7 +508,8 @@
                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
                                     <div class="product__modal-box">
                                         <div class="tab-content" id="modalTabContent">
-                                            <div class="tab-pane fade show active" id="nav1" role="tabpanel" aria-labelledby="nav1-tab">
+                                            <div class="tab-pane fade show active" id="nav1" role="tabpanel"
+                                                 aria-labelledby="nav1-tab">
                                                 <div class="product__modal-img w-img">
                                                     <img src="assets/img/quick-view/quick-view-1.jpg" alt="">
                                                 </div>
@@ -495,23 +532,27 @@
                                         </div>
                                         <ul class="nav nav-tabs" id="modalTab" role="tablist">
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="nav1-tab" data-bs-toggle="tab" data-bs-target="#nav1" type="button" role="tab" aria-controls="nav1"
+                                                <button class="nav-link active" id="nav1-tab" data-bs-toggle="tab"
+                                                        data-bs-target="#nav1" type="button" role="tab" aria-controls="nav1"
                                                         aria-selected="true">
                                                     <img src="assets/img/quick-view/quick-nav-1.jpg" alt="">
                                                 </button>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="nav2-tab" data-bs-toggle="tab" data-bs-target="#nav2" type="button" role="tab" aria-controls="nav2" aria-selected="false">
+                                                <button class="nav-link" id="nav2-tab" data-bs-toggle="tab" data-bs-target="#nav2"
+                                                        type="button" role="tab" aria-controls="nav2" aria-selected="false">
                                                     <img src="assets/img/quick-view/quick-nav-2.jpg" alt="">
                                                 </button>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="nav3-tab" data-bs-toggle="tab" data-bs-target="#nav3" type="button" role="tab" aria-controls="nav3" aria-selected="false">
+                                                <button class="nav-link" id="nav3-tab" data-bs-toggle="tab" data-bs-target="#nav3"
+                                                        type="button" role="tab" aria-controls="nav3" aria-selected="false">
                                                     <img src="assets/img/quick-view/quick-nav-3.jpg" alt="">
                                                 </button>
                                             </li>
                                             <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="nav4-tab" data-bs-toggle="tab" data-bs-target="#nav4" type="button" role="tab" aria-controls="nav4" aria-selected="false">
+                                                <button class="nav-link" id="nav4-tab" data-bs-toggle="tab" data-bs-target="#nav4"
+                                                        type="button" role="tab" aria-controls="nav4" aria-selected="false">
                                                     <img src="assets/img/quick-view/quick-nav-4.jpg" alt="">
                                                 </button>
                                             </li>
@@ -541,9 +582,12 @@
                                         <div class="product__modal-des mt-20 mb-15">
                                             <ul>
                                                 <li><a href="#"><i class="fas fa-circle"></i> Bass and Stereo Sound.</a></li>
-                                                <li><a href="#"><i class="fas fa-circle"></i> Display with 3088 x 1440 pixels resolution.</a></li>
-                                                <li><a href="#"><i class="fas fa-circle"></i> Memory, Storage & SIM: 12GB RAM, 256GB.</a></li>
-                                                <li><a href="#"><i class="fas fa-circle"></i> Androi v10.0 Operating system.</a></li>
+                                                <li><a href="#"><i class="fas fa-circle"></i> Display with 3088 x 1440 pixels
+                                                    resolution.</a></li>
+                                                <li><a href="#"><i class="fas fa-circle"></i> Memory, Storage & SIM: 12GB RAM,
+                                                    256GB.</a></li>
+                                                <li><a href="#"><i class="fas fa-circle"></i> Androi v10.0 Operating system.</a>
+                                                </li>
                                             </ul>
                                         </div>
                                         <div class="product__stock mb-20">
@@ -554,7 +598,8 @@
                                             <form action="#">
                                                 <div class="pro-quan-area d-lg-flex align-items-center">
                                                     <div class="product-quantity mr-20 mb-25">
-                                                        <div class="cart-plus-minus p-relative"><input type="text" value="1"/></div>
+                                                        <div class="cart-plus-minus p-relative"><input type="text" value="1"/>
+                                                        </div>
                                                     </div>
                                                     <div class="pro-cart-btn mb-25">
                                                         <button class="cart-btn" type="submit">Add to cart</button>
@@ -589,62 +634,6 @@
         <!-- shop modal end -->
 
     </main>
-
-    <script>
-        $(document).ready(function () {
-            $(".filter-checkbox").on('click', function () {
-                var filter_object = {};
-                $(".filter-checkbox").each(function (index, ele) {
-                    var filter_value = $(this).val();
-                    var filter_key = $(this).data('filter');
-                    console.log(filter_key, filter_value);
-                    filter_object[filter_key] = Array.from(document.querySelectorAll('input[data-filter=' + filter_key + ']:checked')).map(function (el) {
-                        return el.value;
-                    });
-                });
-                $.ajax({
-                    url: '{% url 'filter-data' %}',
-                    data: filter_object,
-                    dataType: 'json',
-                    success: function (res) {
-                        $("#filteredProducts").html(res.data);
-                    }
-                });
-            });
-        });
-    </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

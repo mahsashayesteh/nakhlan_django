@@ -11,6 +11,7 @@
         <div class="slider-area rtl">
             <div class="swiper-container slider__active">
                 <div class="slider-wrapper  swiper-wrapper">
+
                     {%  for slider in sliders %}
                     <div class=" swiper-slide slider-height d-flex align-items-center" data-background="{{ slider.image.url }}">
                         <div class="container">
@@ -69,7 +70,7 @@
                 <div class="product-bs-slider" >
                     <div class="product-slider swiper-container">
                         <div class="swiper-wrapper">
-
+                          {% if products %}
                             {% for pro in special_offers %}
 
                                 <div class="product__item swiper-slide">
@@ -143,7 +144,7 @@
                                 </div>
 
                             {% endfor %}
-
+                          {% endif %}
                         </div>
 
                     </div>

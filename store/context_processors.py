@@ -14,11 +14,12 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 def section_links(request):
-    special_offers = Product.objects.filter(section__name='special offers')
+    special_offers = Product.objects.filter(section__name_show='special offer')
     for product in special_offers:
-        # ÑİÊä ã?Çä?ä æ ÊÚÏÇÏ Ï?ÏÇå åÇ? ÏÑÌ ÔÏå ÈÑÇ? ãÍÕæáÇÊ
+        # Ú¯Ø±ÙØªÙ† Ù…ÛŒØ§Ù†Ú¯ÛŒÙ† Ùˆ ØªØ¹Ø¯Ø§Ø¯ Ø¯ÛŒØ¯Ú¯Ø§Ù‡ Ù‡Ø§ÛŒ Ø¯Ø±Ø¬ Ø´Ø¯Ù‡ Ø¨Ø±Ø§ÛŒ Ù…Ø­ØµÙˆÙ„Ø§Øª
         fetch_reviews = (
-            " SELECT AVG(rating) as avgrating, COUNT(rating) as countrating FROM ecommerce_website.store_reviewrating  WHERE status=1 and product_id=%s;")
+            "SELECT AVG(rating) as avgrating, COUNT(rating) as countrating FROM ecommerce_website.store_reviewrating  WHERE "
+            "status=1 and product_id=%s;")
         mycursor.execute(fetch_reviews, [product.id])
         reviews_sql = mycursor.fetchall()
         print(reviews_sql)
@@ -34,7 +35,8 @@ def section_links(request):
 
 def Avg(product):
         fetch_reviews = (
-            " SELECT AVG(rating) as avgrating, COUNT(rating) as countrating FROM ecommerce_website.store_reviewrating  WHERE status=1 and product_id=%s;")
+            "SELECT AVG(rating) as avgrating, COUNT(rating) as countrating FROM ecommerce_website.store_reviewrating  WHERE "
+            "status=1 and product_id=%s;")
         mycursor.execute(fetch_reviews, [product.id])
         reviews_sql = mycursor.fetchall()
 
