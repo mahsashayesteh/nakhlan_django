@@ -19,7 +19,7 @@ django-jalali-date==1.0.2
 django-js-asset==2.1.0
 django-mptt==0.14.0
 django-mptt-admin==2.5.1
-django-pyodbc-azure==2.1.0.0
+
 django-quill-editor==0.1.40
 django-tagging==0.5.0
 django-taggit==4.0.0
