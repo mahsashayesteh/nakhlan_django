@@ -54,7 +54,7 @@ PySocks==1.7.1
 python-decouple==3.8
 python-dotenv==0.21.1
 pytz==2022.7.1
-vboxapi==1.0
+vboxapi==4.3.10
 virtualenv==20.20.0
 virtualenv-clone==0.5.7
 webdriver-manager==3.8.5
