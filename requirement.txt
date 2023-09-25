@@ -12,7 +12,6 @@ django-admin-honeypot-updated-2021==1.2.0
 django-admin-persian-fonts==0.2
 django-admin-thumbnails==0.2.8
 django-ajax-selects==2.2.0
-django-ckeditor==6.7.0
 django-crispy-forms==2.0
 django-ipware==5.0.0
 django-jalali==4.3.0
@@ -20,7 +19,6 @@ django-jalali-date==1.0.2
 django-js-asset==2.1.0
 django-mptt==0.14.0
 django-mptt-admin==2.5.1
-django-phonenumber-field==7.0.2
 django-pyodbc-azure==2.1.0.0
 django-quill-editor==0.1.40
 django-tagging==0.5.0
@@ -41,12 +39,10 @@ mysql-connector==2.2.9
 mysql-connector-python==8.0.31
 mysqlclient==2.1.1
 numpy==1.24.2
-opencv-python==4.7.0.68
 openpyxl==2.6.2
 outcome==1.2.0
 packaging==23.0
 persiantools==3.0.1
-phonenumberslite==8.13.10
 Pillow==9.3.0
 pipenv==2023.2.18
 platformdirs==3.1.0
@@ -54,8 +50,6 @@ ply==3.11
 protobuf==3.20.1
 pycparser==2.21
 pyodbc==4.0.35
-PySide6-Addons==6.4.2
-PySide6-Essentials==6.4.2
 PySocks==1.7.1
 python-decouple==3.8
 python-dotenv==0.21.1
