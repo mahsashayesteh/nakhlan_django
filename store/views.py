@@ -121,13 +121,9 @@ def store(request, main_category_slug=None, category_slug=None, sub_category_slu
 def filter_sec(request):
     filter_section = Section.objects.filter().all()
     sec = request.GET.getlist('filter_category')
-    print(sec)
-    print('mffffffffffffffffffffffffffff')
     allProducts = Product.objects.all().order_by('-id').distinct()
-    print(sec)
     if len(sec) > 0:
         allProducts = allProducts.filter(section__id__in=sec).distinct()
-        print(allProducts)
         for product in allProducts:
             product.avg = Avg(product)[0]
             product.count_review = Avg(product)[1]

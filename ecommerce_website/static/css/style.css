@@ -223,7 +223,7 @@ input {
 }
 
 .w-img-blog{
-    height: 100px;
+    height: 150px;
 }
 w-img-about{
     height: auto;
@@ -1091,8 +1091,8 @@ w-img-about{
     color: #999;
     content: "\f715";
     font-size: 8px;
-    right: -8px;
-    top: 1px;
+    right: 35px;
+    top: 5px;
     font-family: "Font Awesome 5 pro", serif;
     transform: rotate(-110deg);
 }

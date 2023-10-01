@@ -141,6 +141,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+{#  فارسی سازی کلیه اعداد انگلیسی سایت #}
 <script>
     $(document).ready(function () {
         $('.thumb a').click(function (e) {
@@ -205,11 +206,10 @@
 </script>
 
 {# استفاده از ajax برای فیلتر کردن بر اساس جدیدترین ها یا پرفروش ترین ها و ....#}
-
 <script>
     $(document).ready(function () {
         const $selectionbutton = $('.selection-button');
-         const handeler = $( ".selection-button" ).on('click',function(event) {
+        const handeler = $(".selection-button").on('click', function (event) {
             event.preventDefault();
             var element = $(this); //button that was clicked
             $selectionbutton.off('click', handeler);
@@ -232,6 +232,31 @@
     });
 </script>
 
+<script>
+
+    $(document).ready(function () {
+        $(".selection-button-blog").on('click', function () {
+            event.preventDefault();
+            var element = $(this); //button that was clicked
+
+            $.ajax({
+                url: '{% url 'ajax-filter-blogs' %}',
+                method: 'GET',
+                data: {
+                    filter_category_blog: element.attr("data")
+                },
+                dataType: 'json',
+                success: function (res) {
+                    $(".filteredblogs").html(res.data);
+                },
+                error: function (xhr, errmsg, err) {
+                    console.log("error")
+
+                }
+            });
+        });
+    });
+</script>
 <style>
     input[type=range] {
         -webkit-appearance: none;

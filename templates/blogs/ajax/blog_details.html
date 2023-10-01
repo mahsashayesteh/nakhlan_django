@@ -1,0 +1,84 @@
+{% load static %}
+<div class="container">
+    <div class="row">
+        <div class="col-xl-8 col-lg-7">
+            <div class="row">
+                {% for blog in blogs %}
+
+                    <div class="col-xl-6">
+                        <div class="single-smblog mb-30">
+                            <div class="smblog-thum" style="margin-bottom: -130px">
+                                <div class="blog-image w-img">
+                                    <a href="blog-details.html"><img src="{{ blog.img_banner.url }}"
+                                                                     alt="{{ blog.subject.html_name|safe }}"></a>
+                                </div>
+                                <div class="blog-tag blog-tag-2">
+                                    <a href="blog.html">Food Beverage</a>
+                                </div>
+                            </div>
+                            <div class="smblog-content smblog-content-3">
+                                <h2 class="text-right"><a href="blog-details.html">
+                                    <div style="direction: rtl; font-weight: bolder">{{ blog.subject.html|safe }}</div>
+                                </a></h2>
+                                {#                                    <span class="author mb-10">posted by <a href="#">Adlop</a></span>#}
+                                <div class="rtl">{{ blog.description.html|safe|slice:":255" }} ....</div>
+                                <div class="smblog-foot pt-15">
+                                    <div class="post-readmore">
+                                        <a href="{{ blog.get_url }}" style="font-size: 12px"> بیشتر... <span
+                                                class="icon"></span></a>
+                                    </div>
+                                    <div class="post-date">
+                                        <a href="blog-details.html">{{ blog.update_date }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="row">
+                <div class="col-xl-12 ">
+                    <div class="filteredProducts basic-pagination pt-30 pb-30  " style="padding-right: 30%">
+                        <nav>
+                            <ul>
+                                {% if blogs.has_other_pages %}
+                                    <ul>
+                                        {% if blogs.has_previous %}
+                                            <li class="page-item "><a class="page-link"
+                                                                      href="?page={{ blogs.pervious_page_number }}">قبلی</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled"><a class="page-link"
+                                                                              href="#">قبلی</a></li>
+                                        {% endif %}
+                                        {% for i in blogs.paginator.page_range %}
+                                            {% if blogs.number == i %}
+                                                <li class="page-item active"><a class="page-link"
+                                                                                href="#">{{ i }}</a></li>
+                                            {% else %}
+                                                <li class="page-item"><a class="page-link"
+                                                                         href="?page={{ i }}">{{ i }}</a></li>
+                                            {% endif %}
+                                        {% endfor %}
+                                        {% if products.has_next %}
+                                            <li class="page-item mr-5"><a class="page-link"
+                                                                          href="?page={{ blogs.next_page_number }}">بعدی</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item disabled mr-10"><a class="page-link"
+                                                                                    href="#">بعدی</a></li>
+                                        {% endif %}
+
+                                    </ul>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        {% include 'includes/side_bar_blogs.html' %}
+    </div>
+</div>
