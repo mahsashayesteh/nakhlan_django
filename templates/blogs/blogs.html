@@ -38,26 +38,25 @@
         <!-- page-banner-area-end -->
 
         <!-- news-detalis-area-start -->
-        <div class="blog-area mt-120 mb-75 filteredblogs">
+        <div class="blog-area mt-120 mb-75 ">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-8 col-lg-7">
+                    <div class="col-xl-8 col-lg-7 filteredblogs">
                         <div class="row">
                             {% for blog in blogs %}
-
                                 <div class="col-xl-6">
                                     <div class="single-smblog mb-30">
                                         <div class="smblog-thum" style="margin-bottom: -130px">
-                                            <div class="blog-image w-img">
+                                            <div class="blog-image w-img-blogs">
                                                 <a href="blog-details.html"><img src="{{ blog.img_banner.url }}"
                                                                                  alt="{{ blog.subject.html_name|safe }}"></a>
                                             </div>
-                                            <div class="blog-tag blog-tag-2">
-                                                <a href="blog.html">Food Beverage</a>
-                                            </div>
+                                            {#                                            <div class="blog-tag blog-tag-2">#}
+                                            {#                                                <a href="blog.html">Food Beverage</a>#}
+                                            {#                                            </div>#}
                                         </div>
                                         <div class="smblog-content smblog-content-3">
-                                            <h2 class="text-right"><a href="blog-details.html">
+                                            <h2 class="text-right"><a href="{{ blog.get_url }}">
                                                 <div style="direction: rtl; font-weight: bolder">{{ blog.subject.html|safe }}</div>
                                             </a></h2>
                                             {#                                    <span class="author mb-10">posted by <a href="#">Adlop</a></span>#}
@@ -68,7 +67,7 @@
                                                             class="icon"></span></a>
                                                 </div>
                                                 <div class="post-date">
-                                                    <a href="blog-details.html">{{ blog.update_date }}</a>
+                                                    <a href="{{ blog.get_url }}">{{ blog.update_date }}</a>
                                                 </div>
                                             </div>
                                         </div>

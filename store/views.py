@@ -53,7 +53,7 @@ def store(request, main_category_slug=None, category_slug=None, sub_category_slu
     if category_slug is not None:
         categories = get_object_or_404(Category, slug=category_slug)
         products = Product.objects.filter(category=categories, is_available=True)
-        print(products)
+
         for product in products:
             product.avg = Avg(product)[0]
             product.count_review = Avg(product)[1]
@@ -76,7 +76,7 @@ def store(request, main_category_slug=None, category_slug=None, sub_category_slu
 
         sub_categories = get_object_or_404(SubCategory, slug=sub_category_slug)
         products = Product.objects.filter(sub_category=sub_categories, is_available=True)
-        print(products)
+
         for product in products:
             product.avg = Avg(product)[0]
             product.count_review = Avg(product)[1]
@@ -131,7 +131,7 @@ def filter_sec(request):
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = allProducts.count()
-        print(product_count)
+
     contex = {
         'products': paged_products,
         'product_count': product_count,
@@ -160,7 +160,6 @@ def filter_data(request):
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = allProducts.count()
-        print(product_count)
 
 
     if len(brands) > 0:
@@ -172,7 +171,8 @@ def filter_data(request):
         page = request.GET.get('page')
         paged_products = paginator.get_page(page)
         product_count = allProducts.count()
-        print(product_count)
+
+
     context = {
         'products': paged_products,
         'product_count': product_count,

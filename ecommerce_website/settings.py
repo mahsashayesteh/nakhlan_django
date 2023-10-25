@@ -21,7 +21,7 @@ from decouple import config
 import sys
 import io
 
-sys.stdout = io .TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -97,6 +97,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "category.context_processors.menu_links",
+                "blogs.context_processors.menu_links",
                 "carts.context_processors.counter",
                 "store.context_processors.section_links",
 
@@ -155,6 +156,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'fa'
 
 import locale
+
 locale.setlocale(locale.LC_ALL, "fa_IR.UTF-8")
 
 TIME_ZONE = 'Asia/Tehran'
@@ -193,7 +195,6 @@ import django
 from django.utils.encoding import smart_str
 
 django.utils.encoding.smart_text = smart_str
-
 
 import django
 from django.utils.translation import gettext
@@ -252,7 +253,4 @@ CKEDITOR_CONFIGS = {
     }
 }
 
-
-
 DATA_UPLOAD_MAX_MEMORY_SIZE = 30242880
-

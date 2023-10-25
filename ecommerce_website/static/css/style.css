@@ -222,10 +222,10 @@ input {
     height: 270px;
 }
 
-.w-img-blog{
+.w-img-blog img{
     height: 150px;
 }
-w-img-about{
+w-img-about {
     height: auto;
 }
 .m-img img {
@@ -409,7 +409,7 @@ w-img-about{
 }
 
 .light-bg-s {
-    background-color: #F4F5F7;
+    background-color: #ff6219;
 }
 
 /*----------------------------------------*/
@@ -598,6 +598,10 @@ w-img-about{
     border-color: #ffffff;
 }
 
+.single-category .selection-button-blog{
+    border: hidden;
+    /*background-color:;*/
+}
 .cart-btn {
     font-size: 13px;
     font-weight: 500;
@@ -953,6 +957,9 @@ w-img-about{
     .w-img{
         height: 400px;
     }
+    .w-img-blog{
+        height: 200px;
+    }
 }
 
 .section__head::before {
@@ -999,7 +1006,8 @@ w-img-about{
 }
 
 .section__title .st-titile-d {
-    margin-bottom: -22px;
+    margin-bottom: 22px;
+    color: #0a0a0a;
 }
 
 .section__title .st-titile-d::after {
@@ -1013,7 +1021,7 @@ w-img-about{
 }
 
 .section__title-2 h5:after {
-    background: #16bcdc;
+    background: #fcfcfc;
 }
 
 .abs-section-title span {
@@ -1330,7 +1338,12 @@ w-img-about{
     }
 
 }
+  @media (max-width: 375px) {
+    .logo .logo-image img{
+      margin-right: -95px;
 
+    }
+  }
 .heade-mid-inner {
     padding: 5px 0;
     border-bottom: 1px solid;
@@ -2609,7 +2622,7 @@ w-img-about{
 
 @media screen and (min-width: 1920px) {
     .container {
-        width: 500px;
+        width: 100%;
     }
 }
 

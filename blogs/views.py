@@ -24,8 +24,7 @@ def blog(request, category_slug=None, main_category_slug=None):
 
 
 def blog_details(request, slug, category_slug):
-    blogs = get_object_or_404(BlogDetails, slug=uri_to_iri(slug), category__slug=uri_to_iri(category_slug))
-    print(blogs)
+    blogs = get_object_or_404(BlogDetails, slug=uri_to_iri(slug), category__slug=uri_to_iri(category_slug), status='active')
     blogs.update_date = datetime2jalali(blogs.update_date).strftime('%Y/%m/%d')
     context = {
         'blogs': blogs,
@@ -34,11 +33,14 @@ def blog_details(request, slug, category_slug):
 
 
 def filter_ajax(request):
-
     get_id_category = request.GET.getlist('filter_category_blog')
-    all_blogs = BlogDetails.objects.all().order_by('-update_date').distinct()
+    all_blogs = BlogDetails.objects.filter(status='active').order_by('-update_date').distinct()
+
+    for blog in all_blogs:
+        blog.update_date = datetime2jalali(blog.update_date).strftime('%Y/%m/%d')
+
     if len(get_id_category) > 0:
-        filter_blogs = all_blogs.filter(category__id__in=get_id_category).distinct()
+        filter_blogs = all_blogs.filter(category__id__in=get_id_category, status='active').distinct()
         paginator = Paginator(filter_blogs, 6)
         page = request.GET.get('page')
         paged_blogs = paginator.get_page(page)
@@ -46,7 +48,6 @@ def filter_ajax(request):
         'blogs': paged_blogs,
         'blog': all_blogs,
     }
-    t = render_to_string('blogs/ajax/blog_details.html', contex)
-
+    t = render_to_string('blogs/ajax/blogs.html', contex)
 
     return JsonResponse({'data': t}, )

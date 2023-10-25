@@ -22,7 +22,7 @@ def section_links(request):
             "status=1 and product_id=%s;")
         mycursor.execute(fetch_reviews, [product.id])
         reviews_sql = mycursor.fetchall()
-        print(reviews_sql)
+
         avg = 0
         count = 0
         if reviews_sql is not None:

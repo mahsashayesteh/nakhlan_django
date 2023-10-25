@@ -5,107 +5,111 @@
 {% block content %}
 
     <!-- ========================= SECTION MAIN ========================= -->
-   <main>
+    <main>
         <!-- slider-area-start -->
 
         <div class="slider-area rtl">
-            <div class="swiper-container slider__active">
+            <div class="swiper-container slider__active rtl">
                 <div class="slider-wrapper  swiper-wrapper">
 
-                    {%  for slider in sliders %}
-                    <div class=" swiper-slide slider-height d-flex align-items-center" data-background="{{ slider.image.url }}">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-xl-5">
-                                    <div class="slider-content">
-                                        <div class="slider-top-btn" data-animation="fadeInLeft" data-delay="1.5s">
-                                            <a href="{{ slider.product.get_url }}" class="st-btn b-radius">{{ slider.discount_deal }}</a>
-                                        </div>
-                                        <h2 data-animation="fadeInLeft" data-delay="1.7s" class="pt-15 slider-title pb-5">  {{ slider.product.product_name }} آف شگفت انگیز خورد</h2>
-                                        <p class="pr-20 slider_text" data-animation="fadeInLeft" data-delay="1.9s">تخفیف {{ slider.product.discount }}% </p>
-                                        <div class="slider-bottom-btn mt-75">
-                                            <a data-animation="fadeInUp" data-delay="1.15s" href="{{ slider.product.get_url }}" class="st-btn-b b-radius">کشف کنید</a>
+                    {% for slider in sliders %}
+                        <div class=" swiper-slide slider-height d-flex align-items-center"
+                             data-background="{{ slider.image.url }}">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-xl-5">
+                                        <div class="slider-content">
+                                            <div class="slider-top-btn" data-animation="fadeInLeft" data-delay="1.5s">
+                                                <a href="{{ slider.product.get_url }}"
+                                                   class="st-btn b-radius">{{ slider.discount_deal }}</a>
+                                            </div>
+                                            <h2 data-animation="fadeInLeft" data-delay="1.7s"
+                                                class="pt-15 slider-title pb-5">  {{ slider.product.product_name }} آف شگفت انگیز
+                                                خورد</h2>
+                                            <p class="pr-20 slider_text" data-animation="fadeInLeft" data-delay="1.9s">
+                                                تخفیف {{ slider.product.discount }}% </p>
+                                            <div class="slider-bottom-btn mt-75">
+                                                <a data-animation="fadeInUp" data-delay="1.15s"
+                                                   href="{{ slider.product.get_url }}" class="st-btn-b b-radius">کشف کنید</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div><!-- /single-slider -->
-                   {% endfor %}
+                        </div><!-- /single-slider -->
+                    {% endfor %}
                     <div class="main-slider-paginations"></div>
                 </div>
             </div>
         </div>
 
 
-
-
-    <!-- topsell__area-start -->
-    <section class="topsell__area-1 pt-15 rtl">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="section__head d-flex justify-content-between mb-10">
-                        <div class="section__title" style="margin-top: 50px; margin-bottom: 40px ">
-                            <h5 class="st-titile-d " >محصولات برتر روز</h5>
-                        </div>
-{#                        جهت نمایش تایم تخفیف                       #}
-                        <div class="offer-time">
-                            <span class="offer-title d-none d-sm-block"></span>
-                            <div class="countdown">
-                                <div class="countdown-inner b-radius">
-{#                                    <ul class="text-center">#}
-{#                                        <li><span data-days="">36</span> Days</li>#}
-{#                                        <li><span data-hours="">8</span> Hours</li>#}
-{#                                        <li><span data-minutes="">16</span> Mins</li>#}
-{#                                        <li><span data-seconds="">54</span> Secs</li>#}
-{#                                    </ul>#}
+        <!-- topsell__area-start -->
+        <section class="topsell__area-1 pt-15 rtl">
+            <div class="container ">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="section__head d-flex justify-content-between mb-10">
+                            <div class="section__title" style="margin-top: 50px; margin-bottom: 40px ">
+                                <h5 class="st-titile ">محصولات برتر روز</h5>
+                            </div>
+                            {#                        جهت نمایش تایم تخفیف                       #}
+                            <div class="offer-time">
+                                <span class="offer-title d-none d-sm-block"></span>
+                                <div class="countdown">
+                                    <div class="countdown-inner b-radius">
+                                        {#                                    <ul class="text-center">#}
+                                        {#                                        <li><span data-days="">36</span> Days</li>#}
+                                        {#                                        <li><span data-hours="">8</span> Hours</li>#}
+                                        {#                                        <li><span data-minutes="">16</span> Mins</li>#}
+                                        {#                                        <li><span data-seconds="">54</span> Secs</li>#}
+                                        {#                                    </ul>#}
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="product-bs-slider" >
-                    <div class="product-slider swiper-container">
-                        <div class="swiper-wrapper">
-                          {% if products %}
-                            {% for pro in special_offers %}
+                <div class="row">
+                    <div class="product-bs-slider">
+                        <div class="product-slider swiper-container">
+                            <div class="swiper-wrapper">
+                                {% if special_offers %}
+                                    {% for pro in special_offers %}
 
-                                <div class="product__item swiper-slide">
-                                    <div class="product__thumb fix">
-                                        <div class="product-image w-img">
-                                            <a href="{{ pro.get_url }}">
-                                                <img src="{{ pro.images.url }}" alt="product" class="w-img">
-                                            </a>
-                                        </div>
+                                        <div class="product__item swiper-slide">
+                                            <div class="product__thumb fix">
+                                                <div class="product-image w-img">
+                                                    <a href="{{ pro.get_url }}">
+                                                        <img src="{{ pro.images.url }}" alt="product" class="w-img">
+                                                    </a>
+                                                </div>
 
-                                        <div class="product__offer">
-                                            {% if pro.discount is not none and  pro.discount is not 0 %}
-                                                <span class="discount">{{ pro.discount }}%</span>
-                                            {% endif %}
-                                        </div>
-                                        <div class="product-action">
-                                            {% comment %} <a data-toggle="modal" data-target="#productModalId-{{ forloop.counter }}" href="#" class="icon-box icon-box-1">
+                                                <div class="product__offer">
+                                                    {% if pro.discount is not none and  pro.discount is not 0 %}
+                                                        <span class="discount">{{ pro.discount }}%</span>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="product-action">
+                                                    {% comment %} <a data-toggle="modal" data-target="#productModalId-{{ forloop.counter }}" href="#" class="icon-box icon-box-1">
                                                 <i class="fal fa-eye"></i>
                                                 <i class="fal fa-eye"></i>
                                             </a>  {% endcomment %}
-                                            <a href="#" class="icon-box icon-box-1">
-                                                <i class="fal fa-heart"></i>
-                                                <i class="fal fa-heart"></i>
-                                            </a>
-                                            <a href="#" class="icon-box icon-box-1">
-                                                <i class="fal fa-layer-group"></i>
-                                                <i class="fal fa-layer-group"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="product__content">
-                                        <h6><a href="{{ pro.get_url }}">{{ pro.product_name }}</a></h6>
-                                        <div class=" mb-5 mt-3 mr-0 pr-0">
-                                            <ul>
-                                                <div class="rtl rate-review">
+                                                    <a href="#" class="icon-box icon-box-1">
+                                                        <i class="fal fa-heart"></i>
+                                                        <i class="fal fa-heart"></i>
+                                                    </a>
+                                                    <a href="#" class="icon-box icon-box-1">
+                                                        <i class="fal fa-layer-group"></i>
+                                                        <i class="fal fa-layer-group"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="product__content">
+                                                <h6><a href="{{ pro.get_url }}">{{ pro.product_name }}</a></h6>
+                                                <div class=" mb-5 mt-3 mr-0 pr-0">
+                                                    <ul>
+                                                        <div class="rtl rate-review">
                                                  <span class="rate-review">
                                                   <i class=" {% if pro.average == 0.5 %} fa fa-star-half-o {% elif pro.average >= 1 %} fa fa-star {% else %} fal fa-star {% endif %}"
                                                      aria-hidden="true"></i>
@@ -119,43 +123,137 @@
                                                      aria-hidden="true"></i>
 
                                                  </span>
+                                                        </div>
+                                                    </ul>
+                                                    <span style="font-weight: 200;font-size: 10px;">(  {{ pro.count_rating }} دیدگاه)</span>
                                                 </div>
-                                            </ul>
-                                            <span style="font-weight: 200;font-size: 10px;">(  {{ pro.count_rating }} دیدگاه)</span>
+                                                <div class="price left " style="text-align: left; height: 30px">
+                                                    {% if pro.discount == 0 or pro.discount == None or pro.discount == '0' %}
+
+                                                        <span> {{ pro.price|intcomma:False }} تومان</span>
+                                                    {% else %}
+                                                        <span>{% call_sellprice pro.price pro.discount as price %} {{ price|intcomma:False }} تومان </span>
+                                                        <br>
+                                                        <del style="font-weight: 200;font-size: 13px; color: #6c6c6c">{{ pro.price|intcomma:False }}
+                                                            تومان
+                                                        </del>
+
+                                                    {% endif %}
+                                                </div>
+
+
+                                            </div>
+                                            <div class="product__add-cart text-center">
+                                                <button src="" type="button"
+                                                        class="cart-btn product-modal-sidebar-open-btn d-flex align-items-center justify-content-center w-100">
+                                                    <a href="{{ pro.get_url }}">مشاهده جزئیات بیشتر</a>
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div class="price left " style="text-align: left; height: 30px">
-                                            {% if pro.discount == 0 or pro.discount == None or pro.discount == '0' %}
 
-                                                <span> {{ pro.price|intcomma:False }} تومان</span>
-                                            {% else %}
-                                                <span>{% call_sellprice pro.price pro.discount as price %} {{ price|intcomma:False }} تومان </span><br>
-                                                <del style="font-weight: 200;font-size: 13px; color: #6c6c6c">{{ pro.price|intcomma:False }} تومان </del>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
 
-                                            {% endif %}
-                                        </div>
-
-
-                                    </div>
-                                    <div class="product__add-cart text-center">
-                                        <button src="" type="button" class="cart-btn product-modal-sidebar-open-btn d-flex align-items-center justify-content-center w-100">
-                                            <a href="{{ pro.get_url }}">مشاهده جزئیات بیشتر</a>
-                                        </button>
-                                    </div>
-                                </div>
-
-                            {% endfor %}
-                          {% endif %}
                         </div>
-
                     </div>
                 </div>
             </div>
+        </section>
+    {#            قسمت قرار دادن دسته بندی ها     #}
+                <!-- banner__area-start -->
+        <section class="categories__area light-bg-s pt-20 pb-10 rtl " style="color: white; border-radius:  35px">
+            <div class="container custom-conatiner">
+                <div class="row">
+                    <div class="col-xl-12 ">
+                        <div class="section__head d-flex justify-content-between mb-30">
+                            <div class="section__title section__title-2">
+                                <h5 class="st-titile " style="color: white ; margin-bottom: 11px">پرطرفدارترین دسته
+                                    بندی</h5>
+                            </div>
+                            <div class="button-wrap button-wrap-2">
+                                <a style="color: white" href="{% url 'store' %}">مشاهده کالاها <i
+                                        class="fal fa-chevron-left"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+
+                    {% for sub_category in sub_categories %}
+                        <div class="col-xl-2 col-lg-3 col-md-4 " style="margin-bottom: -90px">
+                            <div class="categories__item p-relative w-img mb-30">
+                                <div class="categories__img b-radius-2">
+                                    {% if sub_category.image %}
+                                        <a href="{{ sub_category.get_url }}"><img src="{{ sub_category.image.url }}"
+                                                                                  alt=""></a>
+                                    {% endif %}
+                                </div>
+                                <div class="categories__content">
+                                    <h6 style=" opacity: 1"><a
+                                            href="{{ sub_category.get_url }}">{{ sub_category.name }}</a></h6>
+                                    <p>()</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+        <!-- banner__area-end -->
+
+        <!-- blog-area-start -->
+        <div class="blog-area  pt-20 pb-30 rtl mt-25">
+            <div class="container custom-conatiner">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="section__head d-flex justify-content-between mb-30">
+                            <div class="section__title section__title-2">
+                                <h5 class="st-titile-d">پیشنهاد شده برای شما</h5>
+                            </div>
+                            <div class="button-wrap button-wrap-2">
+                                <a href="{% url 'blog' %}">مشاهده همه <i class="fal fa-chevron-left"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for blog in blogs %}
+                    <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-4">
+                        <div class="single-smblog mb-30">
+                            <div class="smblog-thum">
+                                <div class="blog-image w-img-blog">
+                                    <a href="{{ blog.get_url }}"><img src="{{ blog.img_banner.url }}" alt=""></a>
+                                </div>
+{#                                <div class="blog-tag">#}
+{#                                    <a href="{{ blog.get_url }}">Digital</a>#}
+{#                                </div>#}
+                            </div>
+                            <div class="smblog-content">
+                                <h6><a href="{{ blog.get_url }}" style="height: 10px; width: 20px">{{ blog.subject }}</a></h6>
+
+{#                                <p> {{ blog.description.html|safe|slice:":100" }}</p>#}
+                                <div class="smblog-foot pt-15">
+                                    <div class="post-readmore">
+                                        <a href="{{ blog.get_url }}"> بیشتر... <span class="icon"></span></a>
+                                    </div>
+                                    <div class="post-date">
+                                        <a href="{{ blog.get_url }}">{{ blog.update_date }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    </section>
-   </main>
+        <!-- blog-area-end -->
+    </main>
 {% endblock %}
-    <!-- shop modal start -->
-    {% comment %} {% for pro in special_offers %}
+<!-- shop modal start -->
+{% comment %} {% for pro in special_offers %}
         <form action="{% url 'add_cart' pro.id %}">
             {% csrf_token %}
             <div class="modal fade" id="productModalId-{{ forloop.counter }}" tabindex="-1" role="dialog" aria-hidden="true">
@@ -270,21 +368,11 @@
             </div>
         </form>
     {% endfor %}  {% endcomment %}
-    <!-- shop modal end -->
-    <!-- topsell__area-end -->
+<!-- shop modal end -->
+<!-- topsell__area-end -->
 
 
-
-
-
-
-
-
-
-
-
-
-    <!--
+<!--
 
     {#     ========================= SECTION  =========================
     {#    <section class="section-name padding-y-sm">#}
